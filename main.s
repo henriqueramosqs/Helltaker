@@ -4,7 +4,7 @@
 .data
 
 # Imagens
-.include "imagens\helltaker_menu.data"
+.include "imagens\menu_background.data"
 .include "imagens\novo_jogo_alto.data"
 .include "imagens\novo_jogo_baixo.data"
 .include "imagens\sair_alto.data"
@@ -36,7 +36,8 @@ mainLoop:
 	la a0, helltaker_menu	# Seleï¿½ï¿½o do plano de fundo
 	jal drawImage		# Desenhando plano de fundo
 # Menu Buttons
-drawButtons:
+
+draw_buttons_first_choice:		#Desenha o menu de forma que "novo jogo" é a alternativa selecionada
 	jal checkEnd
 	
 	la a0, novo_jogo_alto 	# Seleï¿½ï¿½o da imagem
@@ -48,12 +49,41 @@ drawButtons:
 	li a1, 85		# Coord X do botï¿½o
 	li a2, 190		# Coord Y do botï¿½o
 	jal drawImage		# Desenhando botï¿½o "sair"
-	j drawButtons
 	
 	
+	add t3, zero, ra
+	jal readKeyBlocking
+	li t1, 'w'			# Carrega o caractere 'w'
+	li t2, 's'			# Carrega o caractere 's'
+	beq a0, t1, draw_buttons_second_choice	# Desenha o mapa em outra configuração se w tiver sido pressionado
+	beq a0, t2, draw_buttons_second_choice	# Desenha o mapa em outra configuração se s tiver sido pressionado
 	
 	
-	j mainLoop  	
+
+draw_buttons_second_choice:		#Desenha o menu de forma que "sair" é a alternativa selecionada
+	jal checkEnd
+	
+	la a0, novo_jogo_baixo 	# Seleï¿½ï¿½o da imagem
+	li a1, 85		# Coord X do botï¿½o
+	li a2, 140		# Coorde Y do botï¿½o
+	jal drawImage		# Desenhando botï¿½o "novo jogo"
+	
+	la a0, sair_alto	# Seleï¿½ï¿½o da imagem
+	li a1, 80		# Coord X do botï¿½o
+	li a2, 190		# Coord Y do botï¿½o
+	jal drawImage		# Desenhando botï¿½o "sair"
+	
+	add t3, zero, ra
+	jal readKeyBlocking
+	li t1, 'w'			# Carrega o caractere 'w'
+	li t2, 's'			# Carrega o caractere 's'
+	beq a0, t1, draw_buttons_first_choice	# Desenha o mapa em outra configuração se w tiver sido pressionado
+	beq a0, t2, draw_buttons_first_choice	# Desenha o mapa em outra configuração se s tiver sido pressionado
+	jr t3
+	
+	j draw_buttons_second_choice
+	
+  	
 endProgram:  	
 	li a7, 10	# Syscall "exit"
 	ecall
@@ -75,9 +105,9 @@ readKeyBlocking:
 	
 	li t1, 0xFF200000		# Carrega o endereï¿½o de status do KDMMIO
 rkb_loop:
-		lw t0, 0(t1)		# Carrega o status do teclado
-		andi t0, t0, 0x0001	# Mascara o bit menos significativo. Por quï¿½?!
-		beq t0, zero, rkb_loop	# Se nï¿½o houver tecla pressionada repete atï¿½ que o usuï¿½rio aperte algo
+	lw t0, 0(t1)		# Carrega o status do teclado
+	andi t0, t0, 0x0001	# Mascara o bit menos significativo. Por quï¿½?!
+	beq t0, zero, rkb_loop	# Se nï¿½o houver tecla pressionada repete atï¿½ que o usuï¿½rio aperte algo
 	lw a0, 4(t1)			# Carrega o caractere que foi pressionado
 	sw a0, 12(t1)			# Escreve o caractere lido no display 
 	ret
