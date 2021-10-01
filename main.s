@@ -1,6 +1,12 @@
 ###############################################################################
 ##                                 HELLTAKER                                ##
 ##############################################################################
+.macro ChangeFrame()
+	xori a7,a7,1	
+	li   t0, 0xFF200604
+	sw  a7,0(t0)
+	
+.end_macro
 .data
 
 # Imagens
@@ -22,6 +28,7 @@ frame_one:  .word 0xFF100000
 #.include "SYSTEMv21.s"
 
 .text
+
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
@@ -30,11 +37,15 @@ frame_one:  .word 0xFF100000
 mainLoop:	
 	jal checkEnd	# Se "esc" pressionado, termina programa
 
+	
 # Drawing Menu ================================================================
 
 # Menu Background
 	la a0, helltaker_menu	# Seleï¿½ï¿½o do plano de fundo
-	jal drawImage		# Desenhando plano de fundo
+	jal drawImage_frame0	# Desenhando plano de fundo
+	jal drawImage_frame1
+	ChangeFrame
+
 # Menu Buttons
 
 draw_buttons_first_choice:		#Desenha o menu de forma que "novo jogo" é a alternativa selecionada
@@ -43,22 +54,21 @@ draw_buttons_first_choice:		#Desenha o menu de forma que "novo jogo" é a alterna
 	la a0, novo_jogo_alto 	# Seleï¿½ï¿½o da imagem
 	li a1, 80		# Coord X do botï¿½o
 	li a2, 140		# Coorde Y do botï¿½o
-	jal drawImage		# Desenhando botï¿½o "novo jogo"
+	jal drawImage_frame0	# Desenhando botï¿½o "novo jogo"
 	
-	la a0, sair_baixo	# Seleï¿½ï¿½o da imagem
+	la a0, sair_baixo # Seleï¿½ï¿½o da imagem
 	li a1, 85		# Coord X do botï¿½o
 	li a2, 190		# Coord Y do botï¿½o
-	jal drawImage		# Desenhando botï¿½o "sair"
+	jal drawImage_frame0		# Desenhando botï¿½o "sair"
 	
-	
+
+
 	add t3, zero, ra
 	jal readKeyBlocking
 	li t1, 'w'			# Carrega o caractere 'w'
 	li t2, 's'			# Carrega o caractere 's'
 	beq a0, t1, draw_buttons_second_choice	# Desenha o mapa em outra configuração se w tiver sido pressionado
 	beq a0, t2, draw_buttons_second_choice	# Desenha o mapa em outra configuração se s tiver sido pressionado
-	
-	
 
 draw_buttons_second_choice:		#Desenha o menu de forma que "sair" é a alternativa selecionada
 	jal checkEnd
@@ -66,12 +76,12 @@ draw_buttons_second_choice:		#Desenha o menu de forma que "sair" é a alternativa
 	la a0, novo_jogo_baixo 	# Seleï¿½ï¿½o da imagem
 	li a1, 85		# Coord X do botï¿½o
 	li a2, 140		# Coorde Y do botï¿½o
-	jal drawImage		# Desenhando botï¿½o "novo jogo"
+	jal drawImage_frame1		# Desenhando botï¿½o "novo jogo"
 	
 	la a0, sair_alto	# Seleï¿½ï¿½o da imagem
 	li a1, 80		# Coord X do botï¿½o
 	li a2, 190		# Coord Y do botï¿½o
-	jal drawImage		# Desenhando botï¿½o "sair"
+	jal drawImage_frame1		# Desenhando botï¿½o "sair"
 	
 	add t3, zero, ra
 	jal readKeyBlocking
@@ -130,7 +140,7 @@ rknb_end:
 	ret
 
 
-drawImage:
+drawImage_frame0:
 # Desenha uma figura de qualquer tamanho na tela de bitmap
 #
 # a0: imagem
@@ -144,31 +154,77 @@ drawImage:
 	add t0, t0, a1			# Adiciona a coordenada x ao endereï¿½o do frame
 	li t2, 4			# Carrega o tamanho de uma word na memï¿½ria
 	rem t1, t0, t2			# Calcula o resto entre o endereï¿½o da vga e 4
-	beqz t1, gridOk			# Se nï¿½o for divisï¿½vel por 4 dara problema de desalinhamento de endereï¿½amento da memï¿½ria
+	beqz t1, gridOk_frame0			# Se nï¿½o for divisï¿½vel por 4 dara problema de desalinhamento de endereï¿½amento da memï¿½ria
 	sub t0, t0, t1			# Nesse caso, escolhe o endereï¿½o vï¿½lido imediatamente ï¿½ esquerda
-gridOk:
+gridOk_frame0:
 	add t1, zero, a0		# Endereï¿½o da imagem
 	lw t2, 0(t1)			# Largura da imagem
 	lw t3, 4(t1)			# Altura da imagem
 	addi t1, t1, 8			# Muda t1 para o primeiro pixel da imagem, apï¿½s informaï¿½ï¿½es de altura e largura
 	li t4, 0			# Iterador de colunas
 	li t5, 0			# Iterador de linhas
-drawLoop:	
-	beq t5, t3, endDraw		# Verifica se desenhou todas as linhas da imagem
-	blt t4, t2, continueLine	# Se nï¿½o chegou ao final da linha continua desenhando
+drawLoop_frame0:	
+	beq t5, t3, endDraw_frame0	# Verifica se desenhou todas as linhas da imagem
+	blt t4, t2, continueLine_frame0	# Se nï¿½o chegou ao final da linha continua desenhando
 		sub t0, t0, t4		# Reinicia o endereï¿½o vga para o primeiro pixel da linha
 		li t4, 0		# Reinicia o iterador de coluna
 		addi t5, t5, 1		# Incrementa iterador de linha
 		addi t0, t0, 320	# Prï¿½xima linha na memï¿½ria vga
-		j drawLoop
-continueLine:
+		j drawLoop_frame0
+continueLine_frame0:
 	lw t6, 0(t1)			# Carrega pixel da imagem
 	sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
 	addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
 	addi t1, t1, 4			# Prï¿½ximo pixel da imagem
 	addi t4, t4, 4			# Incrementa iterador			
-	j drawLoop
-endDraw:
+	j drawLoop_frame0
+endDraw_frame0:
+	li a0, 0			# Limpa o registro pra retornar
+	li a1, 0			# Limpa o registro pra retornar
+	li a2, 0			# Limpa o registro pra retornar
+	ret
+
+
+drawImage_frame1:
+# Desenha uma figura de qualquer tamanho na tela de bitmap
+#
+# a0: imagem
+# a1: coordenada x
+# a2: coordenada y
+
+	lw t0, frame_one		# Enderaï¿½o da memï¿½ria vga
+	lw t1, screen_width		# Carrega largura da tela
+	mul t1, t1, a2			# Multiplica largura pela coordenada y
+	add t0, t0, t1			# Adiciona multiplicaï¿½ï¿½o ao endereï¿½o do frame
+	add t0, t0, a1			# Adiciona a coordenada x ao endereï¿½o do frame
+	li t2, 4			# Carrega o tamanho de uma word na memï¿½ria
+	rem t1, t0, t2			# Calcula o resto entre o endereï¿½o da vga e 4
+	beqz t1, gridOk_frame1			# Se nï¿½o for divisï¿½vel por 4 dara problema de desalinhamento de endereï¿½amento da memï¿½ria
+	sub t0, t0, t1			# Nesse caso, escolhe o endereï¿½o vï¿½lido imediatamente ï¿½ esquerda
+gridOk_frame1:
+	add t1, zero, a0		# Endereï¿½o da imagem
+	lw t2, 0(t1)			# Largura da imagem
+	lw t3, 4(t1)			# Altura da imagem
+	addi t1, t1, 8			# Muda t1 para o primeiro pixel da imagem, apï¿½s informaï¿½ï¿½es de altura e largura
+	li t4, 0			# Iterador de colunas
+	li t5, 0			# Iterador de linhas
+drawLoop_frame1:	
+	beq t5, t3, endDraw_frame1	# Verifica se desenhou todas as linhas da imagem
+	blt t4, t2, continueLine_frame1	# Se nï¿½o chegou ao final da linha continua desenhando
+		sub t0, t0, t4		# Reinicia o endereï¿½o vga para o primeiro pixel da linha
+		li t4, 0		# Reinicia o iterador de coluna
+		addi t5, t5, 1		# Incrementa iterador de linha
+		addi t0, t0, 320	# Prï¿½xima linha na memï¿½ria vga
+		j drawLoop_frame1
+continueLine_frame1:
+	lw t6, 0(t1)			# Carrega pixel da imagem
+	sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
+	addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
+	addi t1, t1, 4			# Prï¿½ximo pixel da imagem
+	addi t4, t4, 4			# Incrementa iterador			
+	j drawLoop_frame1
+	
+endDraw_frame1:
 	li a0, 0			# Limpa o registro pra retornar
 	li a1, 0			# Limpa o registro pra retornar
 	li a2, 0			# Limpa o registro pra retornar
