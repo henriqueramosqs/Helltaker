@@ -55,6 +55,7 @@
 .include "imagens\novo_jogo_baixo_1.data"
 .include "imagens\sair_alto_1.data"
 .include "imagens\sair_baixo_1.data"
+.include "imagens\backgroundchatBelzebub.data"
 
 
 screen_width:	.word 320
@@ -95,10 +96,12 @@ selecaoMenuInicial:
 	li t0,'w'					# Armazena carcter 'w' em t0
 	li t1,'s'					# Armazena caracter 's' em t1
 	li t2, 13					# Armazena código ascii da tecla enter em t2
-	beq a0,t0, mudaAlternativa				# Se for w ou s o input, muda a alternativa
+	beq a0,t0, mudaAlternativa			# Se for w ou s o input, muda a alternativa
 	beq a0,t1, mudaAlternativa
 	bne a0,t2, selecaoMenuInicial			# Faz o loop enquanto o usuário não decidir entre as alternativas do menu
 
+	drawImage(frame_one,backgroundchatBelzebub,0,0)
+	jal changeFrame
 endProgram:  	
 	li a7, 10	# Syscall "exit"
 	ecall
