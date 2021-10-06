@@ -95,13 +95,23 @@ selecaoMenuInicial:
 	jal readKeyBlocking				# Lê input do usuário para navegar no menu
 	li t0,'w'					# Armazena carcter 'w' em t0
 	li t1,'s'					# Armazena caracter 's' em t1
-	li t2, 13					# Armazena código ascii da tecla enter em t2
-	beq a0,t0, mudaAlternativa			# Se for w ou s o input, muda a alternativa
-	beq a0,t1, mudaAlternativa
-	bne a0,t2, selecaoMenuInicial			# Faz o loop enquanto o usuário não decidir entre as alternativas do menu
-
+	li t2, 10					# Armazena código ascii da tecla enter em t2
+	beq a0,t2,menuInicialSelecionado		# Se "enter for selecionado, salta o loop do menu
+							# *Não sei porque, mas código não funciona com a tecla enter. Se armazeno 'l"
+							# ..em t2, o códdgio funciona*
+	beq a0,t1,mudarSelecao				# Se w for selecionado, muda seleção
+	beq a0,t0,mudarSelecao				# Se s for selecionado, muda seleção
+	j loopMenu 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
+mudarSelecao:
+	jal changeFrame					# Muda tela
+loopMenu:
+	j selecaoMenuInicial				#Reitera o loop
+	
+menuInicialSelecionado:
 	drawImage(frame_one,backgroundchatBelzebub,0,0)
 	jal changeFrame
+	
+
 endProgram:  	
 	li a7, 10	# Syscall "exit"
 	ecall
@@ -148,13 +158,8 @@ rknb_end:
 	ret
 	
 
-changeFrame:
-	xori a7,a7,1
+changeFrame:	
+	xori a5,a5,1
 	li t0, 0xFF200604
-	sw a7, 0(t0)	
-	ret
-	
-mudaAlternativa:
-	addi t4,t4,8
-	jal changeFrame
+	sw a5, 0(t0)	
 	ret
