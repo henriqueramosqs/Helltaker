@@ -9,12 +9,12 @@
 	# a1: coordenada x
 	# a2: coordenada y
 		la a0, %imagem
-		lw t0, %frame			# Enderaï¿½o da memï¿½ria vga
+		lw t0, %frame			# Endereco da memoria vga
 		li a1, %coord_x
 		li a2, %coord_y
 		lw t1, screen_width		# Carrega largura da tela
 		mul t1, t1, a2			# Multiplica largura pela coordenada y
-		add t0, t0, t1			# Adiciona multiplicaï¿½ï¿½o ao endereï¿½o do frame
+		add t0, t0, t1			# Adiciona multiplicacao ao endereco do frame
 		add t0, t0, a1			# Adiciona a coordenada x ao endereï¿½o do frame
 		li t2, 4			# Carrega o tamanho de uma word na memï¿½ria
 		rem t1, t0, t2			# Calcula o resto entre o endereï¿½o da vga e 4
@@ -47,6 +47,22 @@
 		li a1, 0			# Limpa o registro pra retornar
 		li a2, 0			# Limpa o registro pra retornar
 .end_macro
+
+.macro	clearFrame(%frame)
+	# Desenha uma figura de qualquer tamanho na tela de bitmap
+	
+	li t0, 76800
+	lw t1, %frame	# endereco inicial da Memoria VGA - Frame 0
+	add t2, t0, t1		# endereco final 
+	li t3,0x00000000	# cor vermelho|vermelho|vermelhor|vermelho
+cf_loop: 	
+	beq t1,t2,cf_fora	# Se for o ï¿½ltimo endereï¿½o entï¿½o sai do loop
+	sw t3,0(t1)		# escreve a word na memï¿½ria VGA
+	addi t1,t1,4		# soma 4 ao endereï¿½o
+	j cf_loop
+cf_fora:	
+.end_macro
+
 .data
 
 # Imagens
@@ -75,43 +91,49 @@ frame_one:  .word 0xFF100000
 
 
 mainLoop:
-	jal checkEnd	# Se "esc" pressionado, termina programa
+
 # Drawing Menu ================================================================
 
 # Menu Background
 	drawImage(frame_zero,helltaker_menu,0,0)		# Desenha plano de fundo no frame_zero
+	drawImage(frame_one,helltaker_menu,0,0)		# Desenhando plano de fundo no frame_one
 # Menu Buttons
 drawButtons:
-	jal checkEnd
+	#jal checkEnd
 	
-	drawImage(frame_zero,novo_jogo_alto_1,80,140)	    # Desenha botão superior no frame_zero
-	drawImage(frame_zero,sair_baixo_1,85,190)		    # Desenha botão inferior no frame_zero
+	drawImage(frame_zero,novo_jogo_alto_1,80,140)	    # Desenha botï¿½o superior no frame_zero
+	drawImage(frame_zero,sair_baixo_1,85,190)		    # Desenha botï¿½o inferior no frame_zero
 	
-	drawImage(frame_one,helltaker_menu,0,0)		# Desenhando plano de fundo no frame_one
-	drawImage(frame_one,novo_jogo_baixo_1,85,140)	 # Desenha botão superior no frame_one
-	drawImage(frame_one,sair_alto_1,80,190)		# Desenha botão inferior no frame_one
+	
+	drawImage(frame_one,novo_jogo_baixo_1,85,140)	 # Desenha botï¿½o superior no frame_one
+	drawImage(frame_one,sair_alto_1,80,190)		# Desenha botï¿½o inferior no frame_one
 	
 selecaoMenuInicial:
-	jal readKeyBlocking				# Lê input do usuário para navegar no menu
+	jal readKeyBlocking				# Lï¿½ input do usuï¿½rio para navegar no menu
 	li t0,'w'					# Armazena carcter 'w' em t0
 	li t1,'s'					# Armazena caracter 's' em t1
-	li t2, 10					# Armazena código ascii da tecla enter em t2
-	beq a0,t2,menuInicialSelecionado		# Se "enter for selecionado, salta o loop do menu
-							# *Não sei porque, mas código não funciona com a tecla enter. Se armazeno 'l"
-							# ..em t2, o códdgio funciona*
-	beq a0,t1,mudarSelecao				# Se w for selecionado, muda seleção
-	beq a0,t0,mudarSelecao				# Se s for selecionado, muda seleção
-	j loopMenu 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
-mudarSelecao:
-	jal changeFrame					# Muda tela
-loopMenu:
-	j selecaoMenuInicial				#Reitera o loop
-	
-menuInicialSelecionado:
-	drawImage(frame_one,backgroundchatBelzebub,0,0)
+	li t2, 10					# Armazena cï¿½digo ascii da tecla enter em t2
+	bne a0,t0, next_one			# Se for w ou s o input, muda a alternativa
 	jal changeFrame
+	li a0, 0
+next_one:
+	bne a0,t1, next_two
+	jal changeFrame
+	li a0, 0
+next_two:
+	beq a0,t2, sair			# Faz o loop enquanto o usuï¿½rio nï¿½o decidir entre as alternativas do menu
+	j selecaoMenuInicial
+sair:
+	drawImage(frame_one,backgroundchatBelzebub,0,0)
+	drawImage(frame_zero,backgroundchatBelzebub,0,0)
+	#jal changeFrame
 	
-
+	li a0,2000		# pausa de 2 segundos
+	li a7,32		
+	ecall	
+	
+	clearFrame(frame_zero)	# apaga os frames
+	clearFrame(frame_one)
 endProgram:  	
 	li a7, 10	# Syscall "exit"
 	ecall
