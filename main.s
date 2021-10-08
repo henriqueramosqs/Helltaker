@@ -72,7 +72,8 @@ cf_fora:
 .include "imagens\sair_alto_1.data"
 .include "imagens\sair_baixo_1.data"
 .include "imagens\backgroundchatBelzebub.data"
-
+.include "imagens\PrimeirochatBelzebub.data"
+.include "imagens\SegundochatBelzebub.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -123,9 +124,13 @@ loopMenu:
 	j selecaoMenuInicial				#Reitera o loop
 	
 menuInicialSelecionado:
-	drawImage(frame_one,backgroundchatBelzebub,0,0)
-	drawImage(frame_zero,backgroundchatBelzebub,0,0)
-	jal changeFrame
+	drawImage(frame_one,backgroundchatBelzebub,0,0)  # Desenha o background do diálogo no frame 1
+	drawImage(frame_zero,backgroundchatBelzebub,0,0) # Desenha o background do diálogo no frame o
+	drawImage(frame_zero,PrimeirochatBelzebub,0,136) # Desenha o primeiro diálogo no frame 0
+	drawImage(frame_one,SegundochatBelzebub,0,136)   # Desenha o segundo diálogo no frame 1
+	jal readKeyBlocking				# Se o usuário apertar alguma tecla, mostra o próximo frame
+	jal changeFrame					
+	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (NO caso, mostra o mapa)
 	
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		

@@ -1,0 +1,8 @@
+Notas:
+	*Henrique
+	-Especificações da caixa de diálogo:
+	 Nome do personagem - cor: #f14b57, fonte: Hoelfler Text, tamanho: 14px, caixa de texto com mesma largura do box,a 7 px do topo do mesmo, justifty-text: 	 centralizado
+	 Texto de diálogo - cor: #fdfeff, fonte: Hoefler Text, tamaho: 11px, caixa de texto com 296px de largura, centralizada no box, a 38 px do topo do mesmo, 	  justify-text: left
+
+Pendências:
+ 
