@@ -37,7 +37,10 @@
 		j drawLoop
 	continueLine:
 		lw t6, 0(t1)			# Carrega pixel da imagem
+		li s0, 0xFF00FF			# Cor Magente (Transparente)
+		beq t6, s0, transparent		# Não desenha o pixel transparente
 		sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
+	transparent:
 		addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
 		addi t1, t1, 4			# Prï¿½ximo pixel da imagem
 		addi t4, t4, 4			# Incrementa iterador			
@@ -74,6 +77,8 @@ cf_fora:
 .include "imagens\backgroundchatBelzebub.data"
 .include "imagens\PrimeirochatBelzebub.data"
 .include "imagens\SegundochatBelzebub.data"
+.include "imagens\hero.data"
+.include "imagens\mapa_1.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -132,9 +137,21 @@ menuInicialSelecionado:
 	jal changeFrame					
 	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (NO caso, mostra o mapa)
 	
+
+# Fase 1 (Teste)
+	clearFrame(frame_zero)
+	clearFrame(frame_one)
+	drawImage(frame_zero, mapa_1, 70, 20)
+	drawImage(frame_one, mapa_1, 70, 20)
+fase_1:
+	jal changeFrame
+	drawImage(frame_zero, hero, 130, 80)
+	drawImage(frame_one, hero, 130, 80)
+	j fase_1
+	
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
-	ecall	
+	ecall
 	
 	clearFrame(frame_zero)	# apaga os frames
 	clearFrame(frame_one)
