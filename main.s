@@ -79,6 +79,7 @@ cf_fora:
 .include "imagens\SegundochatBelzebub.data"
 .include "imagens\hero.data"
 .include "imagens\mapa_1.data"
+.include "imagens\tampao_mapa_1"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -143,11 +144,40 @@ menuInicialSelecionado:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)
 	drawImage(frame_one, mapa_1, 70, 20)
-fase_1:
-	jal changeFrame
 	drawImage(frame_zero, hero, 130, 80)
 	drawImage(frame_one, hero, 130, 80)
+	li a3, 2 	# Marca o posicionamento inincial do eixo y do herói
+	li a4, 3 	# Marca o posicionamento inincial do eixo x do herói
+	
+fase_1:
+	jal readkeyBlocking3
+	beq a0, 'w', moveParaCima
+	j casoA
+moveParaCima:
+	jal moverCima
 	j fase_1
+casoA:
+	beq a0, 'a', moveParaEsquerda
+	j casoS
+moveParaEsquerda:
+	jal moverEsquerda
+	j fase_1	
+casoS:
+	beq a0, 's',moveParaBaixo
+	j casoD
+moveParaBaixo:
+	jal moverBaixo
+	j fase_1
+casoD:
+	beq a0, 'd', moveParaDireita
+	j Fase1_loop
+moveParaDireita:
+	jal moverDireita
+	j fase_1
+Fase1_loop
+ 	j fase_1
+	
+	
 	
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
