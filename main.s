@@ -100,8 +100,6 @@
 		li a1, 0			# Limpa o registro pra retornar
 		li a2, 0			# Limpa o registro pra retornar
 .end_macro
-
-
 .macro	clearFrame(%frame)
 	# Desenha uma figura de qualquer tamanho na tela de bitmap
 	
@@ -189,28 +187,29 @@ menuInicialSelecionado:
 	jal changeFrame					
 	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 	
-
+ 
 # Fase 1 (Teste)
 	clearFrame(frame_zero)
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)
 	drawImage(frame_one, mapa_1, 70, 20)
-	drawImage(frame_zero, hero, 130, 80)
 	drawImage(frame_one, hero, 130, 80)
-	li a3, 2 	# Marca o posicionamento inincial do eixo y do herói
+	li a3, 3 	# Marca o posicionamento inincial do eixo y do herói
 	li a4, 3 	# Marca o posicionamento inincial do eixo x do herói
 	
 fase_1:
 	jal readKeyBlocking
 	li t0, 'w'
 	beq a0, t0 , moveParaCima
-#	j casoA
+	j casoA
 moveParaCima:
 	jal moverCima
 	j fase_1
-#casoA:
-#	beq a0, 'a', moveParaEsquerda
-#	j casoS
+casoA:
+	li t0, 'a'
+	beq a0, t0 , moverEsquerda
+	j fase_1 #Exlcuir isso dps
+	#j casoS
 #moveParaEsquerda:
 #	jal moverEsquerda
 #	j fase_1	
@@ -289,35 +288,68 @@ changeFrame:
 	sw a5, 0(t0)	
 	ret
 	
-colocarHeroi:			# Coloca o herói no frame não mostrado
+#!
+colocarHeroiAcima:			# Coloca o herói no frame não mostrado
 	li t1,70
 	li t2, 20
 	mul t2, t2, a3
-	add t1, t1, t2   
-	addi t1, t1, 20 #t1 armazena a coordenada x para pintar o herói
+	add t1, t1, t2  
 	li t2, 20
 	mul t2, t2,a4	#t2 armazena a coordenada y para pintar o herói
 	xori t4,a5,1   # t4 armazena o frame que *NÃO* está sendo mostrado
-	beq t4,zero, heroiNoFrame0
-	j heroiNoFrame1
-heroiNoFrame0:
+	beq t4,zero, heroiAcimaNoFrame0
+	j heroiAcimaNoFrame1
+heroiAcimaNoFrame0:
 	drawImageNotImm(frame_zero,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
 	ret
-heroiNoFrame1:
+heroiAcimaNoFrame1:
 	drawImageNotImm(frame_one,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
 	ret
 	
 moverCima: 	
-	jal colocarHeroi
+	jal colocarHeroiAcima
 	jal changeFrame
 	xori t4,t4,1 # t4 armazena o frame que *NÃO* está sendo mostrado(posição antiga do herói)
 	addi t2,t2,-20	#t1 já tem a coordenada x de coloca o tampão, t2 agora armazena a coordenada y do tampão
-	beq t4,zero, tampaoNoFrame0
-	j tampaoNoFrame1
-tampaoNoFrame0:
+	beq t4,zero, tampaoCimaNoFrame0
+	j tampaoCimaNoFrame1
+tampaoCimaNoFrame0:
 	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
 	ret
-tampaoNoFrame1:
+tampaoCimaNoFrame1:
+	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+
+colocarHeroiEsquerda:			# Coloca o herói no frame não mostrado
+	li t1,70
+	li t2, 20
+	addi t5,a3,-1
+	mul t2, t2, t5
+	add t1, t1, t2   # t1 armazena a coordenada x para pintar o herói
+	li t2, 20
+	addi t5, a4,1
+	mul t2, t2,t5	#t2 armazena a coordenada y para pintar o herói
+	xori t4,a5,1   # t4 armazena o frame que *NÃO* está sendo mostrado
+	beq t4,zero, heroiEsquerdaNoFrame0
+	j heroiEsquerdaNoFrame1
+heroiEsquerdaNoFrame0:
+	drawImageNotImm(frame_zero,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+heroiEsquerdaNoFrame1:
+	drawImageNotImm(frame_one,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+	
+moverEsquerda: 	
+	jal colocarHeroiEsquerda
+	jal changeFrame
+	xori t4,t4,1 # t4 armazena o frame que *NÃO* está sendo mostrado(posição antiga do herói)
+	addi t1,t1,-20	#t2 já tem a coordenada y de coloca o tampão, t2 agora armazena a coordenada x do tampão
+	beq t4,zero, tampaoEsquerdaNoFrame0
+	j tampaoEsquerdaNoFrame1
+tampaoEsquerdaNoFrame0:
+	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+tampaoEsquerdaNoFrame1:
 	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
 	ret
 	
