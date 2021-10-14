@@ -199,24 +199,51 @@ menuInicialSelecionado:
 	
 fase_1:
 	jal readKeyBlocking
+	jal calculaPosicao
 	li t0, 'w'
 	beq a0, t0 , moveParaCima
 	j casoA
 moveParaCima:
-	jal moverCima
+	addi t2,t2,-20
+	jal desenhaHeroiFrameEscondido
+	jal changeFrame
+	addi t2,t2,20
+	jal desenhaTampaoFrameEscondido
 	j fase_1
 casoA:
 	li t0, 'a'
-	beq a0, t0 , moverEsquerda
-	j fase_1 #Exlcuir isso dps
-	#j casoS
-#moveParaEsquerda:
-#	jal moverEsquerda
-#	j fase_1	
-#casoS:
-#	beq a0, 's',moveParaBaixo
-#	j casoD
-#moveParaBaixo:
+	beq a0, t0 , moveParaEsquerda
+	j casoS
+moveParaEsquerda:
+	addi t1,t1,-20
+	jal desenhaHeroiFrameEscondido
+	jal changeFrame
+	addi t1,t1,20
+	jal desenhaTampaoFrameEscondido
+	j fase_1
+casoS:
+	li t0, 's'
+	beq a0, t0 , moveParaBaixo
+	j casoD
+moveParaBaixo:
+	addi t2,t2,20
+	jal desenhaHeroiFrameEscondido
+	jal changeFrame
+	addi t2,t2,-20
+	jal desenhaTampaoFrameEscondido
+	j fase_1
+casoD:
+	li t0, 'd'
+	beq a0, t0 , moveParaDireita
+	j fase_1
+moveParaDireita:
+	addi t1,t1,20
+	jal desenhaHeroiFrameEscondido
+	jal changeFrame
+	addi t1,t1,-20
+	jal desenhaTampaoFrameEscondido
+	j fase_1
+#mo
 #	jal moverBaixo
 #	j fase_1
 #casoD:
@@ -287,69 +314,40 @@ changeFrame:
 	li t0, 0xFF200604
 	sw a5, 0(t0)	
 	ret
-	
-#!
-colocarHeroiAcima:			# Coloca o herói no frame não mostrado
-	li t1,70
-	li t2, 20
-	mul t2, t2, a3
-	add t1, t1, t2  
-	li t2, 20
-	mul t2, t2,a4	#t2 armazena a coordenada y para pintar o herói
-	xori t4,a5,1   # t4 armazena o frame que *NÃO* está sendo mostrado
-	beq t4,zero, heroiAcimaNoFrame0
-	j heroiAcimaNoFrame1
-heroiAcimaNoFrame0:
-	drawImageNotImm(frame_zero,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
-	ret
-heroiAcimaNoFrame1:
-	drawImageNotImm(frame_one,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
-	ret
-	
-moverCima: 	
-	jal colocarHeroiAcima
-	jal changeFrame
-	xori t4,t4,1 # t4 armazena o frame que *NÃO* está sendo mostrado(posição antiga do herói)
-	addi t2,t2,-20	#t1 já tem a coordenada x de coloca o tampão, t2 agora armazena a coordenada y do tampão
-	beq t4,zero, tampaoCimaNoFrame0
-	j tampaoCimaNoFrame1
-tampaoCimaNoFrame0:
-	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
-	ret
-tampaoCimaNoFrame1:
-	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
-	ret
 
-colocarHeroiEsquerda:			# Coloca o herói no frame não mostrado
-	li t1,70
+calculaPosicao:  # baseado em a3 e a4, armazena em t1 e t2 as coordenadas em pixels da posição atual do personagem
+	li t1,70   
 	li t2, 20
-	addi t5,a3,-1
-	mul t2, t2, t5
-	add t1, t1, t2   # t1 armazena a coordenada x para pintar o herói
+	mul t2, t2, a3 
+	add t1, t1, t2   # t1 armazena a coordenada x
 	li t2, 20
 	addi t5, a4,1
-	mul t2, t2,t5	#t2 armazena a coordenada y para pintar o herói
-	xori t4,a5,1   # t4 armazena o frame que *NÃO* está sendo mostrado
-	beq t4,zero, heroiEsquerdaNoFrame0
-	j heroiEsquerdaNoFrame1
-heroiEsquerdaNoFrame0:
-	drawImageNotImm(frame_zero,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
-	ret
-heroiEsquerdaNoFrame1:
-	drawImageNotImm(frame_one,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
+	mul t2, t2,t5	#t2 armazena a coordenada y 
 	ret
 	
-moverEsquerda: 	
-	jal colocarHeroiEsquerda
-	jal changeFrame
-	xori t4,t4,1 # t4 armazena o frame que *NÃO* está sendo mostrado(posição antiga do herói)
-	addi t1,t1,-20	#t2 já tem a coordenada y de coloca o tampão, t2 agora armazena a coordenada x do tampão
-	beq t4,zero, tampaoEsquerdaNoFrame0
-	j tampaoEsquerdaNoFrame1
-tampaoEsquerdaNoFrame0:
-	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+desenhaHeroiFrameEscondido:
+	xori t4,a5,1
+	beq t4,zero,HeroiFrameZeroEscondido
+	j HeroiFrameOneEscondido
+HeroiFrameZeroEscondido:
+	drawImageNotImm(frame_zero,hero,t1,t2)
 	ret
-tampaoEsquerdaNoFrame1:
-	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+HeroiFrameOneEscondido:
+	drawImageNotImm(frame_one,hero,t1,t2)
 	ret
+
+desenhaTampaoFrameEscondido:
+	xori t4,a5,1
+	beq t4,zero,TampaoFrameZeroEscondido
+	j TampaoFrameOneEscondido
+TampaoFrameZeroEscondido:
+	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)
+	ret
+TampaoFrameOneEscondido:
+	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)
+	ret
+
+	
+	
+
 	
