@@ -51,6 +51,57 @@
 		li a2, 0			# Limpa o registro pra retornar
 .end_macro
 
+
+.macro	drawImageNotImm(%frame,%imagem,%coord_x,%coord_y)
+	# Desenha uma figura de qualquer tamanho na tela de bitmap
+	#
+	# a0: imagem
+	# a1: coordenada x
+	# a2: coordenada y
+		la a0, %imagem
+		lw t0, %frame			# Endereco da memoria vga
+		add a1,zero,%coord_x
+		add a2,zero, %coord_y
+		lw t1, screen_width		# Carrega largura da tela
+		mul t1, t1, a2			# Multiplica largura pela coordenada y
+		add t0, t0, t1			# Adiciona multiplicacao ao endereco do frame
+		add t0, t0, a1			# Adiciona a coordenada x ao endereï¿½o do frame
+		li t2, 4			# Carrega o tamanho de uma word na memï¿½ria
+		rem t1, t0, t2			# Calcula o resto entre o endereï¿½o da vga e 4
+		beqz t1, gridOk			# Se nï¿½o for divisï¿½vel por 4 dara problema de desalinhamento de endereï¿½amento da memï¿½ria
+		sub t0, t0, t1			# Nesse caso, escolhe o endereï¿½o vï¿½lido imediatamente ï¿½ esquerda
+	gridOk:
+		add t1, zero, a0		# Endereï¿½o da imagem
+		lw t2, 0(t1)			# Largura da imagem
+		lw t3, 4(t1)			# Altura da imagem
+		addi t1, t1, 8			# Muda t1 para o primeiro pixel da imagem, apï¿½s informaï¿½ï¿½es de altura e largura
+		li t4, 0			# Iterador de colunas
+		li t5, 0			# Iterador de linhas
+	drawLoop:	
+		beq t5, t3, endDraw		# Verifica se desenhou todas as linhas da imagem
+		blt t4, t2, continueLine	# Se nï¿½o chegou ao final da linha continua desenhando
+		sub t0, t0, t4		# Reinicia o endereï¿½o vga para o primeiro pixel da linha
+		li t4, 0		# Reinicia o iterador de coluna
+		addi t5, t5, 1		# Incrementa iterador de linha
+		addi t0, t0, 320	# Prï¿½xima linha na memï¿½ria vga
+		j drawLoop
+	continueLine:
+		lw t6, 0(t1)			# Carrega pixel da imagem
+		li s0, 0xFF00FF			# Cor Magente (Transparente)
+		beq t6, s0, transparent		# Não desenha o pixel transparente
+		sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
+	transparent:
+		addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
+		addi t1, t1, 4			# Prï¿½ximo pixel da imagem
+		addi t4, t4, 4			# Incrementa iterador			
+		j drawLoop
+	endDraw:
+		li a0, 0			# Limpa o registro pra retornar
+		li a1, 0			# Limpa o registro pra retornar
+		li a2, 0			# Limpa o registro pra retornar
+.end_macro
+
+
 .macro	clearFrame(%frame)
 	# Desenha uma figura de qualquer tamanho na tela de bitmap
 	
@@ -79,7 +130,7 @@ cf_fora:
 .include "imagens\SegundochatBelzebub.data"
 .include "imagens\hero.data"
 .include "imagens\mapa_1.data"
-.include "imagens\tampao_mapa_1"
+.include "imagens\tampao_mapa_1.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -150,32 +201,33 @@ menuInicialSelecionado:
 	li a4, 3 	# Marca o posicionamento inincial do eixo x do herói
 	
 fase_1:
-	jal readkeyBlocking3
-	beq a0, 'w', moveParaCima
-	j casoA
+	jal readKeyBlocking
+	li t0, 'w'
+	beq a0, t0 , moveParaCima
+#	j casoA
 moveParaCima:
 	jal moverCima
 	j fase_1
-casoA:
-	beq a0, 'a', moveParaEsquerda
-	j casoS
-moveParaEsquerda:
-	jal moverEsquerda
-	j fase_1	
-casoS:
-	beq a0, 's',moveParaBaixo
-	j casoD
-moveParaBaixo:
-	jal moverBaixo
-	j fase_1
-casoD:
-	beq a0, 'd', moveParaDireita
-	j Fase1_loop
-moveParaDireita:
-	jal moverDireita
-	j fase_1
-Fase1_loop
- 	j fase_1
+#casoA:
+#	beq a0, 'a', moveParaEsquerda
+#	j casoS
+#moveParaEsquerda:
+#	jal moverEsquerda
+#	j fase_1	
+#casoS:
+#	beq a0, 's',moveParaBaixo
+#	j casoD
+#moveParaBaixo:
+#	jal moverBaixo
+#	j fase_1
+#casoD:
+#	beq a0, 'd', moveParaDireita
+#	j Fase1_loop
+#moveParaDireita:
+#	jal moverDireita
+#	j fase_1
+#Fase1_loop
+# 	j fase_1
 	
 	
 	
@@ -236,3 +288,36 @@ changeFrame:
 	li t0, 0xFF200604
 	sw a5, 0(t0)	
 	ret
+	
+colocarHeroi:			# Coloca o herói no frame não mostrado
+	li t1,70
+	li t2, 20
+	mul t2, t2, a3
+	add t1, t1, t2   
+	addi t1, t1, 20 #t1 armazena a coordenada x para pintar o herói
+	li t2, 20
+	mul t2, t2,a4	#t2 armazena a coordenada y para pintar o herói
+	xori t4,a5,1   # t4 armazena o frame que *NÃO* está sendo mostrado
+	beq t4,zero, heroiNoFrame0
+	j heroiNoFrame1
+heroiNoFrame0:
+	drawImageNotImm(frame_zero,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+heroiNoFrame1:
+	drawImageNotImm(frame_one,hero,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+	
+moverCima: 	
+	jal colocarHeroi
+	jal changeFrame
+	xori t4,t4,1 # t4 armazena o frame que *NÃO* está sendo mostrado(posição antiga do herói)
+	addi t2,t2,-20	#t1 já tem a coordenada x de coloca o tampão, t2 agora armazena a coordenada y do tampão
+	beq t4,zero, tampaoNoFrame0
+	j tampaoNoFrame1
+tampaoNoFrame0:
+	drawImageNotImm(frame_zero,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+tampaoNoFrame1:
+	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)  # coloca o tampão na posição antiga do personagem
+	ret
+	
