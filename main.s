@@ -130,7 +130,7 @@ menuInicialSelecionado:
 	drawImage(frame_one,SegundochatBelzebub,0,136)   # Desenha o segundo diálogo no frame 1
 	jal readKeyBlocking				# Se o usuário apertar alguma tecla, mostra o próximo frame
 	jal changeFrame					
-	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (NO caso, mostra o mapa)
+	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 	
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
