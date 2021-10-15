@@ -205,7 +205,7 @@ moveParaCima:
 	jal changeFrame			# Muda de frame
 	addi t2,t2,20			# Atualiza t2 para posição anterior do personagem
 	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
-	addi a4,-1 			# Atualiza a variável que marca a posição do personagem no eixo y
+	addi a4,a4,-1 			# Atualiza a variável que marca a posição do personagem no eixo y
 	j fase_1			# Reitera o loop
 casoA:
 	li t0, 'a'			# armazena código da letra a em t0
@@ -217,7 +217,7 @@ moveParaEsquerda:
 	jal changeFrame			# Muda de frame
 	addi t1,t1,20			# Atualiza t1 para posição anterior do personagem
 	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
-	addi a3,-1			# Atualiza a variável que marca a posição do personagem no eixo x
+	addi a3,a3,-1			# Atualiza a variável que marca a posição do personagem no eixo x
 	j fase_1			# Reitera o loop
 casoS:
 	li t0, 's'			# armazena código da letra s em t0
@@ -228,8 +228,8 @@ moveParaBaixo:
 	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
 	jal changeFrame			# Muda de frame
 	addi t2,t2,-20			# Atualiza t2 para posição anterior do personagem
-	jal desenhaTampaoFrameEscondid	# "Tampa" o desenho do personagem na posição antiga
-	addi a4,1			# Atualiza a variável que marca a posição do personagem no eixo y
+	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
+	addi a4,a4,1			# Atualiza a variável que marca a posição do personagem no eixo y
 	j fase_1			# Reitera o loop
 casoD:
 	li t0, 'd'			# armazena código da letra d em t0
@@ -241,7 +241,7 @@ moveParaDireita:
 	jal changeFrame			# Muda de frame
 	addi t1,t1,-20			# Atualiza t1 para posição anterior do personagem
 	jal desenhaTampaoFrameEscondido # "Tampa" o desenho do personagem na posição antiga
-	addi a3,1			# Atualiza a variável que marca a posição do personagem no eixo x
+	addi a3,a3,1			# Atualiza a variável que marca a posição do personagem no eixo x
 	j fase_1			# Reitera o loop
 	
 	li a0,2000		# pausa de 2 segundos
