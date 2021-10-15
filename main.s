@@ -187,10 +187,6 @@ menuInicialSelecionado:
 	jal changeFrame					
 	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 	
- 
-# Fase 1 (Teste)
-	clearFrame(frame_zero)
-	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)
 	drawImage(frame_one, mapa_1, 70, 20)
 	drawImage(frame_one, hero, 130, 80)
@@ -198,64 +194,55 @@ menuInicialSelecionado:
 	li a4, 3 	# Marca o posicionamento inincial do eixo x do herói
 	
 fase_1:
-	jal readKeyBlocking
-	jal calculaPosicao
-	li t0, 'w'
-	beq a0, t0 , moveParaCima
-	j casoA
+	jal readKeyBlocking		# lê input do usuário	
+	jal calculaPosicao              # Coloca em t1 e t2 as posicoes x e y em pixels atuais do personagem
+	li t0, 'w'			# armazena código da letra w em t0
+	beq a0, t0 , moveParaCima	# Se input for w, roda o comando de mover para cima
+	j casoA				# Se não for, checa o caso do input ser a
 moveParaCima:
-	addi t2,t2,-20
-	jal desenhaHeroiFrameEscondido
-	jal changeFrame
-	addi t2,t2,20
-	jal desenhaTampaoFrameEscondido
-	j fase_1
+	addi t2,t2,-20			# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	jal desenhaHeroiFrameEscondido  # Desenha herói no frame de trás
+	jal changeFrame			# Muda de frame
+	addi t2,t2,20			# Atualiza t2 para posição anterior do personagem
+	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
+	addi a4,-1 			# Atualiza a variável que marca a posição do personagem no eixo y
+	j fase_1			# Reitera o loop
 casoA:
-	li t0, 'a'
-	beq a0, t0 , moveParaEsquerda
-	j casoS
-moveParaEsquerda:
-	addi t1,t1,-20
-	jal desenhaHeroiFrameEscondido
-	jal changeFrame
-	addi t1,t1,20
-	jal desenhaTampaoFrameEscondido
-	j fase_1
+	li t0, 'a'			# armazena código da letra a em t0
+	beq a0, t0 , moveParaEsquerda	# Se input for a, roda o comando de mover para esquerda
+	j casoS				# Se não for, checa o caso do input ser s
+moveParaEsquerda:	
+	addi t1,t1,-20			# atualiza t1 para próxima posição do personagem (que só se movimenta no eixo x)
+	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
+	jal changeFrame			# Muda de frame
+	addi t1,t1,20			# Atualiza t1 para posição anterior do personagem
+	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
+	addi a3,-1			# Atualiza a variável que marca a posição do personagem no eixo x
+	j fase_1			# Reitera o loop
 casoS:
-	li t0, 's'
-	beq a0, t0 , moveParaBaixo
-	j casoD
+	li t0, 's'			# armazena código da letra s em t0
+	beq a0, t0 , moveParaBaixo	# Se input for s, roda o comando de mover para baixo
+	j casoD				# Se não for, checa o caso do input ser d
 moveParaBaixo:
-	addi t2,t2,20
-	jal desenhaHeroiFrameEscondido
-	jal changeFrame
-	addi t2,t2,-20
-	jal desenhaTampaoFrameEscondido
-	j fase_1
+	addi t2,t2,20			# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
+	jal changeFrame			# Muda de frame
+	addi t2,t2,-20			# Atualiza t2 para posição anterior do personagem
+	jal desenhaTampaoFrameEscondid	# "Tampa" o desenho do personagem na posição antiga
+	addi a4,1			# Atualiza a variável que marca a posição do personagem no eixo y
+	j fase_1			# Reitera o loop
 casoD:
-	li t0, 'd'
-	beq a0, t0 , moveParaDireita
-	j fase_1
+	li t0, 'd'			# armazena código da letra d em t0
+	beq a0, t0 , moveParaDireita	# Se input for d, roda o comando de mover para direita
+	j fase_1			# Se não for, reitera o loop
 moveParaDireita:
-	addi t1,t1,20
-	jal desenhaHeroiFrameEscondido
-	jal changeFrame
-	addi t1,t1,-20
-	jal desenhaTampaoFrameEscondido
-	j fase_1
-#mo
-#	jal moverBaixo
-#	j fase_1
-#casoD:
-#	beq a0, 'd', moveParaDireita
-#	j Fase1_loop
-#moveParaDireita:
-#	jal moverDireita
-#	j fase_1
-#Fase1_loop
-# 	j fase_1
-	
-	
+	addi t1,t1,20			# atualiza t1 para próxima posição do personagem (que só se movimenta no eixo x)
+	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
+	jal changeFrame			# Muda de frame
+	addi t1,t1,-20			# Atualiza t1 para posição anterior do personagem
+	jal desenhaTampaoFrameEscondido # "Tampa" o desenho do personagem na posição antiga
+	addi a3,1			# Atualiza a variável que marca a posição do personagem no eixo x
+	j fase_1			# Reitera o loop
 	
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
@@ -326,7 +313,7 @@ calculaPosicao:  # baseado em a3 e a4, armazena em t1 e t2 as coordenadas em pix
 	ret
 	
 desenhaHeroiFrameEscondido:
-	xori t4,a5,1
+	xori t4,a5,1                               
 	beq t4,zero,HeroiFrameZeroEscondido
 	j HeroiFrameOneEscondido
 HeroiFrameZeroEscondido:
