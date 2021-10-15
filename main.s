@@ -129,12 +129,16 @@ cf_fora:
 .include "imagens\hero.data"
 .include "imagens\mapa_1.data"
 .include "imagens\tampao_mapa_1.data"
+.include "colisao_fase_1.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
 
 frame_zero: .word 0xFF000000
 frame_one:  .word 0xFF100000
+
+hero_x: .byte 3
+hero_y: .byte 3
 
 # Incluindo ecalls customizadas
 #.include "MACROSv21.s"
@@ -144,7 +148,7 @@ frame_one:  .word 0xFF100000
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
-
+j fase_teste
 
 mainLoop:
 
@@ -153,7 +157,7 @@ mainLoop:
 # Menu Background
 	drawImage(frame_zero,helltaker_menu,0,0)		# Desenha plano de fundo no frame_zero
 	drawImage(frame_one,helltaker_menu,0,0)		# Desenhando plano de fundo no frame_one
-# Menu Buttons
+# Menu Botoes
 drawButtons:
 	#jal checkEnd
 	
@@ -186,64 +190,117 @@ menuInicialSelecionado:
 	jal readKeyBlocking				# Se o usuário apertar alguma tecla, mostra o próximo frame
 	jal changeFrame					
 	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
-	
-	drawImage(frame_zero, mapa_1, 70, 20)
-	drawImage(frame_one, mapa_1, 70, 20)
-	drawImage(frame_one, hero, 130, 80)
-	li a3, 3 	# Marca o posicionamento inincial do eixo y do herói
-	li a4, 3 	# Marca o posicionamento inincial do eixo x do herói
-	
+
+# Primeira Fase
+fase_teste:
+	clearFrame(frame_zero)			# Limpa os frames
+	clearFrame(frame_one)
+	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
+	li a3, 5 				# Marca o posicionamento inincial do eixo y do herói
+	li a4, 3 				# Marca o posicionamento inincial do eixo x do herói
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
+
 fase_1:
-	jal readKeyBlocking		# lê input do usuário	
-	jal calculaPosicao              # Coloca em t1 e t2 as posicoes x e y em pixels atuais do personagem
-	li t0, 'w'			# armazena código da letra w em t0
-	beq a0, t0 , moveParaCima	# Se input for w, roda o comando de mover para cima
-	j casoA				# Se não for, checa o caso do input ser a
+	jal readKeyNonBlocking			# lê input do usuário	
+	li t0, 'w'				# armazena código da letra w em t0
+	beq a0, t0 , moveParaCima		# Se input for w, roda o comando de mover para cima
+	li t0, 'a'
+	beq a0, t0, moveParaEsquerda
+	li t0, 's'
+	beq a0, t0, moveParaBaixo
+	li t0, 'd'
+	beq a0, t0, moveParaDireita
+	j fase_1					# Se não for, checa o caso do input ser a
 moveParaCima:
-	addi t2,t2,-20			# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
-	jal desenhaHeroiFrameEscondido  # Desenha herói no frame de trás
-	jal changeFrame			# Muda de frame
-	addi t2,t2,20			# Atualiza t2 para posição anterior do personagem
-	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
-	addi a4,a4,-1 			# Atualiza a variável que marca a posição do personagem no eixo y
-	j fase_1			# Reitera o loop
-casoA:
-	li t0, 'a'			# armazena código da letra a em t0
-	beq a0, t0 , moveParaEsquerda	# Se input for a, roda o comando de mover para esquerda
-	j casoS				# Se não for, checa o caso do input ser s
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a4, a4, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_1
+	li t2, 10
+	mul t2, a4, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, cimaLivre
+	addi a4, a4, 1
+cimaLivre:
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_1
 moveParaEsquerda:	
-	addi t1,t1,-20			# atualiza t1 para próxima posição do personagem (que só se movimenta no eixo x)
-	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
-	jal changeFrame			# Muda de frame
-	addi t1,t1,20			# Atualiza t1 para posição anterior do personagem
-	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
-	addi a3,a3,-1			# Atualiza a variável que marca a posição do personagem no eixo x
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_1
+	li t2, 10
+	mul t2, a4, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, esquerdaLivre
+	addi a3, a3, 1
+esquerdaLivre:
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_1			# Reitera o loop
-casoS:
-	li t0, 's'			# armazena código da letra s em t0
-	beq a0, t0 , moveParaBaixo	# Se input for s, roda o comando de mover para baixo
-	j casoD				# Se não for, checa o caso do input ser d
 moveParaBaixo:
-	addi t2,t2,20			# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
-	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
-	jal changeFrame			# Muda de frame
-	addi t2,t2,-20			# Atualiza t2 para posição anterior do personagem
-	jal desenhaTampaoFrameEscondido	# "Tampa" o desenho do personagem na posição antiga
-	addi a4,a4,1			# Atualiza a variável que marca a posição do personagem no eixo y
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a4, a4, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_1
+	li t2, 10
+	mul t2, a4, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, baixoLivre
+	addi a4, a4, -1
+baixoLivre:
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_1			# Reitera o loop
-casoD:
-	li t0, 'd'			# armazena código da letra d em t0
-	beq a0, t0 , moveParaDireita	# Se input for d, roda o comando de mover para direita
-	j fase_1			# Se não for, reitera o loop
 moveParaDireita:
-	addi t1,t1,20			# atualiza t1 para próxima posição do personagem (que só se movimenta no eixo x)
-	jal desenhaHeroiFrameEscondido	# Desenha herói no frame de trás
-	jal changeFrame			# Muda de frame
-	addi t1,t1,-20			# Atualiza t1 para posição anterior do personagem
-	jal desenhaTampaoFrameEscondido # "Tampa" o desenho do personagem na posição antiga
-	addi a3,a3,1			# Atualiza a variável que marca a posição do personagem no eixo x
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_1
+	li t2, 10
+	mul t2, a4, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, direitaLivre
+	addi a3, a3, -1
+direitaLivre:
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicao
+	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_1			# Reitera o loop
-	
+
+# Fim do Programa
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
 	ecall
