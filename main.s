@@ -142,6 +142,13 @@ cf_fora:
 .include "imagens\esqueleto.data"
 .include "imagens\mapa_1.data"
 .include "imagens\tampao_mapa_1.data"
+.include "imagens\f1_b1.data"
+.include "imagens\f1_b2.data"
+.include "imagens\f1_b3.data"
+.include "imagens\f1_b4.data"
+.include "imagens\fase_1PrimeiraEscolhaErrada.data"
+.include "imagens\fase_1PrimeiraEscolhaCerta.data"
+.include "imagens\Malina_background.data"
 .include "colisao_fase_1.data"
 
 screen_width:	.word 320
@@ -196,6 +203,10 @@ loopMenu:
 	j selecaoMenuInicial				#Reitera o loop
 	
 menuInicialSelecionado:
+	beq a5, zero, usuarioQuerJogar 			# Se usuário river selecionaado 'Novo jogo', começa novo jogo
+	clearFrame(frame_one)				#Se usuário tiver escrito que quer sair, limpa o frame e encerra o programa
+	jal endProgram						
+usuarioQuerJogar:	
 	drawImage(frame_one,backgroundchatBelzebub,0,0)  # Desenha o background do diálogo no frame 1
 	drawImage(frame_zero,backgroundchatBelzebub,0,0) # Desenha o background do diálogo no frame o
 	drawImage(frame_zero,PrimeirochatBelzebub,0,136) # Desenha o primeiro diálogo no frame 0
@@ -210,22 +221,10 @@ fase_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
-	li a4, 0
-	li a3, 0x0038
-	li a0 , 3
-	li a1, 1
-	li a2, 2
-	li a7, 101
-	ecall
-	li a4, 1
-	li a3, 0x0038
-	li a0 , 3
-	li a1, 1
-	li a2, 2
-	li a7, 101
-	ecall
-	li a3, 3 				# Marca o posicionamento inincial do eixo y do herói
-	li a6, 3 				# Marca o posicionamento inincial do eixo x do herói
+	li a3, 3 				# Marca o posicionamento inincial do eixo x do herói
+	li a6, 3 				# Marca o posicionamento inincial do eixo y do herói
+	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
+	li s6, 2			        # Marca o eixo y do ponto que abre a caixa de dialogo
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
 	jal calculaPosicao
@@ -258,6 +257,8 @@ fase_teste:
 #	j desenha_esqueletos
 
 fase_1:
+	beq a3, s3, fase_1DialogCase
+fase_1AfterComparison:
 	jal readKeyNonBlocking			# lê input do usuário	
 	li t0, 'w'				# armazena código da letra w em t0
 	beq a0, t0 , moveParaCima		# Se input for w, roda o comando de mover para cima
@@ -351,7 +352,53 @@ direitaLivre:
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1			# Reitera o loop
+	j fase_1		# Reitera o loop	
+
+fase_1DialogCase:
+	beq a6,s6,fase_1AbreDialogo
+	j fase_1AfterComparison
+fase_1AbreDialogo:
+	drawImage(frame_zero,Malina_background,0,0)		# Desenha a cena de dialogo da Malina no frame 0
+	drawImage(frame_one,Malina_background,0,0)		#Desenha a cena de dialogo da Malina no frame 1
+
+fase_1DrawOptions:
+	
+	
+	drawImage(frame_zero,f1_b1,10,135)	    # Desenha botao de acordo com primeira selecao
+	drawImage(frame_zero,f1_b4,4,185)	   # Desenha botao de acordo com primeira selecao
+	
+	
+	drawImage(frame_one,f1_b2,4,135)	 # Desenha botao de acordo com a segunda selecao
+	drawImage(frame_one,f1_b3,10,185)	 # Desenha botao de acordo com a segunda selecao
+	
+fase_1UserChoice:
+	jal readKeyBlocking				# Lê input do usuário para navegar nas opcoes do dialogo
+	li t0,'w'					# Armazena carcter 'w' em t0
+	li t1,'s'					# Armazena caracter 's' em t1
+	li t2, 10					# Armazena código ascii da tecla enter em t2
+	beq a0,t2,fase1_userChoose			# Se "enter for selecionado, salta o loop dde selecao do dialogo
+	beq a0,t1,fase_1ChangeChoice			# Se w for selecionado, muda seleção
+	beq a0,t0,fase_1ChangeChoice			# Se s for selecionado, muda seleção
+	j fase_1UserChoice				# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
+fase_1ChangeChoice:
+	jal changeFrame					# Muda tela
+fase_1ChoicLoop:
+	j fase_1UserChoice				#Reitera o loop
+
+fase1_userChoose:
+	beq a5,zero,fase_1RightChoice			# Se o usuário fizer a resposta certa, agir como tal
+	jal changeFrame					#Se o usuario fizer a resposta errada, agir como tal
+	drawImage(frame_zero,fase_1PrimeiraEscolhaErrada,0,0)
+	
+	jal readKeyBlocking
+	j fase_teste					# Volta para o setup da fase_1
+fase_1RightChoice:
+	jal changeFrame
+	drawImage(frame_one,fase_1PrimeiraEscolhaCerta,0,0)
+	jal readKeyBlocking				#Espera o usuario digitar algo e vai pra fase 2
+	
+fase_2:
+	
 
 # Fim do Programa
 	li a0,2000		# pausa de 2 segundos
