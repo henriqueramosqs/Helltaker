@@ -38,7 +38,7 @@
 	continueLine:
 		lw t6, 0(t1)			# Carrega pixel da imagem
 		li s0, 0xFF00FF			# Cor Magente (Transparente)
-		beq t6, s0, transparent		# Não desenha o pixel transparente
+		beq t6, s0, transparent		# Nï¿½o desenha o pixel transparente
 		sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
 	transparent:
 		addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
@@ -88,7 +88,7 @@
 	continueLine:
 		lw t6, 0(t1)			# Carrega pixel da imagem
 		li s0, 0xFF00FF			# Cor Magente (Transparente)
-		beq t6, s0, transparent		# Não desenha o pixel transparente
+		beq t6, s0, transparent		# Nï¿½o desenha o pixel transparente
 		sw t6, 0(t0)			# Escreve pixel na memï¿½ria vga
 	transparent:
 		addi t0, t0, 4			# Prï¿½ximo endereï¿½o da memï¿½ria vga
@@ -117,17 +117,8 @@ cf_fora:
 .macro calculaPosicao(%rel_x, %rel_y, %base_x, %base_y)  
 	# Caso geral do calcula posicao
 	mv a0, %rel_x
-	mv a1, %rel_y
-	li t1, %base_x   
-	li t2, %base_y
-	mul t2, a1, t2
-	add a0, t1, t2   # a0 armazena a coordenada x
-	li t2, %base_y
-	addi a1, a1, 1
-	mul a1, a1, t2	# a1 armazena a coordenada y 
-	ret
+	mv a1, %r
 .end_macro
-
 .data
 # Imagens
 .include "imagens\menu_background.data"
@@ -156,9 +147,6 @@ screen_height:	.word 240
 
 frame_zero: .word 0xFF000000
 frame_one:  .word 0xFF100000
-
-hero_x: .byte 3
-hero_y: .byte 3
 
 # Incluindo ecalls customizadas
 #.include "MACROSv21.s"
@@ -189,13 +177,13 @@ drawButtons:
 	drawImage(frame_one,sair_alto_1,80,190)		# Desenha botï¿½o inferior no frame_one
 	
 selecaoMenuInicial:
-	jal readKeyBlocking				# Lê input do usuário para navegar no menu
+	jal readKeyBlocking				# Lï¿½ input do usuï¿½rio para navegar no menu
 	li t0,'w'					# Armazena carcter 'w' em t0
 	li t1,'s'					# Armazena caracter 's' em t1
-	li t2, 10					# Armazena código ascii da tecla enter em t2
+	li t2, 10					# Armazena cï¿½digo ascii da tecla enter em t2
 	beq a0,t2,menuInicialSelecionado		# Se "enter for selecionado, salta o loop do menu
-	beq a0,t1,mudarSelecao				# Se w for selecionado, muda seleção
-	beq a0,t0,mudarSelecao				# Se s for selecionado, muda seleção
+	beq a0,t1,mudarSelecao				# Se w for selecionado, muda seleï¿½ï¿½o
+	beq a0,t0,mudarSelecao				# Se s for selecionado, muda seleï¿½ï¿½o
 	j loopMenu 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
 mudarSelecao:
 	jal changeFrame					# Muda tela
@@ -203,17 +191,17 @@ loopMenu:
 	j selecaoMenuInicial				#Reitera o loop
 	
 menuInicialSelecionado:
-	beq a5, zero, usuarioQuerJogar 			# Se usuário river selecionaado 'Novo jogo', começa novo jogo
-	clearFrame(frame_one)				#Se usuário tiver escrito que quer sair, limpa o frame e encerra o programa
+	beq a5, zero, usuarioQuerJogar 			# Se usuï¿½rio river selecionaado 'Novo jogo', comeï¿½a novo jogo
+	clearFrame(frame_one)				#Se usuï¿½rio tiver escrito que quer sair, limpa o frame e encerra o programa
 	jal endProgram						
 usuarioQuerJogar:	
-	drawImage(frame_one,backgroundchatBelzebub,0,0)  # Desenha o background do diálogo no frame 1
-	drawImage(frame_zero,backgroundchatBelzebub,0,0) # Desenha o background do diálogo no frame o
-	drawImage(frame_zero,PrimeirochatBelzebub,0,136) # Desenha o primeiro diálogo no frame 0
-	drawImage(frame_one,SegundochatBelzebub,0,136)   # Desenha o segundo diálogo no frame 1
-	jal readKeyBlocking				# Se o usuário apertar alguma tecla, mostra o próximo frame
+	drawImage(frame_one,backgroundchatBelzebub,0,0)  # Desenha o background do diï¿½logo no frame 1
+	drawImage(frame_zero,backgroundchatBelzebub,0,0) # Desenha o background do diï¿½logo no frame o
+	drawImage(frame_zero,PrimeirochatBelzebub,0,136) # Desenha o primeiro diï¿½logo no frame 0
+	drawImage(frame_one,SegundochatBelzebub,0,136)   # Desenha o segundo diï¿½logo no frame 1
+	jal readKeyBlocking				# Se o usuï¿½rio apertar alguma tecla, mostra o prï¿½ximo frame
 	jal changeFrame					
-	jal readKeyBlocking				# Se o usuário apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
+	jal readKeyBlocking				# Se o usuï¿½rio apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 
 # Primeira Fase
 fase_teste:
@@ -221,60 +209,33 @@ fase_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
-	li a3, 3 				# Marca o posicionamento inincial do eixo x do herói
-	li a6, 3 				# Marca o posicionamento inincial do eixo y do herói
+	li a3, 3 				# Marca o posicionamento inincial do eixo x do herï¿½i
+	li a6, 3 				# Marca o posicionamento inincial do eixo y do herï¿½i
 	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
 	li s6, 2			        # Marca o eixo y do ponto que abre a caixa de dialogo
 	jal calculaPosicao
-	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
+	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posiï¿½ï¿½o inicial (3, 3)
 	jal calculaPosicao
-	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
-
-# Desenhando os Esqueletos no Mapa
-#	li t0, 0	# Primeiro quadrado do mapa
-#	
-#desenha_esqueletos:
-#	li t1, 89	# Último quadrado do mapa
-#	bgt t0, t1, fase_1
-#	
-#	li t2, 'E'
-#	la t3, colisao_fase_1
-#	add t3, t3, t0
-#	lb t4, 0(t3)
-#	bne t4, t2, nao_desenha_esqueleto
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#nao_desenha_esqueleto:	
-#	addi t0, t0, 1
-#	j desenha_esqueletos
-
+	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posiï¿½ï¿½o inicial (3, 3)
 fase_1:
 	beq a3, s3, fase_1DialogCase
 fase_1AfterComparison:
-	jal readKeyNonBlocking			# lê input do usuário	
-	li t0, 'w'				# armazena código da letra w em t0
+	jal readKeyNonBlocking			# lï¿½ input do usuï¿½rio	
+	li t0, 'w'				# armazena cï¿½digo da letra w em t0
 	beq a0, t0 , moveParaCima		# Se input for w, roda o comando de mover para cima
 	li t0, 'a'
-	beq a0, t0, moveParaEsquerda
+	beq a0, t0, mvPEsq
 	li t0, 's'
 	beq a0, t0, moveParaBaixo
 	li t0, 'd'
 	beq a0, t0, moveParaDireita
-	j fase_1					# Se não for, checa o caso do input ser a
+	j fase_1					# Se nï¿½o for, checa o caso do input ser a
 moveParaCima:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a6, a6, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a6, a6, -1		# atualiza t2 para prï¿½xima posiï¿½ï¿½o do personagem (que sï¿½ se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
@@ -290,12 +251,12 @@ cimaLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_1
-moveParaEsquerda:	
+mvPEsq:	
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a3, a3, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a3, a3, -1		# atualiza t2 para prï¿½xima posiï¿½ï¿½o do personagem (que sï¿½ se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
@@ -303,9 +264,28 @@ moveParaEsquerda:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, esquerdaLivre
+	bne t2, t0, cEsqEsq
 	addi a3, a3, 1
-esquerdaLivre:
+	j esqLivre
+cEsqEsq:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, esqLivre		# Checa se tem esqueleto, se nï¿½o segue normalmente
+	sb t0, -1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
+	
+	jal calculaPosicao					# Desenha o tampï¿½o onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a3, a3, -1						# Sobe uma posiï¿½ï¿½o na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicao
+#	drawImageNotImm(frame_one, esqueleto, t1, t2)	!!!!!!!!!!! ESSA LINHA Dï¿½ ERRO, Nï¿½O SEI BEM PORQUE, MAS SE Nï¿½O TIVER TROCANDO FRAME, Nï¿½O TEM PROBLEMA!!!!!!!!
+	addi a3, a3, 2
+esqLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
@@ -316,7 +296,7 @@ moveParaBaixo:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a6, a6, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a6, a6, 1		# atualiza t2 para prï¿½xima posiï¿½ï¿½o do personagem (que sï¿½ se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
@@ -337,7 +317,7 @@ moveParaDireita:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a3, a3, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a3, a3, 1		# atualiza t2 para prï¿½xima posiï¿½ï¿½o do personagem (que sï¿½ se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
@@ -345,22 +325,33 @@ moveParaDireita:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, direitaLivre
+	bne t2, t0, cEsqDir
 	addi a3, a3, -1
-direitaLivre:
+	j direitaLivre
+cEsqDir:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, direitaLivre		# Checa se tem esqueleto, se nï¿½o segue normalmente
+	sb t0, 1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
+	
+	jal calculaPosicao					# Desenha o tampï¿½o onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
 	jal calculaPosicao
-	drawImageNotImm(frame_zero, hero, t1, t2)
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a3, a3, 1						# Sobe uma posiï¿½ï¿½o na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
 	jal calculaPosicao
-	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1		# Reitera o loop	
-
-fase_1DialogCase:
-	beq a6,s6,fase_1AbreDialogo
-	j fase_1AfterComparison
-fase_1AbreDialogo:
-	drawImage(frame_zero,Malina_background,0,0)		# Desenha a cena de dialogo da Malina no frame 0
+	drawImageNotImm(frame_one, esqueleto, t1, t2)	
+	addi a3, a3, -2
+#ame 0 (Isso aqui rava no negocio, não entendi pq)
 	drawImage(frame_one,Malina_background,0,0)		#Desenha a cena de dialogo da Malina no frame 1
 
+fase_1DialogCase:
+	beq a6,s6,fase_1DrawOptions
+	j fase_1AfterComparison
 fase_1DrawOptions:
 	
 	
@@ -372,13 +363,13 @@ fase_1DrawOptions:
 	drawImage(frame_one,f1_b3,10,185)	 # Desenha botao de acordo com a segunda selecao
 	
 fase_1UserChoice:
-	jal readKeyBlocking				# Lê input do usuário para navegar nas opcoes do dialogo
+	jal readKeyBlocking				# Lï¿½ input do usuï¿½rio para navegar nas opcoes do dialogo
 	li t0,'w'					# Armazena carcter 'w' em t0
 	li t1,'s'					# Armazena caracter 's' em t1
-	li t2, 10					# Armazena código ascii da tecla enter em t2
+	li t2, 10					# Armazena cï¿½digo ascii da tecla enter em t2
 	beq a0,t2,fase1_userChoose			# Se "enter for selecionado, salta o loop dde selecao do dialogo
-	beq a0,t1,fase_1ChangeChoice			# Se w for selecionado, muda seleção
-	beq a0,t0,fase_1ChangeChoice			# Se s for selecionado, muda seleção
+	beq a0,t1,fase_1ChangeChoice			# Se w for selecionado, muda seleï¿½ï¿½o
+	beq a0,t0,fase_1ChangeChoice			# Se s for selecionado, muda seleï¿½ï¿½o
 	j fase_1UserChoice				# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
 fase_1ChangeChoice:
 	jal changeFrame					# Muda tela
@@ -386,7 +377,7 @@ fase_1ChoicLoop:
 	j fase_1UserChoice				#Reitera o loop
 
 fase1_userChoose:
-	beq a5,zero,fase_1RightChoice			# Se o usuário fizer a resposta certa, agir como tal
+	beq a5,zero,fase_1RightChoice			# Se o usuï¿½rio fizer a resposta certa, agir como tal
 	jal changeFrame					#Se o usuario fizer a resposta errada, agir como tal
 	drawImage(frame_zero,fase_1PrimeiraEscolhaErrada,0,0)
 	
@@ -459,7 +450,7 @@ changeFrame:
 	sw a5, 0(t0)	
 	ret
 
-calculaPosicao:  # baseado em a3 e a6, armazena em t1 e t2 as coordenadas em pixels da posição atual do personagem
+calculaPosicao:  # baseado em a3 e a6, armazena em t1 e t2 as coordenadas em pixels da posiï¿½ï¿½o atual do personagem
 	li t1,70   
 	li t2, 20
 	mul t2, t2, a3 
