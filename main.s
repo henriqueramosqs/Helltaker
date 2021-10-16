@@ -114,9 +114,21 @@ cf_loop:
 	j cf_loop
 cf_fora:	
 .end_macro
+.macro calculaPosicao(%rel_x, %rel_y, %base_x, %base_y)  
+	# Caso geral do calcula posicao
+	mv a0, %rel_x
+	mv a1, %rel_y
+	li t1, %base_x   
+	li t2, %base_y
+	mul t2, a1, t2
+	add a0, t1, t2   # a0 armazena a coordenada x
+	li t2, %base_y
+	addi a1, a1, 1
+	mul a1, a1, t2	# a1 armazena a coordenada y 
+	ret
+.end_macro
 
 .data
-
 # Imagens
 .include "imagens\menu_background.data"
 .include "imagens\novo_jogo_alto_1.data"
@@ -127,6 +139,7 @@ cf_fora:
 .include "imagens\PrimeirochatBelzebub.data"
 .include "imagens\SegundochatBelzebub.data"
 .include "imagens\hero.data"
+.include "imagens\esqueleto.data"
 .include "imagens\mapa_1.data"
 .include "imagens\tampao_mapa_1.data"
 .include "colisao_fase_1.data"
@@ -217,6 +230,32 @@ fase_teste:
 	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
+
+# Desenhando os Esqueletos no Mapa
+#	li t0, 0	# Primeiro quadrado do mapa
+#	
+#desenha_esqueletos:
+#	li t1, 89	# Último quadrado do mapa
+#	bgt t0, t1, fase_1
+#	
+#	li t2, 'E'
+#	la t3, colisao_fase_1
+#	add t3, t3, t0
+#	lb t4, 0(t3)
+#	bne t4, t2, nao_desenha_esqueleto
+#		li t3, 10
+#		rem t2, t0, t3
+#		div t3, t0, t3
+#		calculaPosicao(t2, t3, 70, 20)
+#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
+#		li t3, 10
+#		rem t2, t0, t3
+#		div t3, t0, t3
+#		calculaPosicao(t2, t3, 70, 20)
+#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
+#nao_desenha_esqueleto:	
+#	addi t0, t0, 1
+#	j desenha_esqueletos
 
 fase_1:
 	jal readKeyNonBlocking			# lê input do usuário	
