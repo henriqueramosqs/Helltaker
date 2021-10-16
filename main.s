@@ -114,19 +114,6 @@ cf_loop:
 	j cf_loop
 cf_fora:	
 .end_macro
-.macro calculaPosicao(%rel_x, %rel_y, %base_x, %base_y)  
-	# Caso geral do calcula posicao
-	mv a0, %rel_x
-	mv a1, %rel_y
-	li t1, %base_x   
-	li t2, %base_y
-	mul t2, a1, t2
-	add a0, t1, t2   # a0 armazena a coordenada x
-	li t2, %base_y
-	addi a1, a1, 1
-	mul a1, a1, t2	# a1 armazena a coordenada y 
-	ret
-.end_macro
 
 .data
 # Imagens
@@ -149,9 +136,6 @@ screen_height:	.word 240
 
 frame_zero: .word 0xFF000000
 frame_one:  .word 0xFF100000
-
-hero_x: .byte 3
-hero_y: .byte 3
 
 # Incluindo ecalls customizadas
 #.include "MACROSv21.s"
@@ -210,45 +194,45 @@ fase_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
+	
+
+# Desenhando os Esqueletos no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	
+desenha_esqueletos:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, pre_fase_1
+	
+	li t2, 'E'
+	la t3, colisao_fase_1
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, nao_desenha_esqueleto
+		li t3, 10
+		rem a3, s11, t3
+		div a4, s11, t3
+		jal calculaPosicao
+		drawImageNotImm(frame_zero, esqueleto, t1, t2)
+		jal calculaPosicao
+		drawImageNotImm(frame_one, esqueleto, t1, t2)
+nao_desenha_esqueleto:	
+	addi s11, s11, 1
+	j desenha_esqueletos
+
+pre_fase_1:
 	li a3, 5 				# Marca o posicionamento inincial do eixo y do herói
 	li a4, 3 				# Marca o posicionamento inincial do eixo x do herói
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
-
-# Desenhando os Esqueletos no Mapa
-#	li t0, 0	# Primeiro quadrado do mapa
-#	
-#desenha_esqueletos:
-#	li t1, 89	# Último quadrado do mapa
-#	bgt t0, t1, fase_1
-#	
-#	li t2, 'E'
-#	la t3, colisao_fase_1
-#	add t3, t3, t0
-#	lb t4, 0(t3)
-#	bne t4, t2, nao_desenha_esqueleto
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#nao_desenha_esqueleto:	
-#	addi t0, t0, 1
-#	j desenha_esqueletos
-
 fase_1:
+	
 	jal readKeyNonBlocking			# lê input do usuário	
 	li t0, 'w'				# armazena código da letra w em t0
 	beq a0, t0 , moveParaCima		# Se input for w, roda o comando de mover para cima
 	li t0, 'a'
-	beq a0, t0, moveParaEsquerda
+	beq a0, t0, mvPEsq
 	li t0, 's'
 	beq a0, t0, moveParaBaixo
 	li t0, 'd'
@@ -259,23 +243,42 @@ moveParaCima:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a4, a4, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
-	li t0, 'X'
-	la t1, colisao_fase_1
-	li t2, 10
-	mul t2, a4, t2
-	add t2, t2, a3
-	add t1, t1, t2
-	lb t2, 0(t1)
-	bne t2, t0, cimaLivre
-	addi a4, a4, 1
+	addi a4, a4, -1				# Atualiza posição do personagem (Eixo Y)
+	li t0, 'X'				# X representa obstáculos fixos e limites do mapa
+	la t1, colisao_fase_1			# Carrega o endereço inicial do arquivo de obstáculos e inimigos
+	li t2, 10				# Carrega largura da matriz do mapa da fase
+	mul t2, a4, t2				# Encontra posição horizontal na matriz
+	add t2, t2, a3				# Encontra posição vertical na matriz
+	add t1, t1, t2				# Muda para o endereço correspondente no arquivo de obstáculos e inimigos
+	lb t2, 0(t1)				# Carrega caractere do arquivo de obstáculos e inimigos
+	bne t2, t0, checaEsqueletoCima		# Checa se é uma parede ou buraco, se não vai pra checagem se é esqueleto
+	addi a4, a4, 1				# Se for parede ou buraco, corrige a posição do personagem
+	j cimaLivre				# Pula para o fim da checagem
+checaEsqueletoCima:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, cimaLivre			# Checa se tem esqueleto, se não segue normalmente
+	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	jal calculaPosicao					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a4, a4, -1						# Sobe uma posição na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, esqueleto, t1, t2)	
+	addi a4, a4, 2						# Corrige a posição de volta para o personagem
 cimaLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_1
-moveParaEsquerda:	
+mvPEsq:	
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
@@ -288,9 +291,28 @@ moveParaEsquerda:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, esquerdaLivre
+	bne t2, t0, cEsqEsq
 	addi a3, a3, 1
-esquerdaLivre:
+	j esqLivre
+cEsqEsq:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, esqLivre		# Checa se tem esqueleto, se não segue normalmente
+	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	jal calculaPosicao					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a3, a3, -1						# Sobe uma posição na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicao
+#	drawImageNotImm(frame_one, esqueleto, t1, t2)	!!!!!!!!!!! ESSA LINHA DÁ ERRO, NÃO SEI BEM PORQUE, MAS SE NÃO TIVER TROCANDO FRAME, NÃO TEM PROBLEMA!!!!!!!!
+	addi a3, a3, 2
+esqLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
@@ -309,8 +331,27 @@ moveParaBaixo:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, baixoLivre
+	bne t2, t0, checaEsqueletoBaixo
 	addi a4, a4, -1
+	j baixoLivre
+checaEsqueletoBaixo:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, baixoLivre			# Checa se tem esqueleto, se não segue normalmente
+	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado abaixo para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	jal calculaPosicao					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a4, a4, 1						# Desce uma posição na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	addi a4, a4, -2
 baixoLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
@@ -330,8 +371,27 @@ moveParaDireita:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, direitaLivre
+	bne t2, t0, cEsqDir
 	addi a3, a3, -1
+	j direitaLivre
+cEsqDir:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, direitaLivre		# Checa se tem esqueleto, se não segue normalmente
+	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	jal calculaPosicao					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	
+	addi a3, a3, 1						# Sobe uma posição na matriz
+	jal calculaPosicao					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicao
+	drawImageNotImm(frame_one, esqueleto, t1, t2)	
+	addi a3, a3, -2
 direitaLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
