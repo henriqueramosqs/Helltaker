@@ -197,8 +197,22 @@ fase_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
-	li a3, 5 				# Marca o posicionamento inincial do eixo y do herói
-	li a4, 3 				# Marca o posicionamento inincial do eixo x do herói
+	li a4, 0
+	li a3, 0x0038
+	li a0 , 3
+	li a1, 1
+	li a2, 2
+	li a7, 101
+	ecall
+	li a4, 1
+	li a3, 0x0038
+	li a0 , 3
+	li a1, 1
+	li a2, 2
+	li a7, 101
+	ecall
+	li a3, 3 				# Marca o posicionamento inincial do eixo y do herói
+	li a6, 3 				# Marca o posicionamento inincial do eixo x do herói
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posição inicial (3, 3)
 	jal calculaPosicao
@@ -220,16 +234,16 @@ moveParaCima:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a4, a4, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a6, a6, -1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
-	mul t2, a4, t2
+	mul t2, a6, t2
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
 	bne t2, t0, cimaLivre
-	addi a4, a4, 1
+	addi a6, a6, 1
 cimaLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
@@ -245,7 +259,7 @@ moveParaEsquerda:
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
-	mul t2, a4, t2
+	mul t2, a6, t2
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
@@ -262,16 +276,16 @@ moveParaBaixo:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
-	addi a4, a4, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
+	addi a6, a6, 1		# atualiza t2 para próxima posição do personagem (que só se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
-	mul t2, a4, t2
+	mul t2, a6, t2
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
 	bne t2, t0, baixoLivre
-	addi a4, a4, -1
+	addi a6, a6, -1
 baixoLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
@@ -287,7 +301,7 @@ moveParaDireita:
 	li t0, 'X'
 	la t1, colisao_fase_1
 	li t2, 10
-	mul t2, a4, t2
+	mul t2, a6, t2
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
@@ -359,13 +373,13 @@ changeFrame:
 	sw a5, 0(t0)	
 	ret
 
-calculaPosicao:  # baseado em a3 e a4, armazena em t1 e t2 as coordenadas em pixels da posição atual do personagem
+calculaPosicao:  # baseado em a3 e a6, armazena em t1 e t2 as coordenadas em pixels da posição atual do personagem
 	li t1,70   
 	li t2, 20
 	mul t2, t2, a3 
 	add t1, t1, t2   # t1 armazena a coordenada x
 	li t2, 20
-	addi t5, a4,1
+	addi t5, a6,1
 	mul t2, t2,t5	#t2 armazena a coordenada y 
 	ret
 	

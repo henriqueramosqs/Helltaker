@@ -5,9 +5,3 @@ Notas:
 	 Texto de diálogo - cor: #fdfeff, fonte: Hoefler Text, tamaho: 11px, caixa de texto com 296px de largura, centralizada no box, a 38 px do topo do mesmo, 	  justify-text: left
 
 Pendências:
-	*Henrique
-	-Posição anterior do personagem não está sendo coberta por tampão
-	-Funções semelhantes não estão agrupadas
-	-Posição atual do herói não está sendo atualizada
-	-O loop da fase_1 não está sendo reiterado
- 
