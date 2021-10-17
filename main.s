@@ -149,6 +149,8 @@ cf_fora:
 .include "imagens\fase_1PrimeiraEscolhaCerta.data"
 .include "imagens\Malina_background.data"
 .include "imagens\tampao_mapa_1.data"
+.include "imagens\pedra.data"
+.include "imagens\malina.data"
 .include "colisao_fase_1.data"
 
 screen_width:	.word 320
@@ -217,6 +219,14 @@ fase1_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
+	drawImage(frame_zero, pedra, 130, 100)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, pedra,130, 100)	# Desenha o mapa no Frame 1
+	drawImage(frame_zero, pedra, 170, 80)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, pedra,170, 80)	# Desenha o mapa no Frame 1
+	drawImage(frame_zero, pedra, 190, 80)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, pedra,190, 80)	# Desenha o mapa no Frame 1
+	drawImage(frame_zero, malina, 170, 40)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, malina,170, 40)	# Desenha o mapa no Frame 1
 	li a3, 3 				# Marca o posicionamento inincial do eixo x do her?i
 	li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
 	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
