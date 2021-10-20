@@ -141,6 +141,7 @@ cf_fora:
 .include "imagens\hero.data"
 .include "imagens\esqueleto.data"
 .include "imagens\mapa_1.data"
+.include "imagens\mapa2.data"
 .include "imagens\f1_b1.data"
 .include "imagens\f1_b2.data"
 .include "imagens\f1_b3.data"
@@ -170,7 +171,7 @@ hero_y: .byte 3
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
-j fase1_teste
+j fase2_teste
 
 mainLoop:
 
@@ -401,7 +402,16 @@ fase_1RightChoice:
 	jal changeFrame
 	jal readKeyBlocking
 	
-fase_2:
+# Primeira Fase
+fase2_teste:
+	clearFrame(frame_zero)			# Limpa os frames
+	clearFrame(frame_one)
+	drawImage(frame_zero, mapa2, 70, 20)	# Desenha o mapa no Frame 0
+	drawImage(frame_one, mapa2, 70, 20)	# Desenha o mapa no Frame 1
+	li a3, 1				# Marca o posicionamento inincial do eixo x do her?i
+	li a6, 6 				# Marca o posicionamento inincial do eixo y do her?i
+	li s3, 7				# Marca o eixo x do ponto que abre a caixa de dialogo
+	li s6, 6			        # Marca o eixo y do ponto que abre a caixa de dialogo
 # Fim do Programa
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		

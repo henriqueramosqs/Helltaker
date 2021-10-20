@@ -5,3 +5,14 @@ Notas:
 	 Texto de diálogo - cor: #fdfeff, fonte: Hoefler Text, tamaho: 11px, caixa de texto com 296px de largura, centralizada no box, a 38 px do topo do mesmo, 	  justify-text: left
 
 Pendências:
+	*Henrique
+	
+	-Tampões deixam marcas no chão
+
+	-Falta nteração  com os blocos (um dos requisitos do projeto)
+
+	-Limitação dos blocos -ele tá passando reto (acho que é só editar aquele arquivo de colisões)
+
+	-Contador de movimentos (não está nos requisitos do projeto)
+
+	-Inidcador de fase entre uma fase e outra
