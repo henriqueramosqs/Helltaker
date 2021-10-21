@@ -244,31 +244,6 @@ fase1_teste:
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
 
-# Desenhando os Esqueletos no Mapa
-#	li t0, 0	# Primeiro quadrado do mapa
-#	
-#desenha_esqueletos:
-#	li t1, 89	# ?ltimo quadrado do mapa
-#	bgt t0, t1, fase_1
-#	
-#	li t2, 'E'
-#	la t3, colisao_fase_1
-#	add t3, t3, t0
-#	lb t4, 0(t3)
-#	bne t4, t2, nao_desenha_esqueleto
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#		li t3, 10
-#		rem t2, t0, t3
-#		div t3, t0, t3
-#		calculaPosicao(t2, t3, 70, 20)
-#		drawImageNotImm(frame_zero, esqueleto, a0, a1)
-#nao_desenha_esqueleto:	
-#	addi t0, t0, 1
-#	j desenha_esqueletos
 
 fase_1:
 	beq a3, s3, fase_1DialogCase
@@ -423,6 +398,29 @@ fase2_teste:
 	drawImage(frame_one, pedra,174, 140)	
 	drawImage(frame_zero, pedra, 214, 140)	
 	drawImage(frame_one, pedra,214, 140)		
+	# Desenhando os Esqueletos no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+
+desenha_esqueletos:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, plotaHeroi2
+
+	li t2, 'E'
+	la t3, colisao_fase_2
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, nao_desenha_esqueleto
+		li t3, 10
+		rem a3, s11, t3
+		div a6, s11, t3
+		jal calculaPosicaoFase2
+		drawImageNotImm(frame_zero, esqueleto, t1, t2)
+		jal calculaPosicaoFase2
+		drawImageNotImm(frame_one, esqueleto, t1, t2)
+nao_desenha_esqueleto:	
+	addi s11, s11, 1
+	j desenha_esqueletos
+plotaHeroi2:
 	li a3, 1				# Marca o posicionamento inincial do eixo x do her?i
 	li a6, 6 				# Marca o posicionamento inincial do eixo y do her?i
 	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
@@ -458,8 +456,36 @@ moveParaCima2:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, cimaLivre2
+	bne t2, t0, checaEsqueletoCima
 	addi a6, a6, 1
+checaEsqueletoCima:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, cimaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueleto		# Se esweuelto estiver encurralado, ele morre
+	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+
+	addi a6, a6, -1						# Sobe uma posição na matriz
+	jal calculaPosicaoFase2					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, esqueleto, t1, t2)	
+	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+MorteDoEsqueleto:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)	
 cimaLivre2:
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_zero, hero, t1, t2)
