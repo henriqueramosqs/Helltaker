@@ -139,6 +139,7 @@ cf_fora:
 .include "imagens\PrimeirochatBelzebub.data"
 .include "imagens\SegundochatBelzebub.data"
 .include "imagens\hero.data"
+.include "imagens\hero_Kick.data"
 .include "imagens\esqueleto.data"
 .include "imagens\mapa_1.data"
 .include "imagens\mapa2.data"
@@ -161,6 +162,7 @@ cf_fora:
 .include "imagens\malina.data"
 .include "colisao_fase_1.data"
 .include "colisao_fase_2.data"
+
 screen_width:	.word 320
 screen_height:	.word 240
 
@@ -384,7 +386,7 @@ fase_1RightChoice:
 	jal changeFrame
 	jal readKeyBlocking
 	
-# Primeira Fase
+# Segunda Fase
 fase2_teste:
 	clearFrame(frame_zero)			# Limpa os frames
 	clearFrame(frame_one)
@@ -486,6 +488,29 @@ MorteDoEsqueleto:
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)	
+	
+	jal calculaPosicaoFase2
+		
+	la a0, hero_Kick
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	
+	la a0, hero_Kick
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	li a0,100		# pausa de 1/10 segundos
+	li a7,32		
+	ecall
+
 cimaLivre2:
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_zero, hero, t1, t2)
@@ -512,7 +537,7 @@ esquerdaLivre2:
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_2			# Reitera o loop
+	j fase_2	 		# Reitera o loop
 moveParaBaixo2:
 	jal calculaPosicaoFase2
 
@@ -613,6 +638,27 @@ MorteDoEsqueletoBx:
 	add a2,zero, t2
 
 	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, hero_Kick
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	
+	la a0, hero_Kick
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	li a0,100		# pausa de 1/10 segundos
+	li a7,32		
+	ecall
 BaixoLivre2:
 	jal calculaPosicaoFase2
 
@@ -730,6 +776,28 @@ MorteDoEsqueletoDir:
 	add a2,zero, t2
 
 	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, hero_Kick
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	
+	la a0, hero_Kick
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	
+	li a0,100		# pausa de 1/10 segundos
+	li a7,32		
+	ecall
+	
 DireitaLivre2:
 	jal calculaPosicaoFase2
 
@@ -941,4 +1009,4 @@ endDraw:
 	li a2, 0			# Limpa o registro pra retornar
 	ret
 
-	
+kick:
