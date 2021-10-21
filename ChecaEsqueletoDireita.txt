@@ -1,0 +1,50 @@
+moveParaDireita2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, checaEsqueletoDireita
+	addi a3, a3, 1
+checaEsqueletoDireita:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, DireitaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, 11(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoDir		# Se esweuelto estiver encurralado, ele morre
+	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+
+	addi a3, a3, 1						# Sobe uma posição na matriz
+	jal calculaPosicaoFase2					# Desenha o esqueleto
+	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, esqueleto, t1, t2)	
+	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+MorteDoEsqueletoDir:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)	
+DireitaLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2
+moveParaEsquerda2:
