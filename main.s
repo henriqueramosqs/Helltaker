@@ -146,14 +146,21 @@ cf_fora:
 .include "imagens\f1_b2.data"
 .include "imagens\f1_b3.data"
 .include "imagens\f1_b4.data"
+.include "imagens\f2_b1.data"
+.include "imagens\f2_b2.data"
+.include "imagens\f2_b3.data"
+.include "imagens\f2_b4.data"
 .include "imagens\fase_1PrimeiraEscolhaErrada.data"
 .include "imagens\fase_1PrimeiraEscolhaCerta.data"
+.include "imagens\Justice_firstWrongAnswern.data"
+.include "imagens\Justice_firstRightAnswern.data"
 .include "imagens\Malina_background.data"
+.include "imagens\Justice_background.data"
 .include "imagens\tampao_mapa_1.data"
 .include "imagens\pedra.data"
 .include "imagens\malina.data"
 .include "colisao_fase_1.data"
-
+.include "colisao_fase_2.data"
 screen_width:	.word 320
 screen_height:	.word 240
 
@@ -408,10 +415,162 @@ fase2_teste:
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa2, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa2, 70, 20)	# Desenha o mapa no Frame 1
+	drawImage(frame_zero, pedra, 174, 100)	
+	drawImage(frame_one, pedra,174, 100)	
+	drawImage(frame_zero, pedra, 194, 100)	#Desenha blocos nos dois frames
+	drawImage(frame_one, pedra,194, 100)
+	drawImage(frame_zero, pedra, 174, 140)	
+	drawImage(frame_one, pedra,174, 140)	
+	drawImage(frame_zero, pedra, 214, 140)	
+	drawImage(frame_one, pedra,214, 140)		
 	li a3, 1				# Marca o posicionamento inincial do eixo x do her?i
 	li a6, 6 				# Marca o posicionamento inincial do eixo y do her?i
-	li s3, 7				# Marca o eixo x do ponto que abre a caixa de dialogo
-	li s6, 6			        # Marca o eixo y do ponto que abre a caixa de dialogo
+	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
+	li s6, 7			        # Marca o eixo y do ponto que abre a caixa de dialogo
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
+
+fase_2:
+	beq a3, s3, fase_2DialogCase
+fase_2AfterComparison:
+	jal readKeyNonBlocking			# l? input do usu?rio	
+	li t0, 'w'				# armazena c?digo da letra w em t0
+	beq a0, t0 , moveParaCima2		# Se input for w, roda o comando de mover para cima
+	li t0, 'a'
+	beq a0, t0, moveParaEsquerda2
+	li t0, 's'
+	beq a0, t0, moveParaBaixo2
+	li t0, 'd'
+	beq a0, t0, moveParaDireita2
+	j fase_2					# Se n?o for, checa o caso do input ser a
+moveParaCima2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a6, a6, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, cimaLivre2
+	addi a6, a6, 1
+cimaLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2
+moveParaEsquerda2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, esquerdaLivre2
+	addi a3, a3, 1
+esquerdaLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2			# Reitera o loop
+moveParaBaixo2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a6, a6, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, baixoLivre2
+	addi a6, a6, -1
+baixoLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2			# Reitera o loop
+moveParaDireita2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, direitaLivre2
+	addi a3, a3, -1
+direitaLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2			# Reitera o loop
+fase_2DialogCase:
+	beq a6,s6,fase_2AbreDialogo
+	j fase_2AfterComparison
+fase_2AbreDialogo:
+	drawImage(frame_zero,Justice_background,0,0)		# Desenha plano de fundo no frame_zero
+	drawImage(frame_one,Justice_background,0,0)		# Desenhando plano de fundo no frame_one
+
+fase_2DrawOptions:
+	
+	
+	drawImage(frame_zero,f2_b2,4,135)	    # Desenha botao superior no frame_zero
+	drawImage(frame_zero,f2_b1,4,185)		    # Desenha botao inferior no frame_zero
+	
+	
+	drawImage(frame_one,f2_b3,4,135)	 # Desenha botao superior no frame_one
+	drawImage(frame_one,f2_b4,4,185)		# Desenha bota0 inferior no frame_one
+	
+fase_2UserChoice:
+	jal readKeyBlocking				# L? input do usu?rio para navegar no menu
+	li t0,'w'					# Armazena carcter 'w' em t0
+	li t1,'s'					# Armazena caracter 's' em t1
+	li t2, 10					# Armazena c?digo ascii da tecla enter em t2
+	beq a0,t2,fase2_userChoose				# Se "enter for selecionado, salta o loop do menu
+	beq a0,t1,fase_2ChangeChoice				# Se w for selecionado, muda sele??o
+	beq a0,t0,fase_2ChangeChoice			# Se s for selecionado, muda sele??o
+	j loopMenu 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
+fase_2ChangeChoice:
+	jal changeFrame					# Muda tela
+fase_2ChoicLoop:
+	j fase_2UserChoice				#Reitera o loop
+
+fase2_userChoose:
+	bne a5,zero,fase_2RightChoice
+	drawImage(frame_zero,Justice_firstWrongAnswern,0,0)
+	jal changeFrame
+	jal readKeyBlocking
+	j fase2_teste
+fase_2RightChoice:
+	drawImage(frame_zero,Justice_firstRightAnswern,0,0)
+	jal changeFrame
+	jal readKeyBlocking
+
 # Fim do Programa
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
@@ -473,6 +632,16 @@ changeFrame:
 
 calculaPosicao:  # baseado em a3 e a4, armazena em t1 e t2 as coordenadas em pixels da posi??o atual do personagem
 	li t1,70   
+	li t2, 20
+	mul t2, t2, a3 
+	add t1, t1, t2   # t1 armazena a coordenada x
+	li t2, 20
+	addi t5, a6,1
+	mul t2, t2,t5	#t2 armazena a coordenada y 
+	ret
+	
+calculaPosicaoFase2:  # baseado em a3 e a4, armazena em t1 e t2 as coordenadas em pixels da posi??o atual do personagem
+	li t1,74
 	li t2, 20
 	mul t2, t2, a3 
 	add t1, t1, t2   # t1 armazena a coordenada x
