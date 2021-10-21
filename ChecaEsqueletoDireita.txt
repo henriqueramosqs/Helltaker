@@ -48,3 +48,27 @@ DireitaLivre2:
 	drawImageNotImm(frame_one, hero, t1, t2)
 	j fase_2
 moveParaEsquerda2:
+-------------------------------------------
+Original:
+
+moveParaDireita2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, direitaLivre2
+	addi a3, a3, -1
+direitaLivre2:
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_zero, hero, t1, t2)
+	jal calculaPosicaoFase2
+	drawImageNotImm(frame_one, hero, t1, t2)
+	j fase_2			# Reitera o loop

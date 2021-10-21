@@ -515,10 +515,26 @@ esquerdaLivre2:
 	j fase_2			# Reitera o loop
 moveParaBaixo2:
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
+
 	addi a6, a6, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+
 	li t0, 'X'
 	la t1, colisao_fase_2
 	li t2, 10
@@ -526,23 +542,116 @@ moveParaBaixo2:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, baixoLivre2
+	bne t2, t0, checaEsqueletoBaixo
 	addi a6, a6, -1
-baixoLivre2:
+
+checaEsqueletoBaixo:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, BaixoLivre2		# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoBx		# Se esweuelto estiver encurralado, ele morre
+	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, hero, t1, t2)
+	
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
+	addi a6, a6, 1						# Sobe uma posição na matriz
+	jal calculaPosicaoFase2					# Desenha o esqueleto
+
+	la a0, esqueleto
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_2			# Reitera o loop
-	
-	#######################################
-	
+
+	la a0, esqueleto
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
+	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+MorteDoEsqueletoBx:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm	
+
+	jal calculaPosicaoFase2
+
+	la a0, tampao_mapa_1
+	lw t0, frame_one			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+BaixoLivre2:
+	jal calculaPosicaoFase2
+
+	la a0, hero
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm	
+	jal calculaPosicaoFase2
+	la a0, hero
+	lw t0, frame_one			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+	j fase_2
 moveParaDireita2:
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
+
 	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+
 	li t0, 'X'
 	la t1, colisao_fase_2
 	li t2, 10
@@ -551,45 +660,94 @@ moveParaDireita2:
 	add t1, t1, t2
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoDireita
-	addi a3, a3, 1
+	addi a3, a3, -1
+
 checaEsqueletoDireita:
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, DireitaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, DireitaLivre2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
-	lb t3, 11(t1)				#Armazena o quadrado acima do esqueleto
+	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir		# Se esweuelto estiver encurralado, ele morre
-	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
-	
-	
+
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	#drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
 	
-	#Pedaço do códio que dá problema. Descomente e veja a merda aconntecer#
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	addi a3, a3, 1						# Sobe uma posição na matriz
 	jal calculaPosicaoFase2					# Desenha o esqueleto
-	#drawImageNotImm(frame_zero, esqueleto, t1, t2)	
+
+	la a0, esqueleto
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	jal calculaPosicaoFase2
-	#drawImageNotImm(frame_one, esqueleto, t1, t2)	
+
+	la a0, esqueleto
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
+
 	addi a3, a3, -1						# Corrige a posição de volta para o personagem
 MorteDoEsqueletoDir:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm	
+
 	jal calculaPosicaoFase2
-	#drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+
+	la a0, tampao_mapa_1
+	lw t0, frame_one			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
 DireitaLivre2:
 	jal calculaPosicaoFase2
-	#drawImageNotImm(frame_zero, hero, t1, t2)
+
+	la a0, hero
+	lw t0, frame_zero			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm	
 	jal calculaPosicaoFase2
-	#drawImageNotImm(frame_one, hero, t1, t2)
+	la a0, hero
+	lw t0, frame_one			
+	add a1,zero,t1
+	add a2,zero, t2
+
+	jal drawImageNotImm
 	j fase_2
 
-	########################################
 	
 fase_2DialogCase:
 	beq a6,s6,fase_2AbreDialogo
@@ -733,8 +891,54 @@ TampaoFrameZeroEscondido:
 TampaoFrameOneEscondido:
 	drawImageNotImm(frame_one,tampao_mapa_1,t1,t2)
 	ret
-
 	
-	
+drawImageNotImm:				#Procedimento do drawImage
+# Desenha uma figura de qualquer tamanho na tela de bitmap
+#
+# a0: imagem
+# a1: coordenada x
+# a2: coordenada y
+	#la a0, %imagem
+	#lw t0, %frame			# Endereco da memoria vga
+	#add a1,zero,%coord_x
+	#add a2,zero, %coord_y
+	lw t1, screen_width		# Carrega largura da tela
+	mul t1, t1, a2			# Multiplica largura pela coordenada y
+	add t0, t0, t1			# Adiciona multiplicacao ao endereco do frame
+	add t0, t0, a1			# Adiciona a coordenada x ao endere?o do frame
+	li t2, 4			# Carrega o tamanho de uma word na mem?ria
+	rem t1, t0, t2			# Calcula o resto entre o endere?o da vga e 4
+	beqz t1, gridOk			# Se n?o for divis?vel por 4 dara problema de desalinhamento de endere?amento da mem?ria
+	sub t0, t0, t1			# Nesse caso, escolhe o endere?o v?lido imediatamente ? esquerda
+gridOk:
+	add t1, zero, a0		# Endere?o da imagem
+	lw t2, 0(t1)			# Largura da imagem
+	lw t3, 4(t1)			# Altura da imagem
+	addi t1, t1, 8			# Muda t1 para o primeiro pixel da imagem, ap?s informa??es de altura e largura
+	li t4, 0			# Iterador de colunas
+	li t5, 0			# Iterador de linhas
+drawLoop:	
+	beq t5, t3, endDraw		# Verifica se desenhou todas as linhas da imagem
+	blt t4, t2, continueLine	# Se n?o chegou ao final da linha continua desenhando
+	sub t0, t0, t4		# Reinicia o endere?o vga para o primeiro pixel da linha
+	li t4, 0		# Reinicia o iterador de coluna
+	addi t5, t5, 1		# Incrementa iterador de linha
+	addi t0, t0, 320	# Pr?xima linha na mem?ria vga
+	j drawLoop
+continueLine:
+	lw t6, 0(t1)			# Carrega pixel da imagem
+	li s0, 0xFF00FF			# Cor Magente (Transparente)
+	beq t6, s0, transparent		# N?o desenha o pixel transparente
+	sw t6, 0(t0)			# Escreve pixel na mem?ria vga
+transparent:
+	addi t0, t0, 4			# Pr?ximo endere?o da mem?ria vga
+	addi t1, t1, 4			# Pr?ximo pixel da imagem
+	addi t4, t4, 4			# Incrementa iterador			
+	j drawLoop
+endDraw:
+	li a0, 0			# Limpa o registro pra retornar
+	li a1, 0			# Limpa o registro pra retornar
+	li a2, 0			# Limpa o registro pra retornar
+	ret
 
 	
