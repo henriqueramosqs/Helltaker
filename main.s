@@ -114,19 +114,6 @@ cf_loop:
 	j cf_loop
 cf_fora:	
 .end_macro
-.macro calculaPosicao(%rel_x, %rel_y, %base_x, %base_y)  
-	# Caso geral do calcula posicao
-	mv a0, %rel_x
-	mv a1, %rel_y
-	li t1, %base_x   
-	li t2, %base_y
-	mul t2, a1, t2
-	add a0, t1, t2   # a0 armazena a coordenada x
-	li t2, %base_y
-	addi a1, a1, 1
-	mul a1, a1, t2	# a1 armazena a coordenada y 
-	ret
-.end_macro
 
 .data
 # Imagens
@@ -169,9 +156,6 @@ screen_height:	.word 240
 frame_zero: .word 0xFF000000
 frame_one:  .word 0xFF100000
 
-hero_x: .byte 3
-hero_y: .byte 3
-
 # Incluindo ecalls customizadas
 #.include "MACROSv21.s"
 #.include "SYSTEMv21.s"
@@ -180,7 +164,8 @@ hero_y: .byte 3
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
-j fase2_teste
+
+j fase2
 
 mainLoop:
 
@@ -195,7 +180,6 @@ drawButtons:
 	
 	drawImage(frame_zero,novo_jogo_alto_1,80,140)	    # Desenha bot?o superior no frame_zero
 	drawImage(frame_zero,sair_baixo_1,85,190)		    # Desenha bot?o inferior no frame_zero
-	
 	
 	drawImage(frame_one,novo_jogo_baixo_1,85,140)	 # Desenha bot?o superior no frame_one
 	drawImage(frame_one,sair_alto_1,80,190)		# Desenha bot?o inferior no frame_one
@@ -224,7 +208,7 @@ menuInicialSelecionado:
 	jal readKeyBlocking				# Se o usu?rio apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 
 # Primeira Fase
-fase1_teste:
+fase1:
 	clearFrame(frame_zero)			# Limpa os frames
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
@@ -247,20 +231,20 @@ fase1_teste:
 	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
 
 
-fase_1:
+fase1_loop:
 	beq a3, s3, fase_1DialogCase
 fase_1AfterComparison:
 	jal readKeyNonBlocking			# l? input do usu?rio	
 	li t0, 'w'				# armazena c?digo da letra w em t0
-	beq a0, t0 , moveParaCima		# Se input for w, roda o comando de mover para cima
+	beq a0, t0 , moveCima1		# Se input for w, roda o comando de mover para cima
 	li t0, 'a'
-	beq a0, t0, moveParaEsquerda
+	beq a0, t0, moveEsquerda1
 	li t0, 's'
-	beq a0, t0, moveParaBaixo
+	beq a0, t0, moveBaixo1
 	li t0, 'd'
-	beq a0, t0, moveParaDireita
-	j fase_1					# Se n?o for, checa o caso do input ser a
-moveParaCima:
+	beq a0, t0, moveDireita1
+	j fase1_loop					# Se n?o for, checa o caso do input ser a
+moveCima1:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
@@ -280,8 +264,8 @@ cimaLivre:
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1
-moveParaEsquerda:	
+	j fase1_loop
+moveEsquerda1:	
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
@@ -301,8 +285,8 @@ esquerdaLivre:
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1			# Reitera o loop
-moveParaBaixo:
+	j fase1_loop			# Reitera o loop
+moveBaixo1:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
@@ -322,8 +306,8 @@ baixoLivre:
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1			# Reitera o loop
-moveParaDireita:
+	j fase1_loop			# Reitera o loop
+moveDireita1:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
 	jal calculaPosicao
@@ -336,14 +320,61 @@ moveParaDireita:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, direitaLivre
+	bne t2, t0, checaPedraDir1
 	addi a3, a3, -1
+	j direitaLivre
+checaPedraDir1:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
+	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a3, a3, 1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, -2
+	j direitaLivre
+	
+naoMovePedraDir1:	
+	addi a3, a3, -1						# Corrige a posição de volta para o personagem
 direitaLivre:
 	jal calculaPosicao
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicao
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_1			# Reitera o loop
+	j fase1_loop			# Reitera o loop
 fase_1DialogCase:
 	beq a6,s6,fase_1AbreDialogo
 	j fase_1AfterComparison
@@ -380,30 +411,53 @@ fase1_userChoose:
 	drawImage(frame_zero,fase_1PrimeiraEscolhaErrada,0,0)
 	jal changeFrame
 	jal readKeyBlocking
-	j fase1_teste
+	j fase1
 fase_1RightChoice:
 	drawImage(frame_zero,fase_1PrimeiraEscolhaCerta,0,0)
 	jal changeFrame
 	jal readKeyBlocking
 	
 # Segunda Fase
-fase2_teste:
+fase2:
 	clearFrame(frame_zero)			# Limpa os frames
 	clearFrame(frame_one)
 	drawImage(frame_zero, mapa2, 70, 20)	# Desenha o mapa no Frame 0
 	drawImage(frame_one, mapa2, 70, 20)	# Desenha o mapa no Frame 1
-	drawImage(frame_zero, pedra, 174, 100)	
-	drawImage(frame_one, pedra,174, 100)	
-	drawImage(frame_zero, pedra, 194, 100)	#Desenha blocos nos dois frames
-	drawImage(frame_one, pedra,194, 100)
-	drawImage(frame_zero, pedra, 174, 140)	
-	drawImage(frame_one, pedra,174, 140)	
-	drawImage(frame_zero, pedra, 214, 140)	
-	drawImage(frame_one, pedra,214, 140)		
-	# Desenhando os Esqueletos no Mapa
+	
+	# Desenhando Pedras no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
+desenhaPedras:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, preDesenhaEsqueletos
 
-desenha_esqueletos:
+	li t2, 'P'
+	la t3, colisao_fase_2
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, naoDesenhaPedra
+		li t3, 10
+		rem a3, s11, t3
+		div a6, s11, t3
+		jal calculaPosicaoFase2	
+		la a0, pedra
+		lw t0, frame_zero			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+		jal calculaPosicaoFase2	
+		la a0, pedra
+		lw t0, frame_one			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+naoDesenhaPedra:	
+	addi s11, s11, 1
+	j desenhaPedras
+
+	# Desenhando Esqueletos no Mapa
+preDesenhaEsqueletos:
+	li s11, 0	# Primeiro quadrado do mapa
+desenhaEsqueletos:
 	li t1, 89	# Último quadrado do mapa
 	bgt s11, t1, plotaHeroi2
 
@@ -411,45 +465,70 @@ desenha_esqueletos:
 	la t3, colisao_fase_2
 	add t3, t3, s11
 	lb t4, 0(t3)
-	bne t4, t2, nao_desenha_esqueleto
+	bne t4, t2, naoDesenhaEsqueleto
 		li t3, 10
 		rem a3, s11, t3
 		div a6, s11, t3
-		jal calculaPosicaoFase2
-		drawImageNotImm(frame_zero, esqueleto, t1, t2)
-		jal calculaPosicaoFase2
-		drawImageNotImm(frame_one, esqueleto, t1, t2)
-nao_desenha_esqueleto:	
+		jal calculaPosicaoFase2	
+		la a0, esqueleto
+		lw t0, frame_zero			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+		jal calculaPosicaoFase2	
+		la a0, esqueleto
+		lw t0, frame_one			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+naoDesenhaEsqueleto:	
 	addi s11, s11, 1
-	j desenha_esqueletos
+	j desenhaEsqueletos
 plotaHeroi2:
 	li a3, 1				# Marca o posicionamento inincial do eixo x do her?i
 	li a6, 6 				# Marca o posicionamento inincial do eixo y do her?i
 	li s3, 6				# Marca o eixo x do ponto que abre a caixa de dialogo
 	li s6, 7			        # Marca o eixo y do ponto que abre a caixa de dialogo
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, hero, t1, t2)	# Desenha o Helltaker na posi??o inicial (3, 3)
+	jal calculaPosicaoFase2	
+	la a0, hero
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2	
+	la a0, hero
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
 
-fase_2:
+fase2_loop:
 	beq a3, s3, fase_2DialogCase
 fase_2AfterComparison:
 	jal readKeyNonBlocking			# l? input do usu?rio	
 	li t0, 'w'				# armazena c?digo da letra w em t0
-	beq a0, t0 , moveParaCima2		# Se input for w, roda o comando de mover para cima
+	beq a0, t0 , moveCima2		# Se input for w, roda o comando de mover para cima
 	li t0, 'a'
-	beq a0, t0, moveParaEsquerda2
+	beq a0, t0, moveEsquerda2
 	li t0, 's'
-	beq a0, t0, moveParaBaixo2
+	beq a0, t0, moveBaixo2
 	li t0, 'd'
-	beq a0, t0, moveParaDireita2
-	j fase_2					# Se n?o for, checa o caso do input ser a
-moveParaCima2:
+	beq a0, t0, moveDireita2
+	j fase2_loop					# Se n?o for, checa o caso do input ser a
+moveCima2:
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
 	addi a6, a6, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_2
@@ -460,28 +539,49 @@ moveParaCima2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoCima
 	addi a6, a6, 1
+	j cimaLivre2
 checaEsqueletoCima:
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, cimaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraCima		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueleto		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueleto
 	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
 
-	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)	
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
 
 	addi a6, a6, -1						# Sobe uma posição na matriz
-	jal calculaPosicaoFase2					# Desenha o esqueleto
-	drawImageNotImm(frame_zero, esqueleto, t1, t2)	
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, esqueleto, t1, t2)	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	jal calculaPosicaoFase2	
+	la a0, esqueleto
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm	
+	jal calculaPosicaoFase2	
+	la a0, esqueleto
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm	
+	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	j cimaLivre2
 MorteDoEsqueleto:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
@@ -489,39 +589,92 @@ MorteDoEsqueleto:
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)	
 	
-	jal calculaPosicaoFase2
-		
+	addi a6, a6, 1
+	jal calculaPosicaoFase2	
 	la a0, hero_Kick
 	lw t0, frame_one			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 	
 	jal calculaPosicaoFase2
-	
 	la a0, hero_Kick
 	lw t0, frame_zero			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 	
 	li a0,100		# pausa de 1/10 segundos
 	li a7,32		
 	ecall
 
+	j cimaLivre2
+checaPedraCima:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, cimaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, não move
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, não move
+	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a6, a6, -1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, 2
+	j cimaLivre2
+naoMovePedraCima2:	
+	addi a6, a6, 1						# Corrige a posição de volta para o personagem
 cimaLivre2:
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_zero, hero, t1, t2)
 	jal calculaPosicaoFase2
 	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_2
-moveParaEsquerda2:
+	j fase2_loop
+moveEsquerda2:
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, tampao_mapa_1, t1, t2)
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, tampao_mapa_1, t1, t2)
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
 	addi a3, a3, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
 	li t0, 'X'
 	la t1, colisao_fase_2
@@ -530,15 +683,150 @@ moveParaEsquerda2:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, esquerdaLivre2
+	bne t2, t0, checaEsqueletoEsq2
 	addi a3, a3, 1
+	j esquerdaLivre2
+checaEsqueletoEsq2:
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, checaPedraEsq2		# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoEsq2		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueletoEsq2
+	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+
+	addi a3, a3, -1						# Sobe uma posição na matriz
+	jal calculaPosicaoFase2	
+	la a0, esqueleto
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, esqueleto
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm	
+	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	j esquerdaLivre2
+	
+MorteDoEsqueletoEsq2:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm	
+	
+	addi a3, a3, 1
+	jal calculaPosicaoFase2	
+	la a0, hero_Kick
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, hero_Kick
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	li a0,100		# pausa de 1/10 segundos
+	li a7,32		
+	ecall
+	
+	
+	j esquerdaLivre2
+checaPedraEsq2:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, esquerdaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, não move
+	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a3, a3, -1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, 2
+	j esquerdaLivre2
+	
+naoMovePedraEsq2:	
+	addi a3, a3, 1						# Corrige a posição de volta para o personagem
 esquerdaLivre2:
+	jal calculaPosicaoFase2	
+	la a0, hero
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
 	jal calculaPosicaoFase2
-	drawImageNotImm(frame_zero, hero, t1, t2)
-	jal calculaPosicaoFase2
-	drawImageNotImm(frame_one, hero, t1, t2)
-	j fase_2	 		# Reitera o loop
-moveParaBaixo2:
+	la a0, hero
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	j fase2_loop	 		# Reitera o loop
+moveBaixo2:
 	jal calculaPosicaoFase2
 
 	la a0, tampao_mapa_1
@@ -569,14 +857,17 @@ moveParaBaixo2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoBaixo
 	addi a6, a6, -1
-
+	j BaixoLivre2
+	
 checaEsqueletoBaixo:
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, BaixoLivre2		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraBaixo2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoBx		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueletoBx
 	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
@@ -618,7 +909,9 @@ checaEsqueletoBaixo:
 
 	jal drawImageNotImm
 
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	
+	j BaixoLivre2
 MorteDoEsqueletoBx:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
@@ -639,6 +932,7 @@ MorteDoEsqueletoBx:
 
 	jal drawImageNotImm
 	
+	addi a6, a6, -1
 	jal calculaPosicaoFase2
 	la a0, hero_Kick
 	lw t0, frame_one			# Endereco da memoria vga
@@ -659,45 +953,88 @@ MorteDoEsqueletoBx:
 	li a0,100		# pausa de 1/10 segundos
 	li a7,32		
 	ecall
+	
+	
+	j BaixoLivre2
+	
+checaPedraBaixo2:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, BaixoLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, não move
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, não move
+	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a6, a6, 1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, -2
+	j BaixoLivre2
+naoMovePedraBaixo2:	
+	addi a6, a6, -1						# Corrige a posição de volta para o personagem
 BaixoLivre2:
 	jal calculaPosicaoFase2
-
 	la a0, hero
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
-	jal drawImageNotImm	
+	jal drawImageNotImm
+	
 	jal calculaPosicaoFase2
 	la a0, hero
 	lw t0, frame_one			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
-	j fase_2
-moveParaDireita2:
+	
+	j fase2_loop
+moveDireita2:
 	jal calculaPosicaoFase2
-
 	la a0, tampao_mapa_1
 	lw t0, frame_zero			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 
 	jal calculaPosicaoFase2
-
 	la a0, tampao_mapa_1
 	lw t0, frame_one			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 
-
 	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
-
 	li t0, 'X'
 	la t1, colisao_fase_2
 	li t2, 10
@@ -705,118 +1042,156 @@ moveParaDireita2:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, checaEsqueletoDireita
+	bne t2, t0, checaEsqueletoDireita2
 	addi a3, a3, -1
-
-checaEsqueletoDireita:
+	j DireitaLivre2
+	
+checaEsqueletoDireita2:
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, DireitaLivre2		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraDir2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, MorteDoEsqueletoDir		# Se esweuelto estiver encurralado, ele morre
+	beq t3,t4, MorteDoEsqueletoDir2		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoDir2		# Se esweuelto estiver encurralado, ele morre
 	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
 
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
-
 	la a0, tampao_mapa_1
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 
 	jal calculaPosicaoFase2
-	
 	la a0, tampao_mapa_1
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 
 	addi a3, a3, 1						# Sobe uma posição na matriz
 	jal calculaPosicaoFase2					# Desenha o esqueleto
-
 	la a0, esqueleto
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 
 	jal calculaPosicaoFase2
-
 	la a0, esqueleto
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
-
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
-MorteDoEsqueletoDir:
+	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	
+	j DireitaLivre2
+MorteDoEsqueletoDir2:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
-
 	la a0, tampao_mapa_1
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm	
 
 	jal calculaPosicaoFase2
-
 	la a0, tampao_mapa_1
 	lw t0, frame_one			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 	
+	addi a3, a3, -1
 	jal calculaPosicaoFase2
 	la a0, hero_Kick
 	lw t0, frame_one			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 	
 	jal calculaPosicaoFase2
-	
 	la a0, hero_Kick
 	lw t0, frame_zero			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
 	
 	li a0,100		# pausa de 1/10 segundos
 	li a7,32		
 	ecall
 	
+	
+	j DireitaLivre2
+checaPedraDir2:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, DireitaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, não move
+	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, não move
+	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao_mapa_1
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao_mapa_1
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a3, a3, 1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, -2
+	j DireitaLivre2
+	
+naoMovePedraDir2:	
+	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+
 DireitaLivre2:
 	jal calculaPosicaoFase2
-
 	la a0, hero
 	lw t0, frame_zero			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm	
+	
 	jal calculaPosicaoFase2
 	la a0, hero
 	lw t0, frame_one			
 	add a1,zero,t1
 	add a2,zero, t2
-
 	jal drawImageNotImm
-	j fase_2
-
 	
+	j fase2_loop
+
 fase_2DialogCase:
 	beq a6,s6,fase_2AbreDialogo
 	j fase_2AfterComparison
@@ -853,7 +1228,7 @@ fase2_userChoose:
 	drawImage(frame_zero,Justice_firstWrongAnswern,0,0)
 	jal changeFrame
 	jal readKeyBlocking
-	j fase2_teste
+	j fase2
 fase_2RightChoice:
 	drawImage(frame_zero,Justice_firstRightAnswern,0,0)
 	jal changeFrame
