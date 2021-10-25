@@ -128,7 +128,8 @@ cf_fora:
 .include "imagens\PrimeirochatBelzebub.data"
 .include "imagens\SegundochatBelzebub.data"
 .include "imagens\hero.data"
-.include "imagens\hero_Kick.data"
+.include "imagens\hero_kick.data"
+.include "imagens\hero_hurt.data"
 .include "imagens\esqueleto.data"
 .include "imagens\mapa_1.data"
 .include "imagens\mapa2.data"
@@ -148,6 +149,7 @@ cf_fora:
 .include "imagens\Justice_background.data"
 .include "imagens\tampao.data"
 .include "imagens\pedra.data"
+.include "imagens\espinho.data"
 .include "imagens\malina.data"
 .include "imagens\justice.data"
 .include "colisao_fase_1.data"
@@ -666,7 +668,7 @@ fase2:
 	jal drawImageNotImm
 	
 	
-	# Desenhando Pedras no Mapa
+# Desenhando Pedras no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 desenhaPedras:
 	li t1, 89	# Último quadrado do mapa
@@ -696,12 +698,12 @@ naoDesenhaPedra:
 	addi s11, s11, 1
 	j desenhaPedras
 
-	# Desenhando Esqueletos no Mapa
+# Desenhando Esqueletos no Mapa
 preDesenhaEsqueletos:
 	li s11, 0	# Primeiro quadrado do mapa
 desenhaEsqueletos:
 	li t1, 89	# Último quadrado do mapa
-	bgt s11, t1, plotaHeroi2
+	bgt s11, t1, preDesenhaEspinhos
 
 	li t2, 'E'
 	la t3, colisao_fase_2
@@ -726,6 +728,39 @@ desenhaEsqueletos:
 naoDesenhaEsqueleto:	
 	addi s11, s11, 1
 	j desenhaEsqueletos
+
+# Desenhando Espinhos no Mapa
+preDesenhaEspinhos:
+	li s11, 0	# Primeiro quadrado do mapa
+desenhaEspinhos:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, plotaHeroi2
+
+	li t2, 'T'
+	la t3, colisao_fase_2
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, naoDesenhaEspinho
+		li t3, 10
+		rem a3, s11, t3
+		div a6, s11, t3
+		jal calculaPosicaoFase2	
+		la a0, espinho
+		lw t0, frame_zero			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+		jal calculaPosicaoFase2	
+		la a0, espinho
+		lw t0, frame_one			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+naoDesenhaEspinho:	
+	addi s11, s11, 1
+	j desenhaEspinhos
+
+# Desenhando o Heroi
 plotaHeroi2:
 	li a3, 1				# Marca o posicionamento inincial do eixo x do her?i
 	li a6, 6 				# Marca o posicionamento inincial do eixo y do her?i
@@ -781,7 +816,7 @@ moveCima2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoCima
 	addi a6, a6, 1
-	j cimaLivre2
+	j checaEspinhoCima2
 checaEsqueletoCima:
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraCima		# Checa se tem esqueleto, se não segue normalmente
@@ -824,7 +859,7 @@ checaEsqueletoCima:
 	jal drawImageNotImm	
 	addi a6, a6, 2						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
-	j cimaLivre2
+	j checaEspinhoCima2
 MorteDoEsqueleto:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2	
@@ -844,11 +879,21 @@ MorteDoEsqueleto:
 	addi a6, a6, 1
 	
 	jal s11, animacaoChute
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
 
-	j cimaLivre2
+	j checaEspinhoCima2
 checaPedraCima:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, cimaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaEspinhoCima2			# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
@@ -890,10 +935,46 @@ checaPedraCima:
 	jal drawImageNotImm
 	addi a6, a6, 2
 	jal s11, animacaoChute
-	j cimaLivre2
+	j checaEspinhoCima2
 naoMovePedraCima2:	
 	addi a6, a6, 1						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
+checaEspinhoCima2:
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoCima2
+	jal s11, animacaoFuro
+	j cimaLivre2
+deixaEspinhoCima2:
+	addi a6, a6, 1
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a6, a6, -1
+	bne t2, t0, cimaLivre2
+	addi a6, a6, 1
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, -1
 cimaLivre2:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -932,7 +1013,7 @@ moveEsquerda2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoEsq2
 	addi a3, a3, 1
-	j esquerdaLivre2
+	j checaEspinhoEsq2
 checaEsqueletoEsq2:
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraEsq2		# Checa se tem esqueleto, se não segue normalmente
@@ -974,7 +1055,7 @@ checaEsqueletoEsq2:
 	jal drawImageNotImm	
 	addi a3, a3, 2						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
-	j esquerdaLivre2
+	j checaEspinhoEsq2
 	
 MorteDoEsqueletoEsq2:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
@@ -993,10 +1074,21 @@ MorteDoEsqueletoEsq2:
 	
 	addi a3, a3, 1
 	jal s11, animacaoChute
-	j esquerdaLivre2
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoEsq2
 checaPedraEsq2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, esquerdaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaEspinhoEsq2			# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
@@ -1038,11 +1130,47 @@ checaPedraEsq2:
 	jal drawImageNotImm
 	addi a3, a3, 2
 	jal s11, animacaoChute
-	j esquerdaLivre2
+	j checaEspinhoEsq2
 	
 naoMovePedraEsq2:	
 	addi a3, a3, 1						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
+checaEspinhoEsq2:
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoEsq2
+	jal s11, animacaoFuro
+	j esquerdaLivre2
+deixaEspinhoEsq2:
+	addi a3, a3, 1
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a3, a3, -1
+	bne t2, t0, esquerdaLivre2
+	addi a3, a3, 1
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, -1
 esquerdaLivre2:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -1090,7 +1218,7 @@ moveBaixo2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoBaixo
 	addi a6, a6, -1
-	j BaixoLivre2
+	j checaEspinhoBaixo2
 	
 checaEsqueletoBaixo:
 	li t0, 'E'				# E representa esqueleto no mapa
@@ -1144,7 +1272,7 @@ checaEsqueletoBaixo:
 
 	addi a6, a6, -2					# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
-	j BaixoLivre2
+	j checaEspinhoBaixo2
 MorteDoEsqueletoBx:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
@@ -1167,11 +1295,22 @@ MorteDoEsqueletoBx:
 	
 	addi a6, a6, -1
 	jal s11, animacaoChute
-	j BaixoLivre2
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoBaixo2
 	
 checaPedraBaixo2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, BaixoLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaEspinhoBaixo2			# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
@@ -1213,10 +1352,46 @@ checaPedraBaixo2:
 	jal drawImageNotImm
 	addi a6, a6, -2
 	jal s11, animacaoChute
-	j BaixoLivre2
+	j checaEspinhoBaixo2
 naoMovePedraBaixo2:	
 	addi a6, a6, -1						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
+checaEspinhoBaixo2:
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoBaixo2
+	jal s11, animacaoFuro
+	j BaixoLivre2
+deixaEspinhoBaixo2:
+	addi a6, a6, -1
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a6, a6, 1
+	bne t2, t0, BaixoLivre2
+	addi a6, a6, -1
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, 1
 BaixoLivre2:
 	jal calculaPosicaoFase2
 	la a0, hero
@@ -1258,7 +1433,7 @@ moveDireita2:
 	lb t2, 0(t1)
 	bne t2, t0, checaEsqueletoDireita2
 	addi a3, a3, -1
-	j DireitaLivre2
+	j checaEspinhoDir2
 	
 checaEsqueletoDireita2:
 	li t0, 'E'				# E representa esqueleto no mapa
@@ -1303,7 +1478,7 @@ checaEsqueletoDireita2:
 	jal drawImageNotImm
 	addi a3, a3, -2					# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
-	j DireitaLivre2
+	j checaEspinhoDir2
 MorteDoEsqueletoDir2:
 	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
 	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
@@ -1322,10 +1497,21 @@ MorteDoEsqueletoDir2:
 	
 	addi a3, a3, -1
 	jal s11, animacaoChute
-	j DireitaLivre2
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoDir2
 checaPedraDir2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, DireitaLivre2			# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaEspinhoDir2			# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
@@ -1367,11 +1553,47 @@ checaPedraDir2:
 	jal drawImageNotImm
 	addi a3, a3, -2
 	jal s11, animacaoChute
-	j DireitaLivre2
+	j checaEspinhoDir2
 	
 naoMovePedraDir2:	
 	addi a3, a3, -1						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
+checaEspinhoDir2:
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoDir2
+	jal s11, animacaoFuro
+	j DireitaLivre2
+deixaEspinhoDir2:
+	addi a3, a3, -1
+	li t0, 'T'
+	la t1, colisao_fase_2
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a3, a3, 1
+	bne t2, t0, DireitaLivre2
+	addi a3, a3, -1
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, 1
 DireitaLivre2:
 	jal calculaPosicaoFase2
 	la a0, hero
@@ -1696,13 +1918,13 @@ cf_fora2:
 # Animação do Chute
 animacaoChute:
 	jal calculaPosicaoFase2	
-	la a0, hero_Kick
+	la a0, hero_kick
 	lw t0, frame_one			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
 	jal drawImageNotImm
 	jal calculaPosicaoFase2
-	la a0, hero_Kick
+	la a0, hero_kick
 	lw t0, frame_zero			# Endereco da memoria vga
 	add a1,zero,t1
 	add a2,zero, t2
@@ -1710,6 +1932,16 @@ animacaoChute:
 	li a0, 300		# pausa de 1/10 segundos
 	li a7, 32		
 	ecall
+	# Toca o som do chute
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2500		# define a duração da nota em ms
+	li a2,118		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
 	jal calculaPosicaoFase2	
 	la a0, tampao
 	lw t0, frame_one			# Endereco da memoria vga
@@ -1723,4 +1955,71 @@ animacaoChute:
 	add a2,zero, t2
 	jal drawImageNotImm
 	jr s11
-#kick:
+
+# Animação do Furo
+animacaoFuro:
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2	
+	la a0, hero_hurt
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, hero_hurt
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	li a0, 300		# pausa de 1/10 segundos
+	li a7, 32		
+	ecall
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,75		# define a nota
+	li a1,1000		# define a duração da nota em ms
+	li a2,65		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	jal calculaPosicaoFase2	
+	la a0, tampao
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, tampao
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2	
+	la a0, espinho
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jal calculaPosicaoFase2
+	la a0, espinho
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	jr s11
