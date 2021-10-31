@@ -718,7 +718,7 @@ plotaHeroi2:
 
 fase2_loop:
 	beq a3, s3, fase_2DialogCase
-	ble s10, zero, fase2_morte
+	ble 10, zero, fase2_morte
 fase_2AfterComparison:
 # Mostrando a vida na tela
 	mv s9, a3
@@ -779,7 +779,7 @@ vida_continua:
 	beq a0, t0, moveDireita2
 	j fase2_loop					# Se n?o for, checa o caso do input ser a
 moveCima2:
-	addi s10, s10, -1
+	#addi s10, s10, -1
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -795,6 +795,7 @@ moveCima2:
 	addi a6, a6, 1
 	j checaEspinhoCima2
 checaEsqueletoCima:
+	addi s10,s10,-1
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraCima		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
@@ -895,7 +896,7 @@ cimaLivre2:
 	jal s9, spriteNotImm
 	j fase2_loop
 moveEsquerda2:
-	addi s10, s10, -1
+	#addi s10, s10, -1
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -911,6 +912,7 @@ moveEsquerda2:
 	addi a3, a3, 1
 	j checaEspinhoEsq2
 checaEsqueletoEsq2:
+	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraEsq2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
@@ -1011,7 +1013,7 @@ esquerdaLivre2:
 	
 	j fase2_loop	 		# Reitera o loop
 moveBaixo2:
-	addi s10, s10, -1
+	#addi s10, s10, -1
 	jal calculaPosicaoFase2
 	
 	la a4, tampao
@@ -1032,6 +1034,7 @@ moveBaixo2:
 	j checaEspinhoBaixo2
 	
 checaEsqueletoBaixo:
+	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraBaixo2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
@@ -1134,7 +1137,7 @@ BaixoLivre2:
 	
 	j fase2_loop
 moveDireita2:
-	addi s10, s10, -1
+	#addi s10, s10, -1
 	la a4, tampao
 	jal s9, spriteNotImm
 
@@ -1151,6 +1154,7 @@ moveDireita2:
 	j checaEspinhoDir2
 	
 checaEsqueletoDireita2:
+	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
 	bne t2, t0, checaPedraDir2		# Checa se tem esqueleto, se não segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
