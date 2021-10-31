@@ -718,7 +718,7 @@ plotaHeroi2:
 
 fase2_loop:
 	beq a3, s3, fase_2DialogCase
-	ble 10, zero, fase2_morte
+	ble s10, zero, fase2_morte
 fase_2AfterComparison:
 # Mostrando a vida na tela
 	mv s9, a3
