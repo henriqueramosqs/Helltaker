@@ -156,6 +156,7 @@ cf_fora:
 .include "imagens\pedra.data"
 .include "imagens\espinho.data"
 .include "imagens\malina.data"
+.include "imagens\Fase2Morte.data"
 .include "imagens\justice.data"
 .include "colisao_fase_1.data"
 .include "colisao_fase_2.data"
@@ -165,6 +166,7 @@ screen_height:	.word 240
 
 frame_zero: .word 0xFF000000
 frame_one:  .word 0xFF100000
+movRest:.string "Movimentos restantes: " 
 
 colisao_temporaria: .byte 0,0,0,0,0,0,0,0,0,0,
 			  0,0,0,0,0,0,0,0,0,0,
@@ -712,19 +714,31 @@ plotaHeroi2:
 	jal s9, spriteNotImm
 
 # Seta Contador de passos
-	li s10, 15
+	li s10, 24
 
 fase2_loop:
 	beq a3, s3, fase_2DialogCase
-	blt s10, zero, fase2_morte
+	ble s10, zero, fase2_morte
 fase_2AfterComparison:
 # Mostrando a vida na tela
 	mv s9, a3
 	mv a0, s10
-	li t0, 10
+	li t0, 10 
+	
 	blt a0, t0, digito_unico
-	li a1, 1
-	li a2, 3
+	
+	add t6,a0,zero
+	li a7,104
+	la a0,movRest
+	li a1,2
+	li a2,3
+	li a3,255
+	li a4,0
+	ecall
+	add a0, t6,zero
+	
+	li a1, 2
+	li a2, 22
 	li a3, 255
 	li a4, 0
 	li a7, 101
@@ -733,8 +747,8 @@ fase_2AfterComparison:
 	ecall
 	j vida_continua
 digito_unico:
-	li a1, 9
-	li a2, 3
+	li a1, 10
+	li a2, 22
 	li a3, 255
 	li a4, 0
 	li a7, 101
@@ -742,8 +756,8 @@ digito_unico:
 	lw a4, frame_one
 	ecall
 	li a0, 0
-	li a1, 1
-	li a2, 3
+	li a1, 2
+	li a2, 22
 	li a3, 255
 	li a4, 0
 	li a7, 101
@@ -1237,21 +1251,18 @@ DireitaLivre2:
 	j fase2_loop
 
 fase2_morte:
-	la a0, Justice_background
+	la a0, Fase2Morte
 	li a1, 0
 	li a2, 0
 	lw t0, frame_zero
 	jal drawImage
 	
-	la a0, Justice_background
+	la a0,Fase2Morte
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
 	
-	#li a0, 3000		# pausa de X segundos
-	#li a7, 32		
-	#ecall
 	jal readKeyBlocking
 	j fase2
 fase_2DialogCase:
