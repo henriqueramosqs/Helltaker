@@ -13,6 +13,9 @@ Pendências:
 
 	-Limitação dos blocos -ele tá passando reto (acho que é só editar aquele arquivo de colisões)
 
+	-Pequenos bugs na fase 1: caso de saída, interações com o bloco em todos os sentidos
+
+
 	-Contador de movimentos (não está nos requisitos do projeto)
 
 	-Inidcador de fase entre uma fase e outra
