@@ -67,6 +67,8 @@
 .include "imagens\f4_b6.data"
 .include "imagens\f4_b7.data"
 .include "imagens\f4_b8.data"
+.include "imagens\chave.data"
+.include "imagens\bau.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -1986,6 +1988,12 @@ fase4:
 # Desenhando Espinhos no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 	jal s9, desenhaEspinhos
+# Desenhando Chave no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaChaves
+# Desenhando Baú no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaBaus
 
 
 # Desenhando o Heroi
@@ -1999,7 +2007,7 @@ plotaHeroi4:
 	jal s9, spriteNotImm3
 
 # Seta Contador de passos
-	li s10, 50
+	li s10, 26
 
 
 fase4_loop:
@@ -3149,6 +3157,67 @@ naoDesenhaEspinho:
 	j desenhaEspinhos
 desenhaEspinhosContinua:
 	jr s9
+
+desenhaChaves:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, desenhaEspinhosContinua
+
+	li t2, 'K'
+	la t3, colisao_temporaria
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, naoDesenhaChaves
+		li t3, 10
+		rem a3, s11, t3
+		div a6, s11, t3
+		jal calculaPosicaoFase2	
+		la a0, chave
+		lw t0, frame_zero			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+		jal calculaPosicaoFase2	
+		la a0, chave
+		lw t0, frame_one			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+naoDesenhaChaves:
+	addi s11,s11, 1
+	j desenhaChaves
+desenhaChavesContinua:
+	jr s9
+
+desenhaBaus:
+	li t1, 89	# Último quadrado do mapa
+	bgt s11, t1, desenhaBausContinua
+
+	li t2, 'B'
+	la t3, colisao_temporaria
+	add t3, t3, s11
+	lb t4, 0(t3)
+	bne t4, t2, naoDesenhaBau
+		li t3, 10
+		rem a3, s11, t3
+		div a6, s11, t3
+		jal calculaPosicaoFase2	
+		la a0, bau
+		lw t0, frame_zero			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+		jal calculaPosicaoFase2	
+		la a0, bau
+		lw t0, frame_one			# Endereco da memoria vga
+		add a1,zero,t1
+		add a2,zero, t2
+		jal drawImageNotImm
+naoDesenhaBau:	
+	addi s11, s11, 1
+	j desenhaBaus
+desenhaBausContinua:
+	jr s9
+
 
 spriteNotImm:
 	jal calculaPosicaoFase2	
