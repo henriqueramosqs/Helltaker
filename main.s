@@ -1,4 +1,4 @@
-###############################################################################
+,###############################################################################
 ##                                 HELLTAKER                                ##
 ##############################################################################
 # Incluindo ecalls customizadas
@@ -2187,12 +2187,28 @@ deixaEspinhoCima4:
 	add t1, t1, t2
 	lb t2, 0(t1)
 	addi a6, a6, -1
-	bne t2, t0, cimaLivre4
+	bne t2, t0, checaBauCima4
 	addi a6, a6, 1
 	
 	la a4, espinho
 	jal s9, spriteNotImm3
 	addi a6, a6, -1
+	j cimaLivre4
+checaBauCima4:	
+
+	li t0, 'B'				# Carrega "B"
+	lb t3, -10(t1)				#Armazena o quadrado a direita do esqueleto
+	bne t3, t0, cimaLivre4		        # Se o da direita não for B, anda 
+	bne s5, zero, bauComChaveCima4          #Se tiver unm B e estiver com chave, abre o baú	
+	                        		#Se tiver baú mas n tiver chave:	       
+	addi a6,a6, 1			        #recalcula posicao do herói e contador de passos 
+	addi s10,s10,1
+	la a4, hero
+	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
+	j fase4_loop		       	
+	
+bauComChaveCima4:
+	#animacaoBau				#Para méritos de teste
 cimaLivre4:
 	la a4, hero
 	jal s9, spriteNotImm3
@@ -2571,16 +2587,20 @@ deixaEspinhoDir4:
 	addi a3, a3, 1
 	j DireitaLivre4
 checaBauDireita4:	
+
 	li t0, 'B'				# Carrega "B"
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	bne t3, t0, DireitaLivre4		# Se o da direita não for B, anda 
 	bne s5, zero, bauComChaveDireita4	 #Se tiver unm B e estiver com chave, abre o baú	
-	jal s11, animacaoChute			#Se tiver baú mas n tiver chave:	       
-	addi a3,a3, -1			         #Se não estiver com chave:
+						#Se tiver baú mas n tiver chave:	       
+	addi a3,a3, -1			        #recalcula posicao do herói e contador de passos 
+	addi s10,s10,1
+	la a4, hero
+	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
 	j fase4_loop		       	
 	
 bauComChaveDireita4:
-	jal s11,animacaoFuro				#Para méritos de teste
+	#inserir animacao de abrir bau
 DireitaLivre4:
 	la a4, hero
 	jal s9, spriteNotImm3
