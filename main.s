@@ -424,6 +424,8 @@ checaPedraDir1:
 	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move	
 	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
@@ -1998,8 +2000,11 @@ fase4:
 
 # Desenhando o Heroi
 plotaHeroi4:
-	li a3, 2				# Marca o posicionamento inincial do eixo x do her?i
-	li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
+	#li a3, 2				# Marca o posicionamento inincial do eixo x do her?i
+	#li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
+	
+	li a3, 4
+	li a6,2
 	li s3, 5				# Marca o eixo x do ponto que abre a caixa de dialogo
 	li s6, 1			        # Marca o eixo y do ponto que abre a caixa de dialogo
 	
@@ -2007,7 +2012,7 @@ plotaHeroi4:
 	jal s9, spriteNotImm3
 
 # Seta Contador de passos
-	li s10, 26
+	li s10, 40 #Era 26
 
 
 fase4_loop:
@@ -2142,6 +2147,9 @@ checaPedraCima4:
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
+	lb t3, -10(t1)	
+	li t4, 'B'
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
 	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
@@ -2258,6 +2266,9 @@ checaPedraEsq4:
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, não move
 	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
@@ -2304,10 +2315,8 @@ deixaEspinhoEsq4:
 esquerdaLivre4:
 	la a4, hero
 	jal s9, spriteNotImm3
-	
 	j fase4_loop	 		# Reitera o loop
 moveBaixo4:
-	#addi s10, s10, -1
 	jal calculaPosicaoFase3
 	
 	la a4, tampao
@@ -2383,6 +2392,9 @@ checaPedraBaixo4:
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, naoMovePedraBaixo4		# Se pedra estiver apoiada, não move
+	lb t3, 10(t1)	
+	li t4, 'B'
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
 	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
 	li t0, '0'				# Carrega 0 que representa espaço vazio
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
@@ -2400,7 +2412,8 @@ naoMovePedraBaixo4:
 	addi a6, a6, -1						# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoBaixo4:
-	li t0, 'T'
+	li t0, 'T'				# P representa pedra no mapa
+	bne t2, t0, checaChaveBaixo4			# Checa se tem esqueleto, se não segue normalmente		#Se não for espinho, checa chave
 	la t1, colisao_temporaria
 	li t2, 10
 	mul t2, a6, t2
@@ -2410,6 +2423,20 @@ checaEspinhoBaixo4:
 	bne t2, t0, deixaEspinhoBaixo4
 	jal s11, animacaoFuro
 	j BaixoLivre4
+checaChaveBaixo4:
+	
+	li t0, 'K'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2				#Atualiza matriz de colisão temporária,
+	lb t2, 0(t1)
+	#jal s11, animacaoChave			#Roda animacão da chave
+	#jal s11,animacaoFuro			#Para méritos de teste
+	bne t0,t2, BaixoLivre4
+	addi s5,s5,1			        #Atualiza s5
+	j BaixoLivre4				#Segue pra baixo
 deixaEspinhoBaixo4:
 	addi a6, a6, -1
 	li t0, 'T'
@@ -2537,17 +2564,27 @@ deixaEspinhoDir4:
 	add t1, t1, t2
 	lb t2, 0(t1)
 	addi a3, a3, 1
-	bne t2, t0, DireitaLivre4
+	bne t2, t0, checaBauDireita4      #Se não for espinho, ele checa se é baú
 	addi a3, a3, -1
 	la a4, espinho
 	jal s9, spriteNotImm3
 	addi a3, a3, 1
+	j DireitaLivre4
+checaBauDireita4:	
+	li t0, 'B'				# Carrega "B"
+	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
+	bne t3, t0, DireitaLivre4		# Se o da direita não for B, anda 
+	bne s5, zero, bauComChaveDireita4	 #Se tiver unm B e estiver com chave, abre o baú	
+	jal s11, animacaoChute			#Se tiver baú mas n tiver chave:	       
+	addi a3,a3, -1			         #Se não estiver com chave:
+	j fase4_loop		       	
+	
+bauComChaveDireita4:
+	jal s11,animacaoFuro				#Para méritos de teste
 DireitaLivre4:
 	la a4, hero
 	jal s9, spriteNotImm3
-	
 	j fase4_loop
-
 fase4_morte:
 	la a0, Fase4Morte
 	li a1, 0
