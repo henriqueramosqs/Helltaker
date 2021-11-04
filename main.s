@@ -107,15 +107,17 @@ colisao_temporaria: .byte 0,0,0,0,0,0,0,0,0,0,
 			  0,0,0,0,0,0,0,0,0,0,
 
 
+NUM: .word 42
+# lista de nota,duração,nota,duração,nota,duração,...
+NOTAS: 60,2349,59,391,60,391,63,261,63,261,60,783,60,391,60,391,60,522,60,1044,59,261,60,261,60,261,59,261,60,261,59,261,63,261,60,261,59,261,60,391,60,1174,59,391,60,391,63,261,63,391,60,652,59,391,60,391,62,261,63,261,60,1044,62,261,62,261,62,261,63,261,62,261,60,261,62,261,60,522,60,522
 
 .text
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
 
-j fase5
+#j fase4
 
-mainLoop:
 
 # Drawing Menu ================================================================
 
@@ -130,7 +132,6 @@ mainLoop:
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
-	
 	
 # Menu Botoes
 drawButtons:
@@ -1289,7 +1290,7 @@ fase3:
         li a3, 8
 	li a6, 7
 	jal calculaPosicaoFase3	
-	la a0, justice
+	la a0, cerberus
 	lw t0, frame_zero			# Endereco da memoria vga
 	mv a1, t1
 	mv a2, t2
@@ -1297,7 +1298,7 @@ fase3:
 	li a3, 8
 	li a6, 7
 	jal calculaPosicaoFase3	
-	la a0, justice
+	la a0, cerberus
 	lw t0, frame_one			# Endereco da memoria vga
 	mv a1, t1
 	mv a2, t2
@@ -1982,7 +1983,7 @@ fase4:
         li a3, 6
 	li a6, 1
 	jal calculaPosicaoFase3	
-	la a0, justice
+	la a0, zdrada
 	lw t0, frame_zero			# Endereco da memoria vga
 	mv a1, t1
 	mv a2, t2
@@ -1990,7 +1991,7 @@ fase4:
 	li a3, 6
 	li a6, 1
 	jal calculaPosicaoFase3	
-	la a0, justice
+	la a0, zdrada
 	lw t0, frame_one			# Endereco da memoria vga
 	mv a1, t1
 	mv a2, t2
@@ -2019,11 +2020,9 @@ fase4:
 
 # Desenhando o Heroi
 plotaHeroi4:
-	#li a3, 2				# Marca o posicionamento inincial do eixo x do her?i
-	#li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
-	
-	li a3, 4
-	li a6,2
+	li a3, 2				# Marca o posicionamento inincial do eixo x do her?i
+	li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
+
 	li s3, 5				# Marca o eixo x do ponto que abre a caixa de dialogo
 	li s6, 1			        # Marca o eixo y do ponto que abre a caixa de dialogo
 	
@@ -2031,7 +2030,7 @@ plotaHeroi4:
 	jal s9, spriteNotImm3
 
 # Seta Contador de passos
-	li s10, 40 #Era 26
+	li s10, 26
 
 
 fase4_loop:
