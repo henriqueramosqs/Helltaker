@@ -21,6 +21,41 @@
 .include "imagens\mapa2.data"
 .include "imagens\mapa3.data"
 .include "imagens\mapa4.data"
+.include "imagens\mapa5.data"
+.include "imagens\fase_1PrimeiraEscolhaErrada.data"
+.include "imagens\fase_1PrimeiraEscolhaCerta.data"
+.include "imagens\Justice_firstWrongAnswern.data"
+.include "imagens\Justice_firstRightAnswern.data"
+.include "imagens\Malina_background.data"
+.include "imagens\Justice_background.data"
+.include "imagens\cerberusBackground.data"
+.include "imagens\cerberusFirstWrongAnswern.data"
+.include "imagens\cerberusFirsRightAnswern.data"
+.include "imagens\espinho.data"
+.include "imagens\malina.data"
+.include "imagens\cerberus.data"
+.include "imagens\justice.data"
+.include "imagens\zdrada.data"
+.include "imagens\loremaster.data"
+.include "colisao_fase_1.data"
+.include "colisao_fase_2.data"
+.include "colisao_fase_3.data"
+.include "colisao_fase_4.data"
+.include "colisao_fase_5.data"
+.include "imagens\Fase2Morte.data"
+.include "imagens\Fase3Morte.data"
+.include "imagens\Fase4Morte.data"
+.include "imagens\Fase5Morte.data"
+.include "imagens\zdradaBackground1.data"
+.include "imagens\zdradaBackground2.data"
+.include "imagens\ZdradaFirstWrongAnswern.data"
+.include "imagens\ZdradaSecondRightAnswern.data"
+.include "imagens\ZdradaSecondWrongAnswern.data"
+.include "imagens\loremasterBackground1.data"
+.include "imagens\loremasterBackground2.data"
+.include "imagens\loremasterFirstWrongAnswern.data"
+.include "imagens\loremasterSecondRightAnswern.data"
+.include "imagens\loremasterSecondWrongAnswern.data"
 .include "imagens\f1_b1.data"
 .include "imagens\f1_b2.data"
 .include "imagens\f1_b3.data"
@@ -33,32 +68,6 @@
 .include "imagens\f3_b2.data"
 .include "imagens\f3_b3.data"
 .include "imagens\f3_b4.data"
-.include "imagens\fase_1PrimeiraEscolhaErrada.data"
-.include "imagens\fase_1PrimeiraEscolhaCerta.data"
-.include "imagens\Justice_firstWrongAnswern.data"
-.include "imagens\Justice_firstRightAnswern.data"
-.include "imagens\Malina_background.data"
-.include "imagens\Justice_background.data"
-.include "imagens\cerberusBackground.data"
-.include "imagens\tampao.data"
-.include "imagens\pedra.data"
-.include "imagens\cerberusFirstWrongAnswern.data"
-.include "imagens\cerberusFirsRightAnswern.data"
-.include "imagens\espinho.data"
-.include "imagens\malina.data"
-.include "imagens\Fase2Morte.data"
-.include "imagens\Fase3Morte.data"
-.include "imagens\justice.data"
-.include "colisao_fase_1.data"
-.include "colisao_fase_2.data"
-.include "colisao_fase_3.data"
-.include "colisao_fase_4.data"
-.include "imagens\Fase4Morte.data"
-.include "imagens\zdradaBackground1.data"
-.include "imagens\zdradaBackground2.data"
-.include "imagens\ZdradaFirstWrongAnswern.data"
-.include "imagens\ZdradaSecondRightAnswern.data"
-.include "imagens\ZdradaSecondWrongAnswern.data"
 .include "imagens\f4_b1.data"
 .include "imagens\f4_b2.data"
 .include "imagens\f4_b3.data"
@@ -67,8 +76,18 @@
 .include "imagens\f4_b6.data"
 .include "imagens\f4_b7.data"
 .include "imagens\f4_b8.data"
+.include "imagens\f5_b1.data"
+.include "imagens\f5_b2.data"
+.include "imagens\f5_b3.data"
+.include "imagens\f5_b4.data"
+.include "imagens\f5_b5.data"
+.include "imagens\f5_b6.data"
+.include "imagens\f5_b7.data"
+.include "imagens\f5_b8.data"
 .include "imagens\chave.data"
 .include "imagens\bau.data"
+.include "imagens\tampao.data"
+.include "imagens\pedra.data"
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -94,7 +113,7 @@ colisao_temporaria: .byte 0,0,0,0,0,0,0,0,0,0,
 # Main Program ================================================================
 #==============================================================================
 
-j fase4
+j fase5
 
 mainLoop:
 
@@ -2765,7 +2784,831 @@ fase_4RightChoice2:
 	jal readKeyBlocking
 	
 ## Quinta Fase
-#fase5:
+#Quinta fase
+fase5:
+	jal clearFrames
+	#clearFrame(frame_zero)			# Limpa os frames
+	#clearFrame(frame_one)
+	la a0, mapa5
+	li a1, 70
+	li a2, 20
+	lw t0, frame_zero
+	jal drawImage
+	la a0, mapa5
+	li a1, 70
+	li a2, 20
+	lw t0, frame_one
+	jal drawImage
+		
+
+        li a3, 4
+	li a6, 3
+	jal calculaPosicaoFase3	
+	la a0, loremaster
+	lw t0, frame_zero			# Endereco da memoria vga
+	mv a1, t1
+	mv a2, t2
+	jal drawImageNotImm
+	li a3, 4
+	li a6, 3
+	jal calculaPosicaoFase3	
+	la a0, loremaster
+	lw t0, frame_one			# Endereco da memoria vga
+	mv a1, t1
+	mv a2, t2
+	jal drawImageNotImm
+	
+# Salvando a colisão em um novo local da memória para não afetar a original
+	li s11, 0		# Primeiro quadrado do mapa
+	la a0, colisao_fase_5	# Escolhe o arquivo de colisao da fase
+	jal s9, copiaColisao
+# Desenhando Pedras no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaPedras
+# Desenhando Esqueletos no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaEsqueletos
+# Desenhando Espinhos no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaEspinhos
+# Desenhando Chave no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaChaves
+# Desenhando Baú no Mapa
+	li s11, 0	# Primeiro quadrado do mapa
+	jal s9, desenhaBaus
+
+
+# Desenhando o Heroi
+plotaHeroi5:
+	#li a3, 2				# Marca o posicionamento inincial do eixo x do her?i
+	#li a6, 3 				# Marca o posicionamento inincial do eixo y do her?i
+	
+	li a3, 1
+	li a6,8
+	li s3, 4				# Marca o eixo x do ponto que abre a caixa de dialogo
+	li s6, 4			        # Marca o eixo y do ponto que abre a caixa de dialogo
+	
+	la a4, hero
+	jal s9, spriteNotImm3
+
+# Seta Contador de passos
+	li s10, 40 #Era 26
+
+
+fase5_loop:
+	beq a3, s3, fase_5DialogCase
+	ble s10, zero, fase5_morte
+fase_5AfterComparison:
+# Mostrando a vida na tela
+	mv s9, a3
+	mv a0, s10
+	li t0, 10 
+	
+	blt a0, t0, digito_unico5
+	
+	add t6,a0,zero
+	li a7,104
+	la a0,movRest
+	li a1,2
+	li a2,3
+	li a3,255
+	li a4,0
+	ecall
+	add a0, t6,zero
+	
+	li a1, 2
+	li a2, 22
+	li a3, 255
+	li a4, 0
+	li a7, 101
+	ecall
+	lw a4, frame_one
+	ecall
+	j vida_continua5
+digito_unico5:
+	li a1, 10
+	li a2, 22
+	li a3, 255
+	li a4, 0
+	li a7, 101
+	ecall
+	lw a4, frame_one
+	ecall
+	li a0, 0
+	li a1, 2
+	li a2, 22
+	li a3, 255
+	li a4, 0
+	li a7, 101
+	ecall
+	lw a4, frame_one
+	ecall
+vida_continua5:
+	mv a3, s9
+
+# Checando teclas pressionadas
+	jal readKeyNonBlocking			# l? input do usu?rio	
+	li t0, 'w'				# armazena c?digo da letra w em t0
+	beq a0, t0 , moveCima5		# Se input for w, roda o comando de mover para cima
+	li t0, 'a'
+	beq a0, t0, moveEsquerda5
+	li t0, 's'
+	beq a0, t0, moveBaixo5
+	li t0, 'd'
+	beq a0, t0, moveDireita5
+	j fase5_loop					# Se n?o for, checa o caso do input ser a
+moveCima5:
+	#addi s10, s10, -1
+	la a4, tampao
+	jal s9, spriteNotImm3
+	
+	addi a6, a6, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, checaEsqueletoCima5
+	addi a6, a6, 1
+	j checaEspinhoCima5
+checaEsqueletoCima5:
+	addi s10,s10,-1
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, checaPedraCima5	 # Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueleto5		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueleto5
+	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	la a4, tampao
+	jal s9, spriteNotImm
+
+	addi a6, a6, -1						# Sobe uma posição na matriz
+	la a4, esqueleto
+	jal s9, spriteNotImm
+	
+	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+	j checaEspinhoCima5
+MorteDoEsqueleto5:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	la a4, tampao
+	jal s9, spriteNotImm3
+
+	addi a6, a6, 1
+	
+	jal s11, animacaoChute
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+
+	j checaEspinhoCima5
+checaPedraCima5:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, checaEspinhoCima5			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	lb t3, -10(t1)	
+	li t4, 'B'
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a6, a6, -1
+	la a4, pedra
+	jal s9, spriteNotImm
+	addi a6, a6, 2
+	jal s11, animacaoChute
+	j checaEspinhoCima5
+naoMovePedraCima5:	
+	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+checaEspinhoCima5:
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoCima5
+	jal s11, animacaoFuro
+	j cimaLivre5
+deixaEspinhoCima5:
+	addi a6, a6, 1
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a6, a6, -1
+	bne t2, t0, checaBauCima5
+	addi a6, a6, 1
+	
+	la a4, espinho
+	jal s9, spriteNotImm3
+	addi a6, a6, -1
+	j cimaLivre5
+checaBauCima5:	
+
+	li t0, 'B'				# Carrega "B"
+	lb t3, -10(t1)				#Armazena o quadrado a direita do esqueleto
+	bne t3, t0, cimaLivre5		        # Se o da direita não for B, anda 
+	bne s5, zero, bauComChaveCima5          #Se tiver unm B e estiver com chave, abre o baú	
+	                        		#Se tiver baú mas n tiver chave:	       
+	addi a6,a6, 1			        #recalcula posicao do herói e contador de passos 
+	addi s10,s10,1
+	la a4, hero
+	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
+	j fase5_loop		       	
+	
+bauComChaveCima5:
+	#animacaoBau				#Para méritos de teste
+cimaLivre5:
+	la a4, hero
+	jal s9, spriteNotImm3
+	j fase5_loop
+moveEsquerda5:
+	#addi s10, s10, -1
+	la a4, tampao
+	jal s9, spriteNotImm3
+	
+	addi a3, a3, -1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, checaEsqueletoEsq5
+	addi a3, a3, 1
+	j checaEspinhoEsq5
+checaEsqueletoEsq5:
+	addi s10, s10, -1
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, checaPedraEsq5    # Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoEsq5		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueletoEsq5
+	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+
+	addi a3, a3, -1						# Sobe uma posição na matriz
+	la a4, esqueleto
+	jal s9, spriteNotImm	
+	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+	j checaEspinhoEsq5
+	
+MorteDoEsqueletoEsq5:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a3, a3, 1
+	jal s11, animacaoChute
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoEsq5
+checaPedraEsq5:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, checaEspinhoEsq5			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
+	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a3, a3, -1
+	la a4, pedra
+	jal s9, spriteNotImm
+	addi a3, a3, 2
+	jal s11, animacaoChute
+	j checaEspinhoEsq5
+	
+naoMovePedraEsq5:	
+	addi a3, a3, 1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+checaEspinhoEsq5:
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoEsq5
+	jal s11, animacaoFuro
+	j esquerdaLivre5
+deixaEspinhoEsq5:
+	addi a3, a3, 1
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a3, a3, -1
+	bne t2, t0, esquerdaLivre5
+	addi a3, a3, 1
+	la a4, espinho
+	jal s9, spriteNotImm3
+	addi a3, a3, -1
+esquerdaLivre5:
+	la a4, hero
+	jal s9, spriteNotImm3
+	j fase5_loop	 		# Reitera o loop
+moveBaixo5:
+	jal calculaPosicaoFase3
+	
+	la a4, tampao
+	jal s9, spriteNotImm3
+
+
+	addi a6, a6, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+
+	li t0, 'X'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, checaEsqueletoBaixo5
+	addi a6, a6, -1
+	j checaEspinhoBaixo5
+	
+checaEsqueletoBaixo5:
+	addi s10, s10, -1
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, checaPedraBaixo5		# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoBx5		# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'
+	beq t3, t4, MorteDoEsqueletoBx5
+	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+
+	addi a6, a6, 1						# Sobe uma posição na matriz
+	la a4, esqueleto
+	jal s9, spriteNotImm
+
+	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+	j checaEspinhoBaixo5
+MorteDoEsqueletoBx5:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase3				# Desenha o tampão onde estava o esqueleto	
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a6, a6, -1
+	jal s11, animacaoChute
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoBaixo5
+	
+checaPedraBaixo5:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, checaEspinhoBaixo5			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, não move
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, não move
+	lb t3, 10(t1)	
+	li t4, 'B'
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a6, a6, 1
+	la a4, pedra
+	jal s9, spriteNotImm
+	addi a6, a6, -2
+	jal s11, animacaoChute
+	j checaEspinhoBaixo5
+naoMovePedraBaixo5:	
+	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+checaEspinhoBaixo5:
+	li t0, 'T'				# P representa pedra no mapa
+	bne t2, t0, checaChaveBaixo5			# Checa se tem esqueleto, se não segue normalmente		#Se não for espinho, checa chave
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoBaixo5
+	jal s11, animacaoFuro
+	j BaixoLivre5
+checaChaveBaixo5:
+	
+	li t0, 'K'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2				#Atualiza matriz de colisão temporária,
+	lb t2, 0(t1)
+	#jal s11, animacaoChave			#Roda animacão da chave
+	#jal s11,animacaoFuro			#Para méritos de teste
+	bne t0,t2, BaixoLivre5
+	addi s5,s5,1			        #Atualiza s5
+	j BaixoLivre5				#Segue pra baixo
+deixaEspinhoBaixo5:
+	addi a6, a6, -1
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a6, a6, 1
+	bne t2, t0, BaixoLivre5
+	addi a6, a6, -1
+	la a4, espinho
+	jal s9, spriteNotImm3
+	addi a6, a6, 1
+BaixoLivre5:
+	la a4, hero
+	jal s9, spriteNotImm3
+	
+	j fase5_loop
+moveDireita5:
+	#addi s10, s10, -1
+	la a4, tampao
+	jal s9, spriteNotImm3
+
+	addi a3, a3, 1		# atualiza t2 para pr?xima posi??o do personagem (que s? se movimenta no eixo y)
+	li t0, 'X'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, checaEsqueletoDireita5
+	addi a3, a3, -1
+	j checaEspinhoDir5
+	
+checaEsqueletoDireita5:
+	addi s10, s10, -1
+	li t0, 'E'				# E representa esqueleto no mapa
+	bne t2, t0, checaPedraDir5		# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
+	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoDir5	# Se esweuelto estiver encurralado, ele morre
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, MorteDoEsqueletoDir5		# Se esweuelto estiver encurralado, ele morre
+	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+
+	addi a3, a3, 1						# Sobe uma posição na matriz
+	la a4, esqueleto
+	jal s9, spriteNotImm
+	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+	j checaEspinhoDir5
+MorteDoEsqueletoDir5:
+	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	la a4, tampao
+	jal s9, spriteNotImm3
+	
+	addi a3, a3, -1
+	jal s11, animacaoChute
+	
+	# Toca o som esqueleto morrendo
+	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	li a0,45		# define a nota
+	li a1,2000		# define a duração da nota em ms
+	li a2,127		# define o instrumento
+	li a3,127		# define o volume
+	li a7,31		# define o syscall
+	ecall			# toca a nota
+	mv a3, s0		# recupera o valor de a3
+	
+	j checaEspinhoDir5
+checaPedraDir5:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, checaEspinhoDir5		# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir4		# Se pedra estiver apoiada, não move
+	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraDir4  # Se pedra estiver apoiada, não move
+	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	
+	la a4, tampao
+	jal s9, spriteNotImm
+	
+	addi a3, a3, 1
+	la a4, pedra
+	jal s9, spriteNotImm
+	addi a3, a3, -2
+	jal s11, animacaoChute
+	j checaEspinhoDir5
+	
+naoMovePedraDir5:	
+	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+checaEspinhoDir5:
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	bne t2, t0, deixaEspinhoDir5
+	jal s11, animacaoFuro
+	j DireitaLivre5
+deixaEspinhoDir5:
+	addi a3, a3, -1
+	li t0, 'T'
+	la t1, colisao_temporaria
+	li t2, 10
+	mul t2, a6, t2
+	add t2, t2, a3
+	add t1, t1, t2
+	lb t2, 0(t1)
+	addi a3, a3, 1
+	bne t2, t0, checaBauDireita5    #Se não for espinho, ele checa se é baú
+	addi a3, a3, -1
+	la a4, espinho
+	jal s9, spriteNotImm3
+	addi a3, a3, 1
+	j DireitaLivre5
+checaBauDireita5:	
+
+	li t0, 'B'				# Carrega "B"
+	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
+	bne t3, t0, DireitaLivre5	# Se o da direita não for B, anda 
+	bne s5, zero, bauComChaveDireita5	 #Se tiver unm B e estiver com chave, abre o baú	
+						#Se tiver baú mas n tiver chave:	       
+	addi a3,a3, -1			        #recalcula posicao do herói e contador de passos 
+	addi s10,s10,1
+	la a4, hero
+	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
+	j fase5_loop		       	
+	
+bauComChaveDireita5:
+	#inserir animacao de abrir bau
+DireitaLivre5:
+	la a4, hero
+	jal s9, spriteNotImm3
+	j fase5_loop
+fase5_morte:
+	la a0, Fase5Morte
+	li a1, 0
+	li a2, 0
+	lw t0, frame_zero
+	jal drawImage
+	
+	la a0,Fase5Morte
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	
+	jal readKeyBlocking
+	j fase5
+fase_5DialogCase:
+	beq a6,s6,fase_5AbreDialogo
+	j fase_5AfterComparison
+fase_5AbreDialogo:
+# Sempre começar o diálogo na primeira opção
+	li t0, 0xFF200604
+	li t1, 0
+	sw t1, 0(t0)
+	
+	la a0, zdradaBackground1
+	li a1, 0
+	li a2, 0
+	lw t0, frame_zero
+	jal drawImage
+	
+	la a0, f4_b2
+	li a1, 4
+	li a2, 135
+	lw t0, frame_zero
+	jal drawImage
+	la a0, f4_b4
+	li a1, 4
+	li a2, 185
+	lw t0, frame_zero
+	jal drawImage
+	
+	la a0, zdradaBackground1
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	
+	la a0, f4_b1
+	li a1, 4
+	li a2, 135
+	lw t0, frame_one
+	jal drawImage
+	la a0, f4_b3
+	li a1, 4
+	li a2, 185
+	lw t0, frame_one
+	jal drawImage
+
+fase_5UserChoice:
+	jal readKeyBlocking				# L? input do usu?rio para navegar no menu
+	li t0,'w'					# Armazena carcter 'w' em t0
+	li t1,'s'					# Armazena caracter 's' em t1
+	li t2, 10					# Armazena c?digo ascii da tecla enter em t2
+	beq a0,t2,fase5_userChoose				# Se "enter for selecionado, salta o loop do menu
+	beq a0,t1,fase_5ChangeChoice				# Se w for selecionado, muda sele??o
+	beq a0,t0,fase_5ChangeChoice			# Se s for selecionado, muda sele??o
+	j fase_5UserChoice 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
+fase_5ChangeChoice:
+	jal changeFrame					# Muda tela
+fase_5ChoicLoop:
+	j fase_5UserChoice				#Reitera o loop
+
+fase5_userChoose:
+	bne a5,zero,fase_5RightChoice
+	la a0, ZdradaFirstWrongAnswern
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	#drawImage(frame_zero,Justice_firstWrongAnswern,0,0)
+	jal changeFrame
+	jal readKeyBlocking
+	jal clearFrames
+	j fase5
+fase_5RightChoice:
+	la a0, zdradaBackground2
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	
+	la a0, f4_b5
+	li a1, 4
+	li a2, 135
+	lw t0, frame_one
+	jal drawImage
+	la a0, f4_b7
+	li a1, 4
+	li a2, 185
+	lw t0, frame_one
+	jal drawImage
+	
+	la a0, zdradaBackground2
+	li a1, 0
+	li a2, 0
+	lw t0, frame_zero
+	jal drawImage
+	
+	la a0, f4_b6
+	li a1, 4
+	li a2, 135
+	lw t0, frame_zero
+	jal drawImage
+	la a0, f4_b8
+	li a1, 4
+	li a2, 185
+	lw t0, frame_zero
+	jal drawImage
+fase_5UserChoice2:
+	jal readKeyBlocking				# L? input do usu?rio para navegar no menu
+	li t0,'w'					# Armazena carcter 'w' em t0
+	li t1,'s'					# Armazena caracter 's' em t1
+	li t2, 10					# Armazena c?digo ascii da tecla enter em t2
+	beq a0,t2,fase5_userChoose2				# Se "enter for selecionado, salta o loop do menu
+	beq a0,t1,fase_5ChangeChoice2				# Se w for selecionado, muda sele??o
+	beq a0,t0,fase_5ChangeChoice2			# Se s for selecionado, muda sele??o
+	j fase_5UserChoice2 					# Se nem w, nem s, nem enter forem selecionadas, refaz o loop
+fase_5ChangeChoice2:
+	jal changeFrame					# Muda tela
+fase_5ChoicLoop2:
+	j fase_5UserChoice2				#Reitera o loop
+
+fase5_userChoose2:
+	bne a5,zero,fase_5RightChoice2
+	la a0, ZdradaSecondWrongAnswern
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	#drawImage(frame_zero,Justice_firstWrongAnswern,0,0)
+	jal changeFrame
+	jal readKeyBlocking
+	jal clearFrames
+	j fase5
+fase_5RightChoice2:
+	la a0, ZdradaSecondRightAnswern
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+
+	la a0, ZdradaSecondRightAnswern
+	li a1, 0
+	li a2, 0
+	lw t0, frame_zero
+	jal drawImage
+	
+	jal readKeyBlocking
+	
+## Fim do jogo
+
+
+
 	li a0,2000		# pausa de 2 segundos
 	li a7,32		
 	ecall
