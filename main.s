@@ -116,7 +116,7 @@ NOTAS: 60,2349,59,391,60,391,63,261,63,261,60,783,60,391,60,391,60,522,60,1044,5
 # Main Program ================================================================
 #==============================================================================
 
-#j fase4
+j fase1
 
 
 # Drawing Menu ================================================================
@@ -140,23 +140,23 @@ drawButtons:
 	la a0, novo_jogo_alto_1
 	li a1, 80
 	li a2, 140
-	lw t0, frame_one
+	lw t0, frame_zero
 	jal drawImage
 	la a0, sair_baixo_1
 	li a1, 85
 	li a2, 190
-	lw t0, frame_one
+	lw t0, frame_zero
 	jal drawImage
 	
 	la a0, novo_jogo_baixo_1
 	li a1, 85
 	li a2, 140
-	lw t0, frame_zero
+	lw t0, frame_one
 	jal drawImage
 	la a0, sair_alto_1
 	li a1, 80
 	li a2, 190
-	lw t0, frame_zero
+	lw t0, frame_one
 	jal drawImage
 	
 selecaoMenuInicial:
@@ -174,6 +174,11 @@ loopMenu:
 	j selecaoMenuInicial				#Reitera o loop
 	
 menuInicialSelecionado:
+	
+	beq a5,zero, segueJogo
+        jal clearFrames
+	jal endProgram
+segueJogo:	
 	la a0, backgroundchatBelzebub
 	li a1, 0
 	li a2, 0
@@ -237,20 +242,6 @@ fase1:
 	li a2, 80
 	lw t0, frame_one
 	jal drawImage
-	#drawImage(frame_zero, pedra, 170, 80)	# Desenha o mapa no Frame 0
-	#drawImage(frame_one, pedra,170, 80)	# Desenha o mapa no Frame 1
-	la a0, pedra
-	li a1, 190
-	li a2, 80
-	lw t0, frame_zero
-	jal drawImage
-	la a0, pedra
-	li a1, 190
-	li a2, 80
-	lw t0, frame_one
-	jal drawImage
-	#drawImage(frame_zero, pedra, 190, 80)	# Desenha o mapa no Frame 0
-	#drawImage(frame_one, pedra,190, 80)	# Desenha o mapa no Frame 1
 	la a0, malina
 	li a1, 170
 	li a2, 40
@@ -316,8 +307,59 @@ moveCima1:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, cimaLivre
+	bne t2, t0, checaPedraCima1
 	addi a6, a6, 1
+	j cimaLivre
+checaPedraCima1:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move	
+	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a6, a6, -1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, 2
+	jal s11, animacaoChute
+	j cimaLivre
+	
+naoMovePedraCima1:	
+	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
 cimaLivre:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -354,8 +396,60 @@ moveEsquerda1:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, esquerdaLivre
+	bne t2, t0, checaPedraEsq1
 	addi a3, a3, 1
+	#
+checaPedraEsq1:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, esquerdaLivre			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move	
+	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a3, a3, -1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a3, a3, 2
+	jal s11, animacaoChute
+	j esquerdaLivre
+	
+naoMovePedraEsq1:	
+	addi a3, a3, +1						# Corrige a posição de volta para o personagem	
+	jal s11, animacaoChute
+
 esquerdaLivre:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -393,8 +487,60 @@ moveBaixo1:
 	add t2, t2, a3
 	add t1, t1, t2
 	lb t2, 0(t1)
-	bne t2, t0, baixoLivre
+	bne t2, t0, checaPedraBaixo1
 	addi a6, a6, -1
+	j baixoLivre
+checaPedraBaixo1:
+	li t0, 'P'				# P representa pedra no mapa
+	bne t2, t0, baixoLivre			# Checa se tem esqueleto, se não segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
+	li t4, 'X'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move
+	li t4, 'P'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move
+	li t4, 'B'				#Armazena  "x" em t4
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move	
+	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaço vazio
+	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+
+	jal calculaPosicaoFase2	
+	la a0, tampao
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, tampao
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	addi a6, a6, 1
+	jal calculaPosicaoFase2	
+	la a0, pedra
+	lw t0, frame_one			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	
+	jal calculaPosicaoFase2
+	la a0, pedra
+	lw t0, frame_zero			# Endereco da memoria vga
+	add a1,zero,t1
+	add a2,zero, t2
+	jal drawImageNotImm
+	addi a6, a6, -2
+	jal s11, animacaoChute
+	j baixoLivre
+	
+naoMovePedraBaixo1:	
+	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
+	
 baixoLivre:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -479,10 +625,13 @@ checaPedraDir1:
 	add a2,zero, t2
 	jal drawImageNotImm
 	addi a3, a3, -2
+	
+	jal s11, animacaoChute
 	j direitaLivre
 	
 naoMovePedraDir1:	
 	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	jal s11, animacaoChute
 direitaLivre:
 	jal calculaPosicaoFase2	
 	la a0, hero
@@ -558,7 +707,7 @@ fase_1ChoicLoop:
 	j fase_1UserChoice				#Reitera o loop
 
 fase1_userChoose:
-	bne a5,zero,fase_1RightChoice
+	beq a5,zero,fase_1RightChoice
 	la a0, fase_1PrimeiraEscolhaErrada
 	li a1, 0
 	li a2, 0
@@ -637,7 +786,7 @@ plotaHeroi2:
 	jal s9, spriteNotImm
 
 # Seta Contador de passos
-	li s10, 24
+	li s10, 30
 
 fase2_loop:
 	beq a3, s3, fase_2DialogCase
@@ -3479,12 +3628,12 @@ fase_5AbreDialogo:
 	la a0, f5_b1
 	li a1, 4
 	li a2, 135
-	lw t0, frame_zero
+	lw t0, frame_one
 	jal drawImage
 	la a0, f5_b6
 	li a1, 4
 	li a2, 185
-	lw t0, frame_zero
+	lw t0, frame_one
 	jal drawImage
 	
 	la a0, loremasterBackground1
@@ -3496,12 +3645,12 @@ fase_5AbreDialogo:
 	la a0, f5_b5
 	li a1, 4
 	li a2, 135
-	lw t0, frame_one
+	lw t0, frame_zero
 	jal drawImage
 	la a0, f5_b2
 	li a1, 4
 	li a2, 185
-	lw t0, frame_one
+	lw t0, frame_zero
 	jal drawImage
 
 fase_5UserChoice:
@@ -3519,7 +3668,7 @@ fase_5ChoicLoop:
 	j fase_5UserChoice				#Reitera o loop
 
 fase5_userChoose:
-	bne a5,zero,fase_5RightChoice
+	beq a5,zero,fase_5RightChoice
 	la a0, loremasterFirstWrongAnswern
 	li a1, 0
 	li a2, 0
