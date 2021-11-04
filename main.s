@@ -2853,7 +2853,7 @@ plotaHeroi5:
 	jal s9, spriteNotImm3
 
 # Seta Contador de passos
-	li s10, 40 #Era 26
+	li s10, 28
 
 
 fase5_loop:
@@ -3018,6 +3018,7 @@ checaEspinhoCima5:
 	bne t2, t0, deixaEspinhoCima5
 	jal s11, animacaoFuro
 	j cimaLivre5
+
 deixaEspinhoCima5:
 	addi a6, a6, 1
 	li t0, 'T'
@@ -3470,35 +3471,35 @@ fase_5AbreDialogo:
 	li t1, 0
 	sw t1, 0(t0)
 	
-	la a0, zdradaBackground1
+	la a0, loremasterBackground1
 	li a1, 0
 	li a2, 0
 	lw t0, frame_zero
 	jal drawImage
 	
-	la a0, f4_b2
+	la a0, f5_b1
 	li a1, 4
 	li a2, 135
 	lw t0, frame_zero
 	jal drawImage
-	la a0, f4_b4
+	la a0, f5_b6
 	li a1, 4
 	li a2, 185
 	lw t0, frame_zero
 	jal drawImage
 	
-	la a0, zdradaBackground1
+	la a0, loremasterBackground1
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
 	
-	la a0, f4_b1
+	la a0, f5_b5
 	li a1, 4
 	li a2, 135
 	lw t0, frame_one
 	jal drawImage
-	la a0, f4_b3
+	la a0, f5_b2
 	li a1, 4
 	li a2, 185
 	lw t0, frame_one
@@ -3520,7 +3521,7 @@ fase_5ChoicLoop:
 
 fase5_userChoose:
 	bne a5,zero,fase_5RightChoice
-	la a0, ZdradaFirstWrongAnswern
+	la a0, loremasterFirstWrongAnswern
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
@@ -3531,30 +3532,30 @@ fase5_userChoose:
 	jal clearFrames
 	j fase5
 fase_5RightChoice:
-	la a0, zdradaBackground2
+	la a0, loremasterBackground2
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
 	
-	la a0, f4_b5
+	la a0, f5_b4
 	li a1, 4
 	li a2, 135
 	lw t0, frame_one
 	jal drawImage
-	la a0, f4_b7
+	la a0, f5_b7
 	li a1, 4
 	li a2, 185
 	lw t0, frame_one
 	jal drawImage
 	
-	la a0, zdradaBackground2
+	la a0, loremasterBackground2
 	li a1, 0
 	li a2, 0
 	lw t0, frame_zero
 	jal drawImage
 	
-	la a0, f4_b6
+	la a0, f5_b3
 	li a1, 4
 	li a2, 135
 	lw t0, frame_zero
@@ -3580,7 +3581,7 @@ fase_5ChoicLoop2:
 
 fase5_userChoose2:
 	bne a5,zero,fase_5RightChoice2
-	la a0, ZdradaSecondWrongAnswern
+	la a0, loremasterSecondWrongAnswern
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
@@ -3591,13 +3592,13 @@ fase5_userChoose2:
 	jal clearFrames
 	j fase5
 fase_5RightChoice2:
-	la a0, ZdradaSecondRightAnswern
+	la a0, loremasterSecondRightAnswern
 	li a1, 0
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
 
-	la a0, ZdradaSecondRightAnswern
+	la a0, loremasterSecondRightAnswern
 	li a1, 0
 	li a2, 0
 	lw t0, frame_zero
