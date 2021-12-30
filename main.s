@@ -88,6 +88,9 @@
 .include "imagens\bau.data"
 .include "imagens\tampao.data"
 .include "imagens\pedra.data"
+.include "imagens\belzebubfinalfirst.data"
+.include "imagens\belzebubfinalsecond.data"
+
 
 screen_width:	.word 320
 screen_height:	.word 240
@@ -109,16 +112,12 @@ colisao_temporaria: .byte 0,0,0,0,0,0,0,0,0,0,
 
 NUM: .word 42
 # lista de nota,duração,nota,duração,nota,duração,...
-NOTAS: 60,2349,59,391,60,391,63,261,63,261,60,783,60,391,60,391,60,522,60,1044,59,261,60,261,60,261,59,261,60,261,59,261,63,261,60,261,59,261,60,391,60,1174,59,391,60,391,63,261,63,391,60,652,59,391,60,391,62,261,63,261,60,1044,62,261,62,261,62,261,63,261,62,261,60,261,62,261,60,522,60,522
+NOTAS: 60,2349,59,391,60,391,63,261,63,261,60,783
 
 .text
 #==============================================================================
 # Main Program ================================================================
 #==============================================================================
-
-j fase1
-
-
 # Drawing Menu ================================================================
 
 # Menu Background
@@ -158,6 +157,7 @@ drawButtons:
 	li a2, 190
 	lw t0, frame_one
 	jal drawImage
+
 	
 selecaoMenuInicial:
 	jal readKeyBlocking				# L? input do usu?rio para navegar no menu
@@ -197,7 +197,7 @@ segueJogo:
 	la a0, SegundochatBelzebub
 	li a1, 0
 	li a2, 136
-	lw t0, frame_zero
+	lw t0, frame_one
 	jal drawImage
 	jal readKeyBlocking				# Se o usu?rio apertar alguma tecla, mostra o pr?ximo frame
 	jal changeFrame					
@@ -221,34 +221,34 @@ fase1:
 	#drawImage(frame_zero, mapa_1, 70, 20)	# Desenha o mapa no Frame 0
 	#drawImage(frame_one, mapa_1, 70, 20)	# Desenha o mapa no Frame 1
 	la a0, pedra
-	li a1, 130
+	li a1, 134
 	li a2, 100
 	lw t0, frame_zero
 	jal drawImage
 	la a0, pedra
-	li a1, 130
+	li a1, 134
 	li a2, 100
 	lw t0, frame_one
 	jal drawImage
 	#drawImage(frame_zero, pedra, 130, 100)	# Desenha o mapa no Frame 0
 	#drawImage(frame_one, pedra,130, 100)	# Desenha o mapa no Frame 1
 	la a0, pedra
-	li a1, 170
+	li a1, 174
 	li a2, 80
 	lw t0, frame_zero
 	jal drawImage
 	la a0, pedra
-	li a1, 170
+	li a1, 174
 	li a2, 80
 	lw t0, frame_one
 	jal drawImage
 	la a0, malina
-	li a1, 170
+	li a1, 174
 	li a2, 40
 	lw t0, frame_zero
 	jal drawImage
 	la a0, malina
-	li a1, 170
+	li a1, 174
 	li a2, 40
 	lw t0, frame_one
 	jal drawImage
@@ -661,8 +661,6 @@ fase_1AbreDialogo:
 	li a2, 0
 	lw t0, frame_one
 	jal drawImage
-	#drawImage(frame_zero,Malina_background,0,0)		# Desenha plano de fundo no frame_zero
-	#drawImage(frame_one,Malina_background,0,0)		# Desenhando plano de fundo no frame_one
 
 fase_1DrawOptions:
 	
@@ -724,7 +722,6 @@ fase_1RightChoice:
 	lw t0, frame_zero
 	jal drawImage
 	#drawImage(frame_zero,fase_1PrimeiraEscolhaCerta,0,0)
-	jal changeFrame
 	jal readKeyBlocking
 	
 # Segunda Fase
@@ -2118,12 +2115,12 @@ fase4:
 	#clearFrame(frame_zero)			# Limpa os frames
 	#clearFrame(frame_one)
 	la a0, mapa4
-	li a1, 70
+	li a1, 74
 	li a2, 20
 	lw t0, frame_zero
 	jal drawImage
 	la a0, mapa4
-	li a1, 70
+	li a1, 74
 	li a2, 20
 	lw t0, frame_one
 	jal drawImage
@@ -2534,11 +2531,11 @@ checaEsqueletoBaixo4:
 	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
 	
 	la a4, tampao
-	jal s9, spriteNotImm
+	jal s9, spriteNotImm3
 
 	addi a6, a6, 1						# Sobe uma posição na matriz
 	la a4, esqueleto
-	jal s9, spriteNotImm
+	jal s9, spriteNotImm3
 
 	addi a6, a6, -2					# Corrige a posição de volta para o personagem
 	jal s11, animacaoChute
@@ -3755,16 +3752,33 @@ fase_5RightChoice2:
 	jal readKeyBlocking
 	
 ## Fim do jogo
-
-
-
-	li a0,2000		# pausa de 2 segundos
-	li a7,32		
-	ecall
-	
+FimDoJogo:
+	li t0, 0xFF200604
+	sw zero, 0(t0)
+	la a0, backgroundchatBelzebub
+	li a1, 0
+	li a2, 0
+	lw t0, frame_zero
+	jal drawImage
+	la a0, backgroundchatBelzebub
+	li a1, 0
+	li a2, 0
+	lw t0, frame_one
+	jal drawImage
+	la a0, belzebubfinalfirst
+	li a1, 0
+	li a2, 136
+	lw t0, frame_zero
+	jal drawImage
+	la a0, belzebubfinalsecond
+	li a1, 0
+	li a2, 136
+	lw t0, frame_one
+	jal drawImage
+	jal readKeyBlocking				# Se o usu?rio apertar alguma tecla, mostra o pr?ximo frame
+	jal changeFrame					
+	jal readKeyBlocking				# Se o usu?rio apertar alguma ecla, segue o jogo (no caso, mostra o mapa)
 	jal clearFrames
-	#clearFrame(frame_zero)	# apaga os frames
-	#clearFrame(frame_one)
 endProgram:  	
 	li a7, 10	# Syscall "exit"
 	ecall
@@ -4071,7 +4085,7 @@ animacaoFuro:
 	li a1,1000		# define a duração da nota em ms
 	li a2,65		# define o instrumento
 	li a3,127		# define o volume
-	li a7,31		# define o syscall
+	li a7,30		# define o syscall
 	ecall			# toca a nota
 	mv a3, s0		# recupera o valor de a3
 	
