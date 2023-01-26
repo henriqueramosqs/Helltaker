@@ -5,91 +5,91 @@
 .include "MACROSv21.s"
 .data
 # Imagens
-.include "imagens\menu_background.data"
-.include "imagens\novo_jogo_alto_1.data"
-.include "imagens\novo_jogo_baixo_1.data"
-.include "imagens\sair_alto_1.data"
-.include "imagens\sair_baixo_1.data"
-.include "imagens\backgroundchatBelzebub.data"
-.include "imagens\PrimeirochatBelzebub.data"
-.include "imagens\SegundochatBelzebub.data"
-.include "imagens\hero.data"
-.include "imagens\hero_kick.data"
-.include "imagens\hero_hurt.data"
-.include "imagens\esqueleto.data"
-.include "imagens\mapa_1.data"
-.include "imagens\mapa2.data"
-.include "imagens\mapa3.data"
-.include "imagens\mapa4.data"
-.include "imagens\mapa5.data"
-.include "imagens\fase_1PrimeiraEscolhaErrada.data"
-.include "imagens\fase_1PrimeiraEscolhaCerta.data"
-.include "imagens\Justice_firstWrongAnswern.data"
-.include "imagens\Justice_firstRightAnswern.data"
-.include "imagens\Malina_background.data"
-.include "imagens\Justice_background.data"
-.include "imagens\cerberusBackground.data"
-.include "imagens\cerberusFirstWrongAnswern.data"
-.include "imagens\cerberusFirsRightAnswern.data"
-.include "imagens\espinho.data"
-.include "imagens\malina.data"
-.include "imagens\cerberus.data"
-.include "imagens\justice.data"
-.include "imagens\zdrada.data"
-.include "imagens\loremaster.data"
+.include "imagens/menu_background.data"
+.include "imagens/novo_jogo_alto_1.data"
+.include "imagens/novo_jogo_baixo_1.data"
+.include "imagens/sair_alto_1.data"
+.include "imagens/sair_baixo_1.data"
+.include "imagens/backgroundchatBelzebub.data"
+.include "imagens/PrimeirochatBelzebub.data"
+.include "imagens/SegundochatBelzebub.data"
+.include "imagens/hero.data"
+.include "imagens/hero_kick.data"
+.include "imagens/hero_hurt.data"
+.include "imagens/esqueleto.data"
+.include "imagens/mapa_1.data"
+.include "imagens/mapa2.data"
+.include "imagens/mapa3.data"
+.include "imagens/mapa4.data"
+.include "imagens/mapa5.data"
+.include "imagens/fase_1PrimeiraEscolhaErrada.data"
+.include "imagens/fase_1PrimeiraEscolhaCerta.data"
+.include "imagens/Justice_firstWrongAnswern.data"
+.include "imagens/Justice_firstRightAnswern.data"
+.include "imagens/Malina_background.data"
+.include "imagens/Justice_background.data"
+.include "imagens/cerberusBackground.data"
+.include "imagens/cerberusFirstWrongAnswern.data"
+.include "imagens/cerberusFirsRightAnswern.data"
+.include "imagens/espinho.data"
+.include "imagens/malina.data"
+.include "imagens/cerberus.data"
+.include "imagens/justice.data"
+.include "imagens/zdrada.data"
+.include "imagens/loremaster.data"
 .include "colisao_fase_1.data"
 .include "colisao_fase_2.data"
 .include "colisao_fase_3.data"
 .include "colisao_fase_4.data"
 .include "colisao_fase_5.data"
-.include "imagens\Fase2Morte.data"
-.include "imagens\Fase3Morte.data"
-.include "imagens\Fase4Morte.data"
-.include "imagens\Fase5Morte.data"
-.include "imagens\zdradaBackground1.data"
-.include "imagens\zdradaBackground2.data"
-.include "imagens\ZdradaFirstWrongAnswern.data"
-.include "imagens\ZdradaSecondRightAnswern.data"
-.include "imagens\ZdradaSecondWrongAnswern.data"
-.include "imagens\loremasterBackground1.data"
-.include "imagens\loremasterBackground2.data"
-.include "imagens\loremasterFirstWrongAnswern.data"
-.include "imagens\loremasterSecondRightAnswern.data"
-.include "imagens\loremasterSecondWrongAnswern.data"
-.include "imagens\f1_b1.data"
-.include "imagens\f1_b2.data"
-.include "imagens\f1_b3.data"
-.include "imagens\f1_b4.data"
-.include "imagens\f2_b1.data"
-.include "imagens\f2_b2.data"
-.include "imagens\f2_b3.data"
-.include "imagens\f2_b4.data"
-.include "imagens\f3_b1.data"
-.include "imagens\f3_b2.data"
-.include "imagens\f3_b3.data"
-.include "imagens\f3_b4.data"
-.include "imagens\f4_b1.data"
-.include "imagens\f4_b2.data"
-.include "imagens\f4_b3.data"
-.include "imagens\f4_b4.data"
-.include "imagens\f4_b5.data"
-.include "imagens\f4_b6.data"
-.include "imagens\f4_b7.data"
-.include "imagens\f4_b8.data"
-.include "imagens\f5_b1.data"
-.include "imagens\f5_b2.data"
-.include "imagens\f5_b3.data"
-.include "imagens\f5_b4.data"
-.include "imagens\f5_b5.data"
-.include "imagens\f5_b6.data"
-.include "imagens\f5_b7.data"
-.include "imagens\f5_b8.data"
-.include "imagens\chave.data"
-.include "imagens\bau.data"
-.include "imagens\tampao.data"
-.include "imagens\pedra.data"
-.include "imagens\belzebubfinalfirst.data"
-.include "imagens\belzebubfinalsecond.data"
+.include "imagens/Fase2Morte.data"
+.include "imagens/Fase3Morte.data"
+.include "imagens/Fase4Morte.data"
+.include "imagens/Fase5Morte.data"
+.include "imagens/zdradaBackground1.data"
+.include "imagens/zdradaBackground2.data"
+.include "imagens/ZdradaFirstWrongAnswern.data"
+.include "imagens/ZdradaSecondRightAnswern.data"
+.include "imagens/ZdradaSecondWrongAnswern.data"
+.include "imagens/loremasterBackground1.data"
+.include "imagens/loremasterBackground2.data"
+.include "imagens/loremasterFirstWrongAnswern.data"
+.include "imagens/loremasterSecondRightAnswern.data"
+.include "imagens/loremasterSecondWrongAnswern.data"
+.include "imagens/f1_b1.data"
+.include "imagens/f1_b2.data"
+.include "imagens/f1_b3.data"
+.include "imagens/f1_b4.data"
+.include "imagens/f2_b1.data"
+.include "imagens/f2_b2.data"
+.include "imagens/f2_b3.data"
+.include "imagens/f2_b4.data"
+.include "imagens/f3_b1.data"
+.include "imagens/f3_b2.data"
+.include "imagens/f3_b3.data"
+.include "imagens/f3_b4.data"
+.include "imagens/f4_b1.data"
+.include "imagens/f4_b2.data"
+.include "imagens/f4_b3.data"
+.include "imagens/f4_b4.data"
+.include "imagens/f4_b5.data"
+.include "imagens/f4_b6.data"
+.include "imagens/f4_b7.data"
+.include "imagens/f4_b8.data"
+.include "imagens/f5_b1.data"
+.include "imagens/f5_b2.data"
+.include "imagens/f5_b3.data"
+.include "imagens/f5_b4.data"
+.include "imagens/f5_b5.data"
+.include "imagens/f5_b6.data"
+.include "imagens/f5_b7.data"
+.include "imagens/f5_b8.data"
+.include "imagens/chave.data"
+.include "imagens/bau.data"
+.include "imagens/tampao.data"
+.include "imagens/pedra.data"
+.include "imagens/belzebubfinalfirst.data"
+.include "imagens/belzebubfinalsecond.data"
 
 
 screen_width:	.word 320
@@ -111,7 +111,7 @@ colisao_temporaria: .byte 0,0,0,0,0,0,0,0,0,0,
 
 
 NUM: .word 42
-# lista de nota,duração,nota,duração,nota,duração,...
+# lista de nota,duraï¿½ï¿½o,nota,duraï¿½ï¿½o,nota,duraï¿½ï¿½o,...
 NOTAS: 60,2349,59,391,60,391,63,261,63,261,60,783
 
 .text
@@ -312,18 +312,18 @@ moveCima1:
 	j cimaLivre
 checaPedraCima1:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, não move	
-	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima1		# Se pedra estiver apoiada, nï¿½o move	
+	sb t0, -10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	jal calculaPosicaoFase2	
 	la a0, tampao
@@ -358,7 +358,7 @@ checaPedraCima1:
 	j cimaLivre
 	
 naoMovePedraCima1:	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	addi a6, a6, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 cimaLivre:
 	jal calculaPosicaoFase2	
@@ -401,18 +401,18 @@ moveEsquerda1:
 	#
 checaPedraEsq1:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, esquerdaLivre			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, esquerdaLivre			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, não move	
-	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraEsq1		# Se pedra estiver apoiada, nï¿½o move	
+	sb t0, -1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	jal calculaPosicaoFase2	
 	la a0, tampao
@@ -447,7 +447,7 @@ checaPedraEsq1:
 	j esquerdaLivre
 	
 naoMovePedraEsq1:	
-	addi a3, a3, +1						# Corrige a posição de volta para o personagem	
+	addi a3, a3, +1						# Corrige a posiï¿½ï¿½o de volta para o personagem	
 	jal s11, animacaoChute
 
 esquerdaLivre:
@@ -492,18 +492,18 @@ moveBaixo1:
 	j baixoLivre
 checaPedraBaixo1:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, baixoLivre			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, baixoLivre			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, não move	
-	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraBaixo1		# Se pedra estiver apoiada, nï¿½o move	
+	sb t0, 10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	jal calculaPosicaoFase2	
 	la a0, tampao
@@ -538,7 +538,7 @@ checaPedraBaixo1:
 	j baixoLivre
 	
 naoMovePedraBaixo1:	
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	
 baixoLivre:
@@ -583,18 +583,18 @@ moveDireita1:
 	j direitaLivre
 checaPedraDir1:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, direitaLivre			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, nï¿½o move
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, não move	
-	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraDir1		# Se pedra estiver apoiada, nï¿½o move	
+	sb t0, 1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	jal calculaPosicaoFase2	
 	la a0, tampao
@@ -630,7 +630,7 @@ checaPedraDir1:
 	j direitaLivre
 	
 naoMovePedraDir1:	
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	addi a3, a3, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 direitaLivre:
 	jal calculaPosicaoFase2	
@@ -759,7 +759,7 @@ fase2:
 	mv a2, t2
 	jal drawImageNotImm
 	
-# Salvando a colisão em um novo local da memória para não afetar a original
+# Salvando a colisï¿½o em um novo local da memï¿½ria para nï¿½o afetar a original
 	li s11, 0		# Primeiro quadrado do mapa
 	la a0, colisao_fase_2	# Escolhe o arquivo de colisao da fase
 	jal s9, copiaColisao
@@ -866,29 +866,29 @@ moveCima2:
 checaEsqueletoCima:
 	addi s10,s10,-1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraCima		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraCima		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueleto		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueleto
-	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, -1						# Sobe uma posição na matriz
+	addi a6, a6, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 	
-	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	addi a6, a6, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoCima2
 MorteDoEsqueleto:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 
@@ -897,9 +897,9 @@ MorteDoEsqueleto:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -909,17 +909,17 @@ MorteDoEsqueleto:
 	j checaEspinhoCima2
 checaPedraCima:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoCima2			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoCima2			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, não move
-	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima2		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -931,7 +931,7 @@ checaPedraCima:
 	jal s11, animacaoChute
 	j checaEspinhoCima2
 naoMovePedraCima2:	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	addi a6, a6, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoCima2:
 	li t0, 'T'
@@ -983,29 +983,29 @@ moveEsquerda2:
 checaEsqueletoEsq2:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraEsq2		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraEsq2		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoEsq2		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoEsq2
-	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, -1						# Sobe uma posição na matriz
+	addi a3, a3, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm	
-	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	addi a3, a3, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoEsq2
 	
 MorteDoEsqueletoEsq2:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -1013,9 +1013,9 @@ MorteDoEsqueletoEsq2:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1025,17 +1025,17 @@ MorteDoEsqueletoEsq2:
 	j checaEspinhoEsq2
 checaPedraEsq2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoEsq2			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoEsq2			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, não move
-	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraEsq2		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1048,7 +1048,7 @@ checaPedraEsq2:
 	j checaEspinhoEsq2
 	
 naoMovePedraEsq2:	
-	addi a3, a3, 1						# Corrige a posição de volta para o personagem
+	addi a3, a3, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoEsq2:
 	li t0, 'T'
@@ -1105,30 +1105,30 @@ moveBaixo2:
 checaEsqueletoBaixo:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraBaixo2		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraBaixo2		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoBx		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoBx
-	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, 1						# Sobe uma posição na matriz
+	addi a6, a6, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 
-	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	addi a6, a6, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoBaixo2
 MorteDoEsqueletoBx:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
-	jal calculaPosicaoFase2					# Desenha o tampão onde estava o esqueleto	
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase2					# Desenha o tampï¿½o onde estava o esqueleto	
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1137,9 +1137,9 @@ MorteDoEsqueletoBx:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1150,17 +1150,17 @@ MorteDoEsqueletoBx:
 	
 checaPedraBaixo2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoBaixo2			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoBaixo2			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, não move
-	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraBaixo2		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, 10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1172,7 +1172,7 @@ checaPedraBaixo2:
 	jal s11, animacaoChute
 	j checaEspinhoBaixo2
 naoMovePedraBaixo2:	
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoBaixo2:
 	li t0, 'T'
@@ -1225,28 +1225,28 @@ moveDireita2:
 checaEsqueletoDireita2:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraDir2		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraDir2		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir2		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir2		# Se esweuelto estiver encurralado, ele morre
-	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado do lado para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, 1						# Sobe uma posição na matriz
+	addi a3, a3, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
-	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	addi a3, a3, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoDir2
 MorteDoEsqueletoDir2:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -1254,9 +1254,9 @@ MorteDoEsqueletoDir2:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1266,17 +1266,17 @@ MorteDoEsqueletoDir2:
 	j checaEspinhoDir2
 checaPedraDir2:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoDir2			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoDir2			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, não move
-	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraDir2		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, 1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1289,7 +1289,7 @@ checaPedraDir2:
 	j checaEspinhoDir2
 	
 naoMovePedraDir2:	
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	addi a3, a3, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoDir2:
 	li t0, 'T'
@@ -1342,7 +1342,7 @@ fase_2DialogCase:
 	beq a6,s6,fase_2AbreDialogo
 	j fase_2AfterComparison
 fase_2AbreDialogo:
-# Sempre começar o diálogo na primeira opção
+# Sempre comeï¿½ar o diï¿½logo na primeira opï¿½ï¿½o
 	li t0, 0xFF200604
 	li t1, 0
 	sw t1, 0(t0)
@@ -1450,7 +1450,7 @@ fase3:
 	mv a2, t2
 	jal drawImageNotImm
 	
-# Salvando a colisão em um novo local da memória para não afetar a original
+# Salvando a colisï¿½o em um novo local da memï¿½ria para nï¿½o afetar a original
 	li s11, 0		# Primeiro quadrado do mapa
 	la a0, colisao_fase_3	# Escolhe o arquivo de colisao da fase
 	jal s9, copiaColisao
@@ -1560,29 +1560,29 @@ moveCima3:
 checaEsqueletoCima3:
 	addi s10,s10,-1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraCima3		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraCima3		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueleto3		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueleto
-	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, -1						# Sobe uma posição na matriz
+	addi a6, a6, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 	
-	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	addi a6, a6, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoCima3
 MorteDoEsqueleto3:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 
@@ -1591,9 +1591,9 @@ MorteDoEsqueleto3:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1603,17 +1603,17 @@ MorteDoEsqueleto3:
 	j checaEspinhoCima3
 checaPedraCima3:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoCima3			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoCima3			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima3		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima3		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima3		# Se pedra estiver apoiada, não move
-	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima3		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1625,7 +1625,7 @@ checaPedraCima3:
 	jal s11, animacaoChute
 	j checaEspinhoCima3
 naoMovePedraCima3:	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	addi a6, a6, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoCima3:
 	li t0, 'T'
@@ -1677,29 +1677,29 @@ moveEsquerda3:
 checaEsqueletoEsq3:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraEsq3		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraEsq3		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoEsq3		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoEsq3
-	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, -1						# Sobe uma posição na matriz
+	addi a3, a3, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm	
-	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	addi a3, a3, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoEsq3
 	
 MorteDoEsqueletoEsq3:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -1707,9 +1707,9 @@ MorteDoEsqueletoEsq3:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1719,17 +1719,17 @@ MorteDoEsqueletoEsq3:
 	j checaEspinhoEsq3
 checaPedraEsq3:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoEsq3			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoEsq3			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq3		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq3		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq3		# Se pedra estiver apoiada, não move
-	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraEsq3		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1742,7 +1742,7 @@ checaPedraEsq3:
 	j checaEspinhoEsq3
 	
 naoMovePedraEsq3:	
-	addi a3, a3, 1						# Corrige a posição de volta para o personagem
+	addi a3, a3, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoEsq3:
 	li t0, 'T'
@@ -1799,30 +1799,30 @@ moveBaixo3:
 checaEsqueletoBaixo3:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraBaixo3		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraBaixo3		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoBx3		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoBx3
-	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, 1						# Sobe uma posição na matriz
+	addi a6, a6, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 
-	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	addi a6, a6, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoBaixo3
 MorteDoEsqueletoBx3:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
-	jal calculaPosicaoFase3				# Desenha o tampão onde estava o esqueleto	
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase3				# Desenha o tampï¿½o onde estava o esqueleto	
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1831,9 +1831,9 @@ MorteDoEsqueletoBx3:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1844,17 +1844,17 @@ MorteDoEsqueletoBx3:
 	
 checaPedraBaixo3:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoBaixo3			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoBaixo3			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo3		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo3		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo3		# Se pedra estiver apoiada, não move
-	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraBaixo3		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, 10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1866,7 +1866,7 @@ checaPedraBaixo3:
 	jal s11, animacaoChute
 	j checaEspinhoBaixo3
 naoMovePedraBaixo3:	
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoBaixo3:
 	li t0, 'T'
@@ -1919,28 +1919,28 @@ moveDireita3:
 checaEsqueletoDireita3:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraDir3		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraDir3		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir3		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir3		# Se esweuelto estiver encurralado, ele morre
-	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado do lado para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, 1						# Sobe uma posição na matriz
+	addi a3, a3, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
-	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	addi a3, a3, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoDir3
 MorteDoEsqueletoDir3:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 	
@@ -1948,9 +1948,9 @@ MorteDoEsqueletoDir3:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -1960,17 +1960,17 @@ MorteDoEsqueletoDir3:
 	j checaEspinhoDir3
 checaPedraDir3:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoDir3			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoDir3			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir3		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir3		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir3	 # Se pedra estiver apoiada, não move
-	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraDir3	 # Se pedra estiver apoiada, nï¿½o move
+	sb t0, 1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -1983,7 +1983,7 @@ checaPedraDir3:
 	j checaEspinhoDir3
 	
 naoMovePedraDir3:	
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	addi a3, a3, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoDir3:
 	li t0, 'T'
@@ -2036,7 +2036,7 @@ fase_3DialogCase:
 	beq a6,s6,fase_3AbreDialogo
 	j fase_3AfterComparison
 fase_3AbreDialogo:
-# Sempre começar o diálogo na primeira opção
+# Sempre comeï¿½ar o diï¿½logo na primeira opï¿½ï¿½o
 	li t0, 0xFF200604
 	li t1, 0
 	sw t1, 0(t0)
@@ -2143,7 +2143,7 @@ fase4:
 	mv a2, t2
 	jal drawImageNotImm
 	
-# Salvando a colisão em um novo local da memória para não afetar a original
+# Salvando a colisï¿½o em um novo local da memï¿½ria para nï¿½o afetar a original
 	li s11, 0		# Primeiro quadrado do mapa
 	la a0, colisao_fase_4	# Escolhe o arquivo de colisao da fase
 	jal s9, copiaColisao
@@ -2159,7 +2159,7 @@ fase4:
 # Desenhando Chave no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 	jal s9, desenhaChaves
-# Desenhando Baú no Mapa
+# Desenhando Baï¿½ no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 	jal s9, desenhaBaus
 
@@ -2260,29 +2260,29 @@ moveCima4:
 checaEsqueletoCima4:
 	addi s10,s10,-1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraCima4		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraCima4		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueleto4		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueleto4
-	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, -1						# Sobe uma posição na matriz
+	addi a6, a6, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 	
-	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	addi a6, a6, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoCima4
 MorteDoEsqueleto4:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 
@@ -2291,9 +2291,9 @@ MorteDoEsqueleto4:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -2303,20 +2303,20 @@ MorteDoEsqueleto4:
 	j checaEspinhoCima4
 checaPedraCima4:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoCima4			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoCima4			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)	
 	li t4, 'B'
-	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
-	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -2328,7 +2328,7 @@ checaPedraCima4:
 	jal s11, animacaoChute
 	j checaEspinhoCima4
 naoMovePedraCima4:	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	addi a6, a6, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoCima4:
 	li t0, 'T'
@@ -2362,17 +2362,17 @@ checaBauCima4:
 
 	li t0, 'B'				# Carrega "B"
 	lb t3, -10(t1)				#Armazena o quadrado a direita do esqueleto
-	bne t3, t0, cimaLivre4		        # Se o da direita não for B, anda 
-	bne s5, zero, bauComChaveCima4          #Se tiver unm B e estiver com chave, abre o baú	
-	                        		#Se tiver baú mas n tiver chave:	       
-	addi a6,a6, 1			        #recalcula posicao do herói e contador de passos 
+	bne t3, t0, cimaLivre4		        # Se o da direita nï¿½o for B, anda 
+	bne s5, zero, bauComChaveCima4          #Se tiver unm B e estiver com chave, abre o baï¿½	
+	                        		#Se tiver baï¿½ mas n tiver chave:	       
+	addi a6,a6, 1			        #recalcula posicao do herï¿½i e contador de passos 
 	addi s10,s10,1
 	la a4, hero
 	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
 	j fase4_loop		       	
 	
 bauComChaveCima4:
-	#animacaoBau				#Para méritos de teste
+	#animacaoBau				#Para mï¿½ritos de teste
 cimaLivre4:
 	la a4, hero
 	jal s9, spriteNotImm3
@@ -2396,29 +2396,29 @@ moveEsquerda4:
 checaEsqueletoEsq4:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraEsq4    # Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraEsq4    # Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoEsq4		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoEsq4
-	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, -1						# Sobe uma posição na matriz
+	addi a3, a3, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm	
-	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	addi a3, a3, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoEsq4
 	
 MorteDoEsqueletoEsq4:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -2426,9 +2426,9 @@ MorteDoEsqueletoEsq4:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -2438,20 +2438,20 @@ MorteDoEsqueletoEsq4:
 	j checaEspinhoEsq4
 checaPedraEsq4:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoEsq4			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoEsq4			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, não move
-	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraEsq4		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -2464,7 +2464,7 @@ checaPedraEsq4:
 	j checaEspinhoEsq4
 	
 naoMovePedraEsq4:	
-	addi a3, a3, 1						# Corrige a posição de volta para o personagem
+	addi a3, a3, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoEsq4:
 	li t0, 'T'
@@ -2519,30 +2519,30 @@ moveBaixo4:
 checaEsqueletoBaixo4:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraBaixo4		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraBaixo4		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoBx4		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoBx4
-	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm3
 
-	addi a6, a6, 1						# Sobe uma posição na matriz
+	addi a6, a6, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm3
 
-	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	addi a6, a6, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoBaixo4
 MorteDoEsqueletoBx4:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
-	jal calculaPosicaoFase3				# Desenha o tampão onde estava o esqueleto	
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase3				# Desenha o tampï¿½o onde estava o esqueleto	
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -2551,9 +2551,9 @@ MorteDoEsqueletoBx4:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -2564,20 +2564,20 @@ MorteDoEsqueletoBx4:
 	
 checaPedraBaixo4:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoBaixo4			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoBaixo4			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)	
 	li t4, 'B'
-	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, não move
-	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima4		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, 10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -2589,11 +2589,11 @@ checaPedraBaixo4:
 	jal s11, animacaoChute
 	j checaEspinhoBaixo4
 naoMovePedraBaixo4:	
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoBaixo4:
 	li t0, 'T'				# P representa pedra no mapa
-	bne t2, t0, checaChaveBaixo4			# Checa se tem esqueleto, se não segue normalmente		#Se não for espinho, checa chave
+	bne t2, t0, checaChaveBaixo4			# Checa se tem esqueleto, se nï¿½o segue normalmente		#Se nï¿½o for espinho, checa chave
 	la t1, colisao_temporaria
 	li t2, 10
 	mul t2, a6, t2
@@ -2610,10 +2610,10 @@ checaChaveBaixo4:
 	li t2, 10
 	mul t2, a6, t2
 	add t2, t2, a3
-	add t1, t1, t2				#Atualiza matriz de colisão temporária,
+	add t1, t1, t2				#Atualiza matriz de colisï¿½o temporï¿½ria,
 	lb t2, 0(t1)
-	#jal s11, animacaoChave			#Roda animacão da chave
-	#jal s11,animacaoFuro			#Para méritos de teste
+	#jal s11, animacaoChave			#Roda animacï¿½o da chave
+	#jal s11,animacaoFuro			#Para mï¿½ritos de teste
 	bne t0,t2, BaixoLivre4
 	addi s5,s5,1			        #Atualiza s5
 	j BaixoLivre4				#Segue pra baixo
@@ -2657,28 +2657,28 @@ moveDireita4:
 checaEsqueletoDireita4:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraDir4		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraDir4		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir4		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir4		# Se esweuelto estiver encurralado, ele morre
-	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado do lado para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, 1						# Sobe uma posição na matriz
+	addi a3, a3, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
-	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	addi a3, a3, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoDir4
 MorteDoEsqueletoDir4:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 	
@@ -2686,9 +2686,9 @@ MorteDoEsqueletoDir4:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -2698,17 +2698,17 @@ MorteDoEsqueletoDir4:
 	j checaEspinhoDir4
 checaPedraDir4:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoDir4			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoDir4			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir4  # Se pedra estiver apoiada, não move
-	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraDir4  # Se pedra estiver apoiada, nï¿½o move
+	sb t0, 1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -2721,7 +2721,7 @@ checaPedraDir4:
 	j checaEspinhoDir4
 	
 naoMovePedraDir4:	
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	addi a3, a3, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoDir4:
 	li t0, 'T'
@@ -2744,7 +2744,7 @@ deixaEspinhoDir4:
 	add t1, t1, t2
 	lb t2, 0(t1)
 	addi a3, a3, 1
-	bne t2, t0, checaBauDireita4      #Se não for espinho, ele checa se é baú
+	bne t2, t0, checaBauDireita4      #Se nï¿½o for espinho, ele checa se ï¿½ baï¿½
 	addi a3, a3, -1
 	la a4, espinho
 	jal s9, spriteNotImm3
@@ -2754,10 +2754,10 @@ checaBauDireita4:
 
 	li t0, 'B'				# Carrega "B"
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
-	bne t3, t0, DireitaLivre4		# Se o da direita não for B, anda 
-	bne s5, zero, bauComChaveDireita4	 #Se tiver unm B e estiver com chave, abre o baú	
-						#Se tiver baú mas n tiver chave:	       
-	addi a3,a3, -1			        #recalcula posicao do herói e contador de passos 
+	bne t3, t0, DireitaLivre4		# Se o da direita nï¿½o for B, anda 
+	bne s5, zero, bauComChaveDireita4	 #Se tiver unm B e estiver com chave, abre o baï¿½	
+						#Se tiver baï¿½ mas n tiver chave:	       
+	addi a3,a3, -1			        #recalcula posicao do herï¿½i e contador de passos 
 	addi s10,s10,1
 	la a4, hero
 	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
@@ -2788,7 +2788,7 @@ fase_4DialogCase:
 	beq a6,s6,fase_4AbreDialogo
 	j fase_4AfterComparison
 fase_4AbreDialogo:
-# Sempre começar o diálogo na primeira opção
+# Sempre comeï¿½ar o diï¿½logo na primeira opï¿½ï¿½o
 	li t0, 0xFF200604
 	li t1, 0
 	sw t1, 0(t0)
@@ -2963,7 +2963,7 @@ fase5:
 	mv a2, t2
 	jal drawImageNotImm
 	
-# Salvando a colisão em um novo local da memória para não afetar a original
+# Salvando a colisï¿½o em um novo local da memï¿½ria para nï¿½o afetar a original
 	li s11, 0		# Primeiro quadrado do mapa
 	la a0, colisao_fase_5	# Escolhe o arquivo de colisao da fase
 	jal s9, copiaColisao
@@ -2979,7 +2979,7 @@ fase5:
 # Desenhando Chave no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 	jal s9, desenhaChaves
-# Desenhando Baú no Mapa
+# Desenhando Baï¿½ no Mapa
 	li s11, 0	# Primeiro quadrado do mapa
 	jal s9, desenhaBaus
 
@@ -3082,29 +3082,29 @@ moveCima5:
 checaEsqueletoCima5:
 	addi s10,s10,-1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraCima5	 # Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraCima5	 # Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueleto5		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueleto5
-	sb t0, -10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, -1						# Sobe uma posição na matriz
+	addi a6, a6, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 	
-	addi a6, a6, 2						# Corrige a posição de volta para o personagem
+	addi a6, a6, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoCima5
 MorteDoEsqueleto5:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 
@@ -3113,9 +3113,9 @@ MorteDoEsqueleto5:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -3125,20 +3125,20 @@ MorteDoEsqueleto5:
 	j checaEspinhoCima5
 checaPedraCima5:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoCima5			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoCima5			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -10(t1)	
 	li t4, 'B'
-	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
-	sb t0, -10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -3150,7 +3150,7 @@ checaPedraCima5:
 	jal s11, animacaoChute
 	j checaEspinhoCima5
 naoMovePedraCima5:	
-	addi a6, a6, 1						# Corrige a posição de volta para o personagem
+	addi a6, a6, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoCima5:
 	li t0, 'T'
@@ -3185,17 +3185,17 @@ checaBauCima5:
 
 	li t0, 'B'				# Carrega "B"
 	lb t3, -10(t1)				#Armazena o quadrado a direita do esqueleto
-	bne t3, t0, cimaLivre5		        # Se o da direita não for B, anda 
-	bne s5, zero, bauComChaveCima5          #Se tiver unm B e estiver com chave, abre o baú	
-	                        		#Se tiver baú mas n tiver chave:	       
-	addi a6,a6, 1			        #recalcula posicao do herói e contador de passos 
+	bne t3, t0, cimaLivre5		        # Se o da direita nï¿½o for B, anda 
+	bne s5, zero, bauComChaveCima5          #Se tiver unm B e estiver com chave, abre o baï¿½	
+	                        		#Se tiver baï¿½ mas n tiver chave:	       
+	addi a6,a6, 1			        #recalcula posicao do herï¿½i e contador de passos 
 	addi s10,s10,1
 	la a4, hero
 	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
 	j fase5_loop		       	
 	
 bauComChaveCima5:
-	#animacaoBau				#Para méritos de teste
+	#animacaoBau				#Para mï¿½ritos de teste
 cimaLivre5:
 	la a4, hero
 	jal s9, spriteNotImm3
@@ -3219,29 +3219,29 @@ moveEsquerda5:
 checaEsqueletoEsq5:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraEsq5    # Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraEsq5    # Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoEsq5		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoEsq5
-	sb t0, -1(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, -1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, -1						# Sobe uma posição na matriz
+	addi a3, a3, -1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm	
-	addi a3, a3, 2						# Corrige a posição de volta para o personagem
+	addi a3, a3, 2						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoEsq5
 	
 MorteDoEsqueletoEsq5:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm
 	
@@ -3249,9 +3249,9 @@ MorteDoEsqueletoEsq5:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -3261,20 +3261,20 @@ MorteDoEsqueletoEsq5:
 	j checaEspinhoEsq5
 checaPedraEsq5:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoEsq5			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoEsq5			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, -1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'B'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, não move
-	sb t0, -1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraEsq5		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, -1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -3287,7 +3287,7 @@ checaPedraEsq5:
 	j checaEspinhoEsq5
 	
 naoMovePedraEsq5:	
-	addi a3, a3, 1						# Corrige a posição de volta para o personagem
+	addi a3, a3, 1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoEsq5:
 	li t0, 'T'
@@ -3342,30 +3342,30 @@ moveBaixo5:
 checaEsqueletoBaixo5:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraBaixo5		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraBaixo5		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoBx5		# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'
 	beq t3, t4, MorteDoEsqueletoBx5
-	sb t0, 10(t1)				# Se for esqueleto, muda a memória do quadrado acima para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 10(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado acima para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a6, a6, 1						# Sobe uma posição na matriz
+	addi a6, a6, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
 
-	addi a6, a6, -2					# Corrige a posição de volta para o personagem
+	addi a6, a6, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoBaixo5
 MorteDoEsqueletoBx5:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
-	jal calculaPosicaoFase3				# Desenha o tampão onde estava o esqueleto	
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
+	jal calculaPosicaoFase3				# Desenha o tampï¿½o onde estava o esqueleto	
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -3374,9 +3374,9 @@ MorteDoEsqueletoBx5:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -3387,20 +3387,20 @@ MorteDoEsqueletoBx5:
 	
 checaPedraBaixo5:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoBaixo5			# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoBaixo5			# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraBaixo5		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 10(t1)	
 	li t4, 'B'
-	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, não move
-	sb t0, 10(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraCima5		# Se pedra estiver apoiada, nï¿½o move
+	sb t0, 10(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -3412,11 +3412,11 @@ checaPedraBaixo5:
 	jal s11, animacaoChute
 	j checaEspinhoBaixo5
 naoMovePedraBaixo5:	
-	addi a6, a6, -1						# Corrige a posição de volta para o personagem
+	addi a6, a6, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoBaixo5:
 	li t0, 'T'				# P representa pedra no mapa
-	bne t2, t0, checaChaveBaixo5			# Checa se tem esqueleto, se não segue normalmente		#Se não for espinho, checa chave
+	bne t2, t0, checaChaveBaixo5			# Checa se tem esqueleto, se nï¿½o segue normalmente		#Se nï¿½o for espinho, checa chave
 	la t1, colisao_temporaria
 	li t2, 10
 	mul t2, a6, t2
@@ -3433,10 +3433,10 @@ checaChaveBaixo5:
 	li t2, 10
 	mul t2, a6, t2
 	add t2, t2, a3
-	add t1, t1, t2				#Atualiza matriz de colisão temporária,
+	add t1, t1, t2				#Atualiza matriz de colisï¿½o temporï¿½ria,
 	lb t2, 0(t1)
-	#jal s11, animacaoChave			#Roda animacão da chave
-	#jal s11,animacaoFuro			#Para méritos de teste
+	#jal s11, animacaoChave			#Roda animacï¿½o da chave
+	#jal s11,animacaoFuro			#Para mï¿½ritos de teste
 	bne t0,t2, BaixoLivre5
 	addi s5,s5,1			        #Atualiza s5
 	j BaixoLivre5				#Segue pra baixo
@@ -3480,28 +3480,28 @@ moveDireita5:
 checaEsqueletoDireita5:
 	addi s10, s10, -1
 	li t0, 'E'				# E representa esqueleto no mapa
-	bne t2, t0, checaPedraDir5		# Checa se tem esqueleto, se não segue normalmente
+	bne t2, t0, checaPedraDir5		# Checa se tem esqueleto, se nï¿½o segue normalmente
 	#Se tiver esqueleto e quadrado acima do esqueleto for "x", O Esqueleto morre
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir5	# Se esweuelto estiver encurralado, ele morre
 	li t4, 'P'				#Armazena  "x" em t4
 	beq t3,t4, MorteDoEsqueletoDir5		# Se esweuelto estiver encurralado, ele morre
-	sb t0, 1(t1)				# Se for esqueleto, muda a memória do quadrado do lado para E
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	sb t0, 1(t1)				# Se for esqueleto, muda a memï¿½ria do quadrado do lado para E
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
 
-	addi a3, a3, 1						# Sobe uma posição na matriz
+	addi a3, a3, 1						# Sobe uma posiï¿½ï¿½o na matriz
 	la a4, esqueleto
 	jal s9, spriteNotImm
-	addi a3, a3, -2					# Corrige a posição de volta para o personagem
+	addi a3, a3, -2					# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 	j checaEspinhoDir5
 MorteDoEsqueletoDir5:
-	sb zero, (t1)				# Se for pra morrer, muda a memória do quadrado do esqueleto pra 0
+	sb zero, (t1)				# Se for pra morrer, muda a memï¿½ria do quadrado do esqueleto pra 0
 	la a4, tampao
 	jal s9, spriteNotImm3
 	
@@ -3509,9 +3509,9 @@ MorteDoEsqueletoDir5:
 	jal s11, animacaoChute
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2000		# define a duração da nota em ms
+	li a1,2000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,127		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -3521,17 +3521,17 @@ MorteDoEsqueletoDir5:
 	j checaEspinhoDir5
 checaPedraDir5:
 	li t0, 'P'				# P representa pedra no mapa
-	bne t2, t0, checaEspinhoDir5		# Checa se tem esqueleto, se não segue normalmente
-	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra não move
+	bne t2, t0, checaEspinhoDir5		# Checa se tem esqueleto, se nï¿½o segue normalmente
+	#Se tiver pedra e quadrado acima da pedra for "X" ou "P", a pedra nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'X'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir4		# Se pedra estiver apoiada, não move
+	beq t3,t4, naoMovePedraDir4		# Se pedra estiver apoiada, nï¿½o move
 	lb t3, 1(t1)				#Armazena o quadrado acima do esqueleto
 	li t4, 'P'				#Armazena  "x" em t4
-	beq t3,t4, naoMovePedraDir4  # Se pedra estiver apoiada, não move
-	sb t0, 1(t1)				# Se for pedra, muda a memória do quadrado acima para P
-	li t0, '0'				# Carrega 0 que representa espaço vazio
-	sb t0, 0(t1)				# Muda a memória no quadrado para espaço vazio
+	beq t3,t4, naoMovePedraDir4  # Se pedra estiver apoiada, nï¿½o move
+	sb t0, 1(t1)				# Se for pedra, muda a memï¿½ria do quadrado acima para P
+	li t0, '0'				# Carrega 0 que representa espaï¿½o vazio
+	sb t0, 0(t1)				# Muda a memï¿½ria no quadrado para espaï¿½o vazio
 	
 	la a4, tampao
 	jal s9, spriteNotImm
@@ -3544,7 +3544,7 @@ checaPedraDir5:
 	j checaEspinhoDir5
 	
 naoMovePedraDir5:	
-	addi a3, a3, -1						# Corrige a posição de volta para o personagem
+	addi a3, a3, -1						# Corrige a posiï¿½ï¿½o de volta para o personagem
 	jal s11, animacaoChute
 checaEspinhoDir5:
 	li t0, 'T'
@@ -3567,7 +3567,7 @@ deixaEspinhoDir5:
 	add t1, t1, t2
 	lb t2, 0(t1)
 	addi a3, a3, 1
-	bne t2, t0, checaBauDireita5    #Se não for espinho, ele checa se é baú
+	bne t2, t0, checaBauDireita5    #Se nï¿½o for espinho, ele checa se ï¿½ baï¿½
 	addi a3, a3, -1
 	la a4, espinho
 	jal s9, spriteNotImm3
@@ -3577,10 +3577,10 @@ checaBauDireita5:
 
 	li t0, 'B'				# Carrega "B"
 	lb t3, 1(t1)				#Armazena o quadrado a direita do esqueleto
-	bne t3, t0, DireitaLivre5	# Se o da direita não for B, anda 
-	bne s5, zero, bauComChaveDireita5	 #Se tiver unm B e estiver com chave, abre o baú	
-						#Se tiver baú mas n tiver chave:	       
-	addi a3,a3, -1			        #recalcula posicao do herói e contador de passos 
+	bne t3, t0, DireitaLivre5	# Se o da direita nï¿½o for B, anda 
+	bne s5, zero, bauComChaveDireita5	 #Se tiver unm B e estiver com chave, abre o baï¿½	
+						#Se tiver baï¿½ mas n tiver chave:	       
+	addi a3,a3, -1			        #recalcula posicao do herï¿½i e contador de passos 
 	addi s10,s10,1
 	la a4, hero
 	jal s9, spriteNotImm3			#desenha hero no "lugar certo"
@@ -3611,7 +3611,7 @@ fase_5DialogCase:
 	beq a6,s6,fase_5AbreDialogo
 	j fase_5AfterComparison
 fase_5AbreDialogo:
-# Sempre começar o diálogo na primeira opção
+# Sempre comeï¿½ar o diï¿½logo na primeira opï¿½ï¿½o
 	li t0, 0xFF200604
 	li t1, 0
 	sw t1, 0(t0)
@@ -4006,7 +4006,7 @@ cf_fora2:
 	ret
 
 
-# Animação do Chute
+# Animaï¿½ï¿½o do Chute
 animacaoChute:
 	jal calculaPosicaoFase2	
 	la a0, hero_kick
@@ -4024,9 +4024,9 @@ animacaoChute:
 	li a7, 32		
 	ecall
 	# Toca o som do chute
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,45		# define a nota
-	li a1,2500		# define a duração da nota em ms
+	li a1,2500		# define a duraï¿½ï¿½o da nota em ms
 	li a2,118		# define o instrumento
 	li a3,127		# define o volume
 	li a7,31		# define o syscall
@@ -4047,7 +4047,7 @@ animacaoChute:
 	jal drawImageNotImm
 	jr s11
 
-# Animação do Furo
+# Animaï¿½ï¿½o do Furo
 animacaoFuro:
 	addi s10, s10, -1
 	jal calculaPosicaoFase2	
@@ -4080,9 +4080,9 @@ animacaoFuro:
 	ecall
 	
 	# Toca o som esqueleto morrendo
-	mv s0, a3		# salva o valor de a3, porque será usado pra volume
+	mv s0, a3		# salva o valor de a3, porque serï¿½ usado pra volume
 	li a0,75		# define a nota
-	li a1,1000		# define a duração da nota em ms
+	li a1,1000		# define a duraï¿½ï¿½o da nota em ms
 	li a2,65		# define o instrumento
 	li a3,127		# define o volume
 	li a7,30		# define o syscall
@@ -4117,7 +4117,7 @@ animacaoFuro:
 	jr s11
 
 copiaColisao:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, continuaColisao
 
 	la t2, colisao_temporaria
@@ -4132,7 +4132,7 @@ continuaColisao:
 	jr s9
 	
 desenhaPedras:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, desenhaPedrasContinua
 
 	li t2, 'P'
@@ -4162,7 +4162,7 @@ desenhaPedrasContinua:
 	jr s9
 
 desenhaEsqueletos:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, desenhaEsqueletosContinua
 
 	li t2, 'E'
@@ -4192,7 +4192,7 @@ desenhaEsqueletosContinua:
 	jr s9
 
 desenhaEspinhos:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, desenhaEspinhosContinua
 
 	li t2, 'T'
@@ -4222,7 +4222,7 @@ desenhaEspinhosContinua:
 	jr s9
 
 desenhaChaves:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, desenhaEspinhosContinua
 
 	li t2, 'K'
@@ -4252,7 +4252,7 @@ desenhaChavesContinua:
 	jr s9
 
 desenhaBaus:
-	li t1, 89	# Último quadrado do mapa
+	li t1, 89	# ï¿½ltimo quadrado do mapa
 	bgt s11, t1, desenhaBausContinua
 
 	li t2, 'B'
@@ -4310,5 +4310,5 @@ spriteNotImm3:
 	add a2,zero, t2
 	jal drawImageNotImm
 	jr s9
-# Tem que ser a última coisa!
+# Tem que ser a ï¿½ltima coisa!
 .include "SYSTEMv21.s"
