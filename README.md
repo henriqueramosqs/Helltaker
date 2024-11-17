@@ -7,6 +7,8 @@ To play it, use 'W','A','S' and 'D' keys to move and 'Enter' to confirm an actio
 <p align="center">
   <img src="https://github.com/henriqueramosqs/Helltaker/blob/main/helltaker.png?raw=true" width="300"/>
 </p>
+
+
 ## Intalation and Running
 To play this game, one should clone this repository and use a RISC-V simulator to run 'main.s' archive. Some options like the <a href="https://github.com/LeoRiether/FPGRARS">FPGRARS</a> are viable, but
 we strongly recommend the RARS app that will be dowloaded with the code. If that’s the case, don’t forget to click on ‘tools’ and connect both the Keyboard MMIO and the Bitmap Display to the program.
